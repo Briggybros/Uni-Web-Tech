@@ -1,0 +1,10 @@
+{
+    "env": {
+        "node": true,
+        "es6": false,
+        "browser": false
+    },
+    "rules": {
+        "no-console": "off"
+    }
+}

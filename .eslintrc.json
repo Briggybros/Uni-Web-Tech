@@ -1,4 +1,9 @@
 {
     "extends": "airbnb",
-    "parser": "babel-eslint"
+    "parser": "babel-eslint",
+    "rules": {
+        "indent": [4, "error"],
+        "react/jsx-indent": [4, "error"],
+        "react/jsx-indent-props": [4, "error"]
+    }
 }
