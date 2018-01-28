@@ -58,3 +58,4 @@ typings/
 .env
 
 frontend/dist
+server/dist
