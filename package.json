@@ -1,17 +1,21 @@
 {
   "name": "web-tech",
   "version": "1.0.0",
-  "main": "server/index.js",
+  "main": "server/dist/index.js",
   "repository": "git@github.com:Briggybros/web-tech.git",
   "license": "UNLICENSED",
   "private": true,
   "scripts": {
-    "start": "node server/index.js",
-    "start:prod": "npm run build && npm run start",
+    "start": "node server/dist/index.js",
+    "start:prod": "npm run build:prod && npm run start",
     "start:dev": "npm run build:dev && npm run start",
-    "build:prod": "ENV=prod webpack -p --config ./frontend/webpack.config.js",
-    "build:dev": "ENV=dev webpack -d --config ./frontend/webpack.config.js",
-    "test": "eslint ."
+    "build:prod": "npm run build:frontend:prod && npm run build:server:prod",
+    "build:dev": "npm run build:frontend:dev && npm run build:server:dev",
+    "build:frontend:prod": "ENV=prod webpack -p --config ./frontend/webpack.config.js",
+    "build:frontend:dev": "ENV=dev webpack -d --config ./frontend/webpack.config.js",
+    "build:server:prod": "eslint server && ENV=prod babel server/src -d server/dist",
+    "build:server:dev": "eslint server && ENV=dev babel server/src -d server/dist",
+    "test": "npm run build:prod"
   },
   "dependencies": {
     "express": "^4.16.2",
@@ -20,13 +24,17 @@
     "sqlite3": "^3.1.13"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.2.1",
     "babel-loader": "^7.1.2",
     "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
     "copy-webpack-plugin": "^4.3.1",
     "eslint": "^4.16.0",
     "eslint-config-airbnb": "^16.1.0",
+    "eslint-loader": "^1.9.0",
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.6.0",
