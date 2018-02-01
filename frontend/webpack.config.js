@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
-    entry: path.join(__dirname, 'src', 'index.tsx'),
+    entry: path.join(__dirname, 'src', 'index.jsx'),
     output: {
         filename: 'bundle.js',
         path: path.join(__dirname, 'dist'),
@@ -12,23 +12,14 @@ module.exports = {
     module: {
         rules: [
             {
-                enforce: 'pre',
-                test: /\.(js|jsx|ts|tsx)$/,
-                exclude: /node_modules/,
-                loader: 'tslint-loader',
-                options: {
-                    fix: true,
-                },
-            },
-            {
-                test: /\.(js|jsx|ts|tsx)?$/,
+                test: /\.(js|jsx)?$/,
                 loader: 'babel-loader?cacheDirectory',
                 exclude: path.resolve(__dirname, '..', 'node_modules'),
             },
         ],
     },
     resolve: {
-        extensions: ['.js', '.jsx', '.ts', '.tsx'],
+        extensions: ['.js', '.jsx'],
     },
     plugins: [
         new HtmlWebpackPlugin({
