@@ -1,0 +1,10 @@
+{
+    "name": "Web Tech",
+    "short_name": "Web Tech",
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#fff",
+    "description": "Some description",
+    "icons": [],
+    "related_applications": []
+  }
