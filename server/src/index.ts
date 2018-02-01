@@ -1,7 +1,10 @@
 import path from 'path';
+import express from 'express';
 
-const PORT: number = parseInt(process.env.PORT, 10) || 8080;
-const DIST: string = path.join(__dirname, '..', 'frontend', 'dist');
+const PORT: number | string = process.env.PORT || 8080;
+const DIST: string = path.join(__dirname, '..', '..', 'frontend', 'dist');
+
+const app = express();
 
 function xhtmlify(req, res, done) {
     if (req.accepts('application/xhtml+xml')) {
@@ -11,3 +14,13 @@ function xhtmlify(req, res, done) {
     }
     done();
 }
+
+app.use(express.static(DIST));
+
+app.get('*', xhtmlify, (req, res) => {
+    res.sendFile(path.join(DIST, 'index.html'));
+});
+
+app.listen(PORT, () => {
+    console.log(`Server listening on ${PORT}`);
+});

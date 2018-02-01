@@ -1,13 +1,18 @@
 {
     "defaultSeverity": "error",
     "extends": [
-        "tslint-config-airbnb"
+        "tslint-config-airbnb",
+        "tslint-react",
+        "tslint-eslint-rules"
     ],
     "jsRules": {},
     "rules": {
         "ter-indent": {
             "severity": "error",
             "options": 4
+        },
+        "import-name": {
+            "severity": "off"
         }
     },
     "rulesDirectory": [],
