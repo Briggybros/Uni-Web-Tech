@@ -1,8 +1,9 @@
+// @flow
 import path from 'path';
 import express from 'express';
 
-const PORT: number | string = process.env.PORT || 8080;
-const DIST: string = path.join(__dirname, '..', '..', 'frontend', 'dist');
+const PORT : number | string = process.env.PORT || 8080;
+const DIST : string = path.join(__dirname, '..', '..', 'frontend', 'dist');
 
 const app = express();
 
