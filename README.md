@@ -8,15 +8,15 @@ Don't need all of these, just an interpretation of Ian's grading system.
 
 ### HTML ###
 
-- [ ] Get page delivery to work
-- [ ] Use XHTML delivery
+- [x] Get page delivery to work
+- [x] Use XHTML delivery
 - [ ] Use HTML validator in tests
 - [ ] Investigate issues and get high level confidence (slightly ambiguous)
 
 ### CSS ###
 
 - [ ] Get styles to work
-- [ ] No style tags or atributes in html (No <div style="..." width="420px" /> type stuff I assume)
+- [x] No style tags or atributes in html (No <div style="..." width="420px" /> type stuff I assume)
 - [ ] Investigate issues and get high level confidence (slightly ambiguous)
 
 ### JS ###
@@ -60,7 +60,7 @@ Don't need all of these, just an interpretation of Ian's grading system.
 - [x] Basic server (express)
 - [x] Port numbers
 - [ ] URL validation
-- [ ] Content negotiation
+- [x] Content negotiation
 - [ ] Redirections
 - [ ] UTF8 (Why is this here?)
 - [ ] HTTPS
@@ -70,7 +70,7 @@ Don't need all of these, just an interpretation of Ian's grading system.
 - [ ] Security issues beyond URL validation
 - [ ] Automated testing (Would personally include HTML validator)
 - [ ] Cookies (Hope we don't need disclaimer)
-- [ ] Running under reduced privilege (Whatever this is?)
+- [x] Running under reduced privilege (Assuming not needing sudo to run server)
 
 ### Database ###
 
