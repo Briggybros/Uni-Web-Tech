@@ -4,7 +4,12 @@
         "tslint-config-airbnb"
     ],
     "jsRules": {},
-    "rules": {},
+    "rules": {
+        "ter-indent": {
+            "severity": "error",
+            "options": 4
+        }
+    },
     "rulesDirectory": [],
     "linterOptions": {
         "exclude": [
