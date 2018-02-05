@@ -8,7 +8,7 @@
   "scripts": {
     "start": "npm run build && node server/dist/index.js",
     "build": "npm run build:server && npm run build:frontend",
-    "build:server": "babel ./server/src -d ./server/dist --extensions .ts --presets @babel/preset-env",
+    "build:server": "babel ./server/src -d ./server/dist",
     "build:frontend": "ENV=dev webpack --config ./frontend/webpack.config.js",
     "test": "eslint ./ && flow && npm run build"
   },
