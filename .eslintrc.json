@@ -5,6 +5,15 @@
     ],
     "parser": "babel-eslint",
     "rules": {
-        "indent": ["error", 4]
+        "indent": ["error", 4],
+        "import/extensions": [
+            "error",
+            "always",
+            {
+              "js": "never",
+              "jsx": "never",
+              "mjs": "never"
+            }
+          ]
     }
 }
