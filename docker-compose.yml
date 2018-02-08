@@ -15,3 +15,4 @@ services:
     container_name: rag-neo4j
     volumes:
       - "./database:/data"
+      
