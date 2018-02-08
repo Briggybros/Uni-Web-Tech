@@ -1,0 +1,17 @@
+version: '3.3'
+services:
+  ragsite:
+    build: .
+    ports:
+      - "8080:8080"
+    container_name: rag-site
+    depends_on:
+    - "ragneo4j"
+  ragneo4j:
+    image: "neo4j:latest"
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    container_name: rag-neo4j
+    volumes:
+      - "./database:/data"
