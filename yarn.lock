@@ -1426,6 +1426,10 @@ constants-browserify@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/constants-browserify/-/constants-browserify-1.0.0.tgz#c20b96d8c617748aaf1c16021760cd27fcb8cb75"
 
+containerized@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/containerized/-/containerized-1.0.2.tgz#dfed3149eab5042ef0b06e851c7d8f4dc6750d88"
+
 contains-path@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/contains-path/-/contains-path-0.1.0.tgz#fe8cf184ff6670b6baef01a9d4861a5cbec4120a"
@@ -3257,10 +3261,6 @@ nan@^2.3.0:
   version "2.8.0"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.8.0.tgz#ed715f3fe9de02b57a5e6252d90a96675e1f085a"
 
-nan@~2.7.0:
-  version "2.7.0"
-  resolved "https://registry.yarnpkg.com/nan/-/nan-2.7.0.tgz#d95bf721ec877e08db276ed3fc6eb78f9083ad46"
-
 natural-compare@^1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/natural-compare/-/natural-compare-1.4.0.tgz#4abebfeed7541f2c27acfb29bdbbd15c8d5ba4f7"
@@ -3274,6 +3274,13 @@ ncname@1.0.x:
 negotiator@0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/negotiator/-/negotiator-0.6.1.tgz#2b327184e8992101177b28563fb5e7102acd0ca9"
+
+neo4j@^2.0.0-RC2:
+  version "2.0.0-RC2"
+  resolved "https://registry.yarnpkg.com/neo4j/-/neo4j-2.0.0-RC2.tgz#bd328247d0a97b1b16ccb997a694a86ae8620a41"
+  dependencies:
+    request "^2.27.0"
+    underscore "1.7.x"
 
 no-case@^2.2.0:
   version "2.3.2"
@@ -3330,7 +3337,7 @@ node-pre-gyp@0.6.36:
     tar "^2.2.1"
     tar-pack "^3.4.0"
 
-node-pre-gyp@^0.6.39, node-pre-gyp@~0.6.38:
+node-pre-gyp@^0.6.39:
   version "0.6.39"
   resolved "https://registry.yarnpkg.com/node-pre-gyp/-/node-pre-gyp-0.6.39.tgz#c00e96860b23c0e1420ac7befc5044e1d78d8649"
   dependencies:
@@ -3982,7 +3989,7 @@ request@2.81.0:
     tunnel-agent "^0.6.0"
     uuid "^3.0.0"
 
-request@^2.81.0:
+request@^2.27.0, request@^2.81.0:
   version "2.83.0"
   resolved "https://registry.yarnpkg.com/request/-/request-2.83.0.tgz#ca0b65da02ed62935887808e6f510381034e3356"
   dependencies:
@@ -4254,19 +4261,6 @@ spdx-license-ids@^1.0.2:
 sprintf-js@~1.0.2:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/sprintf-js/-/sprintf-js-1.0.3.tgz#04e6926f662895354f3dd015203633b857297e2c"
-
-sqlite3@3.1.13:
-  version "3.1.13"
-  resolved "https://registry.yarnpkg.com/sqlite3/-/sqlite3-3.1.13.tgz#d990a05627392768de6278bafd1a31fdfe907dd9"
-  dependencies:
-    nan "~2.7.0"
-    node-pre-gyp "~0.6.38"
-
-sqlite@^2.9.1:
-  version "2.9.1"
-  resolved "https://registry.yarnpkg.com/sqlite/-/sqlite-2.9.1.tgz#2c85192c15d3e20361236f26240187f9d9f71355"
-  dependencies:
-    sqlite3 "3.1.13"
 
 sshpk@^1.7.0:
   version "1.13.1"
@@ -4546,6 +4540,10 @@ uid-number@^0.0.6:
 ultron@~1.1.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/ultron/-/ultron-1.1.1.tgz#9fe1536a10a664a65266a1e3ccf85fd36302bc9c"
+
+underscore@1.7.x:
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/underscore/-/underscore-1.7.0.tgz#6bbaf0877500d36be34ecaa584e0db9fef035209"
 
 unicode-canonical-property-names-ecmascript@^1.0.2:
   version "1.0.3"
