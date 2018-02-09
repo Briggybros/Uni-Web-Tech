@@ -20,6 +20,7 @@
     "cookie-parser": "^1.4.3",
     "express": "^4.16.2",
     "express-session": "^1.15.6",
+    "flow-typed": "^2.3.0",
     "neo4j": "^2.0.0-RC2",
     "passport": "^0.4.0",
     "passport-json": "^1.2.0",
