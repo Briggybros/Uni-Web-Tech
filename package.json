@@ -16,6 +16,7 @@
     "bcrypt": "^1.0.3",
     "containerized": "^1.0.2",
     "express": "^4.16.2",
+    "flow-typed": "^2.3.0",
     "neo4j": "^2.0.0-RC2",
     "prop-types": "^15.6.0",
     "react": "^16.2.0",
