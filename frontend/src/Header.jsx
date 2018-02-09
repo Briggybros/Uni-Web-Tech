@@ -20,6 +20,16 @@ const Container = styled.div`
     max-width:90%;
 `;
 
+//Should probs have called the file navigation.jsx 
+// :(  <- me using styled Components
+// $FlowFixMe
 render(
-    
+    <Navigation>
+        <MenuContainer>
+            <Logo></Logo>
+            <Menu>
+                <MenuItem><Link></Link></MenuItem>
+            </Menu>
+        </MenuContainer>
+    </Navigation>
 );
