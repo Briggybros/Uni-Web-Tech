@@ -31,6 +31,7 @@ export default class User {
 
     username : string;
     passHash : string;
+    role : string;
 
     constructor({
         username,
@@ -41,6 +42,7 @@ export default class User {
     }) {
         this.username = username;
         this.passHash = password;
+        this.role = '';
 
         users[username] = this;
     }
@@ -58,5 +60,12 @@ export default class User {
                 hash,
             },
         ).then(() => { this.passHash = hash; }));
+    }
+
+    toObject() {
+        return {
+            username: this.username,
+            role: this.role,
+        };
     }
 }
