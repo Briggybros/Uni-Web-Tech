@@ -1,12 +1,15 @@
 // @flow
 import * as React from 'react';
 import styled from 'styled-components';
+import { media } from './style-utils'
 
 const Navigation = styled.nav`
     width: 100%;
-    height: 15vh; /* TODO: alter for screen size*/
-    /*theme dependent*/ 
     background-color: ${props => props.theme.primary};
+    height: 56px;
+    ${media.handheld`
+        height: 10vh;
+    `}
 `;
 
 Navigation.defaultProps = {

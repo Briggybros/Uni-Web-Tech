@@ -1,0 +1,9 @@
+// @flow
+import { css } from 'styled-components'
+
+export const media = {
+    handheld: (...args: any[]) => css`
+    @media (max-width: 500px;) {
+        ${ css(...args) }
+    }`
+};
