@@ -2,6 +2,9 @@
 
 # Web Tech #
 
+## Hot Loading ##
+When making changes to the server, nodemon runs build asynchronously, so another save is needed to reboot after the build.
+
 ## Goals ##
 
 Don't need all of these, just an interpretation of Ian's grading system.

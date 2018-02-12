@@ -1,16 +1,17 @@
 {
   "name": "web-tech",
   "version": "1.0.0",
-  "main": "server/index.js",
+  "main": "run.js",
   "repository": "git@github.com:Briggybros/web-tech.git",
   "license": "UNLICENSED",
   "private": true,
   "scripts": {
-    "start": "npm run build && node server/dist/index.js",
-    "build": "npm run build:server && npm run build:frontend",
+    "start": "npm run build:server && npm run build:frontend && node server/dist/index.js",
+    "start:hot": "npm run build:server && nodemon server/dist/index.js -L & npm run build:frontend:hot",
     "build:server": "babel ./server/src -d ./server/dist",
     "build:frontend": "ENV=dev webpack --config ./frontend/webpack.config.js",
-    "test": "eslint ./ && flow && npm run build"
+    "build:frontend:hot": "ENV=dev webpack --watch --config ./frontend/webpack.config.js",
+    "test": "eslint ./ && flow && npm run build:server && npm run build:frontend"
   },
   "dependencies": {
     "bcrypt": "^1.0.3",
@@ -41,6 +42,7 @@
     "eslint-plugin-react": "^7.6.1",
     "flow-bin": "^0.64.0",
     "html-webpack-plugin": "^2.30.1",
+    "nodemon": "^1.14.12",
     "webpack": "^3.10.0"
   }
 }
