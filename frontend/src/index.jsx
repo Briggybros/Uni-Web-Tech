@@ -1,12 +1,13 @@
 // @flow
 import React from 'react';
 import { render } from 'react-dom';
-
+import Header from './Header';
+ 
 const mount : HTMLElement | null = document.getElementById('app');
 
 if (mount) {
     render(
-        <div />,
+        <Header />,
         mount,
     );
 } else {

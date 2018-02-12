@@ -18,6 +18,9 @@ function xhtmlify(req, res, done) {
 
 app.use(express.static(DIST));
 
+app.get('./normalize.css', (req, res) => {
+    res.sendFile(path.join(DIST, 'normalize.css')); // I'm sorry ik this is bad code
+});
 app.get('*', xhtmlify, (req, res) => {
     res.sendFile(path.join(DIST, 'index.html'));
 });
