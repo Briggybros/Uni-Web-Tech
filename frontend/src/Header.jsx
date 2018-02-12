@@ -1,39 +1,74 @@
 // @flow
 import * as React from 'react';
 import styled from 'styled-components';
-import { media } from './style-utils'
+import { Container } from './style-utils';
+// import { Link } from 'react-router-dom';
 
 const Navigation = styled.nav`
     width: 100%;
     background-color: ${props => props.theme.primary};
-    height: 56px;
-    ${media.handheld`
-        height: 10vh;
-    `}
+    min-height: 10vh;
 `;
 
 Navigation.defaultProps = {
     theme:{
-        primary: '#e9304a'
+        primary: '#e9304a',
+        primaryDark: '#b12538'
     }
 };
 
-const Container = styled.div`
-    display: flex;
-    max-width:90%;
+const MenuContainer = Container.extend`
+    display:flex;
+    justify-content: space-between;
+    height:100%;
 `;
 
-//Should probs have called the file navigation.jsx 
-// :(  <- me using styled Components
+const Menu = styled.ul`
+    list-style: none;
+    margin: 0;
+    display: flex;
+    flex-flow: row wrap;
+    height:100%;
+`
+
+const Logo = styled.div`
+    display: block;
+    align-self:flex-start;
+`;
+
+const MenuItem = styled.li`
+    height:100%;
+`;
+
+const Link = styled.a`
+  text-decoration: none;
+  display: block;
+  color: white;
+  height:100%;
+  padding: 0 1em;
+
+  &:hover {
+      background-color: ${props => props.theme.primaryDark};
+  }
+`;
+
+Link.defaultProps = {
+    theme:{
+        primary: '#e9304a',
+        primaryDark: '#b12538'
+    }
+};
+
 const Header = () => {
     return (
         <Navigation>
-            {/* <MenuContainer>
-                <Logo></Logo>
+            <MenuContainer>
+                <Logo>RAG</Logo>
                 <Menu>
-                    <MenuItem><Link></Link></MenuItem>
+                    <MenuItem><Link href="#">Home</Link></MenuItem>
+                    <MenuItem><Link href="#">About</Link></MenuItem>
                 </Menu>
-            </MenuContainer> */}
+            </MenuContainer>
         </Navigation>
     );
 };
