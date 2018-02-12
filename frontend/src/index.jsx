@@ -5,6 +5,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { createStore } from 'redux';
 import { Provider as ReduxProvider } from 'react-redux';
 import { injectGlobal, ThemeProvider } from 'styled-components';
+import Header from './Header';
 
 import reducer from './reducer';
 
@@ -46,7 +47,7 @@ const theme = {
         black: '#242020',
     },
 };
-
+ 
 const mount : HTMLElement | null = document.getElementById('app');
 
 if (mount) {
@@ -58,7 +59,7 @@ if (mount) {
                 theme={theme}
             >
                 <Router>
-                    <div />
+                    <Header />,
                 </Router>
             </ThemeProvider>
         </ReduxProvider>,

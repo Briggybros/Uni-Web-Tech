@@ -35,6 +35,9 @@ app.use(passport.session);
 
 app.use('/api', api);
 
+app.get('./normalize.css', (req, res) => {
+    res.sendFile(path.join(DIST, 'normalize.css')); // I'm sorry ik this is bad code
+});
 app.get('*', xhtmlify, (req, res) => {
     res.sendFile(path.join(DIST, 'index.html'));
 });
