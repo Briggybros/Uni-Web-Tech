@@ -50,6 +50,11 @@ const theme = {
  
 const mount : HTMLElement | null = document.getElementById('app');
 
+const theme = {
+    primary: '#e9304a',
+    primaryDark: '#b12538'
+};
+
 if (mount) {
     render(
         <ReduxProvider
