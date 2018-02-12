@@ -11,14 +11,6 @@ const Navigation = styled.nav`
     display:flex;
     align-items:stretch;
 `;
-
-Navigation.defaultProps = {
-    theme:{
-        primary: '#e9304a',
-        primaryDark: '#b12538'
-    }
-};
-
 const MenuContainer = Container.extend`
     display:flex;
     justify-content: space-between;
@@ -52,13 +44,6 @@ const Link = styled.a`
   color: white;
   padding: 0 1em;
 `;
-
-MenuItem.defaultProps = {
-    theme:{
-        primary: '#e9304a',
-        primaryDark: '#b12538'
-    }
-};
 
 const Header = () => {
     return (
