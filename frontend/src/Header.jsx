@@ -8,6 +8,8 @@ const Navigation = styled.nav`
     width: 100%;
     background-color: ${props => props.theme.primary};
     min-height: 10vh;
+    display:flex;
+    align-items:stretch;
 `;
 
 Navigation.defaultProps = {
@@ -20,7 +22,7 @@ Navigation.defaultProps = {
 const MenuContainer = Container.extend`
     display:flex;
     justify-content: space-between;
-    height:100%;
+    align-items:stretch;
 `;
 
 const Menu = styled.ul`
@@ -28,31 +30,30 @@ const Menu = styled.ul`
     margin: 0;
     display: flex;
     flex-flow: row wrap;
-    height:100%;
+    align-items:stretch;
 `
 
 const Logo = styled.div`
-    display: block;
-    align-self:flex-start;
+    display: flex;
+    align-self:center;
 `;
 
 const MenuItem = styled.li`
-    height:100%;
+    display:flex;
+    &:hover {
+      background-color: ${props => props.theme.primaryDark};
+    }
 `;
 
 const Link = styled.a`
   text-decoration: none;
-  display: block;
+  display: flex;
+  align-self:center;
   color: white;
-  height:100%;
   padding: 0 1em;
-
-  &:hover {
-      background-color: ${props => props.theme.primaryDark};
-  }
 `;
 
-Link.defaultProps = {
+MenuItem.defaultProps = {
     theme:{
         primary: '#e9304a',
         primaryDark: '#b12538'
