@@ -4,13 +4,16 @@ import styled from 'styled-components';
 import { Container } from './style-utils';
 // import { Link } from 'react-router-dom';
 
+const navHeight = '10vh';
+
 const Navigation = styled.nav`
     width: 100%;
     background-color: ${props => props.theme.primary};
-    min-height: 10vh;
+    height: ${navHeight};
     display:flex;
     align-items:stretch;
 `;
+
 const MenuContainer = Container.extend`
     display:flex;
     justify-content: space-between;
@@ -25,9 +28,10 @@ const Menu = styled.ul`
     align-items:stretch;
 `
 
-const Logo = styled.div`
-    display: flex;
-    align-self:center;
+const Logo = styled.img`
+    align-self:flex-start;
+    height:100%;
+    width:${navHeight};
 `;
 
 const MenuItem = styled.li`
@@ -49,7 +53,7 @@ const Header = () => {
     return (
         <Navigation>
             <MenuContainer>
-                <Logo>RAG</Logo>
+                <Logo src="/logo.svg"/>
                 <Menu>
                     <MenuItem><Link href="#">Home</Link></MenuItem>
                     <MenuItem><Link href="#">About</Link></MenuItem>
