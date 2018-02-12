@@ -6,7 +6,10 @@ services:
       - "8080:8080"
     container_name: rag-site
     depends_on:
-    - "ragneo4j"
+      - "ragneo4j"
+    volumes:
+      - "./frontend/src:/usr/src/ragsite/frontend/src"
+      - "./server/src:/usr/src/ragsite/server/src"
   ragneo4j:
     image: "neo4j:latest"
     ports:
