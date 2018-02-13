@@ -1,6 +1,12 @@
 // @flow
 import path from 'path';
 import express from 'express';
+import passport from 'passport';
+import session from 'express-session';
+import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
+
+import api from './api';
 
 const PORT : number | string = process.env.PORT || 8080;
 const DIST : string = path.join(__dirname, '..', '..', 'frontend', 'dist');
@@ -16,7 +22,18 @@ function xhtmlify(req, res, done) {
     done();
 }
 
+app.use(session({
+    secret: '',
+    resave: false,
+    saveUninitialized: true,
+}));
+app.use(cookieParser());
+app.use(bodyParser.json());
 app.use(express.static(DIST));
+app.use(passport.initialize());
+app.use(passport.session);
+
+app.use('/api', api);
 
 app.get('*', xhtmlify, (req, res) => {
     res.sendFile(path.join(DIST, 'index.html'));
