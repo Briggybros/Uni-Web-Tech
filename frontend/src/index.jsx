@@ -3,6 +3,8 @@ import React from 'react';
 import { render } from 'react-dom';
 import { injectGlobal, ThemeProvider } from 'styled-components';
 
+const ralewayURL = '\'https://fonts.googleapis.com/css?family=Raleway\'';
+
 injectGlobal`
     @font-face {
         font-family: 'bebas neue bold';
@@ -20,7 +22,7 @@ injectGlobal`
         font-style: normal;
     }
 
-    @import url('https://fonts.googleapis.com/css?family=Raleway');
+    @import url(${ralewayURL});
 
     body {
         margin: 0;
