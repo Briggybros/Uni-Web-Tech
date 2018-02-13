@@ -14,8 +14,6 @@ RUN yarn install --pure-lockfile
 # Copy code into directory
 COPY . /usr/src/ragsite
 
-RUN yarn run build
-
 # Expose the port 8080
 EXPOSE 8080
 

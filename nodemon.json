@@ -1,0 +1,9 @@
+{
+    "ignore": [
+        "server/dist/*",
+        "frontend/*"
+    ],
+    "events": {
+        "restart": "npm run build:server"
+    }
+}
