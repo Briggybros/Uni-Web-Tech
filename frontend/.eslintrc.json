@@ -1,7 +1,10 @@
 {
     "rules": {
         "react/jsx-indent": ["error", 4],
-        "react/jsx-indent-props": ["error", 4]
+        "react/jsx-indent-props": ["error", 4],
+        "no-unused-expressions": ["error", {
+            "allowTaggedTemplates": true
+        }]
     },
     "env": {
         "browser": true,
