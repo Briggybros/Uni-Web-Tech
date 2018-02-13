@@ -1,3 +1,4 @@
+// @flow
 import { Router } from 'express';
 import passport from 'passport';
 import { Strategy as JSONStrategy } from 'passport-json';
@@ -9,13 +10,18 @@ passport.deserializeUser((username : string, done) => User.getUser(username)
 
 passport.use(new JSONStrategy((username, password, done) => {
     User.getUser(username)
-        .then(user => user.validatePassword(password)
-            .then((result) => {
-                if (result) {
-                    return done(null, user);
-                }
-                return done(null, false);
-            }))
+        .then((user) => {
+            if (user) {
+                return user.validatePassword(password)
+                    .then((result) => {
+                        if (result) {
+                            return done(null, user);
+                        }
+                        return done(null, false);
+                    });
+            }
+            return done(null, false);
+        })
         .catch(err => done(err));
 }));
 
