@@ -1,10 +1,15 @@
 // @flow
 import React from 'react';
 import { render } from 'react-dom';
+import { Route, Switch } from 'react-router';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { createStore } from 'redux';
 import { Provider as ReduxProvider } from 'react-redux';
 import { injectGlobal, ThemeProvider } from 'styled-components';
+
+import News from './news/Router';
+
+import Authenticator from './auth/Authenticator';
 
 import reducer from './reducer';
 
@@ -47,6 +52,16 @@ const theme = {
     },
 };
 
+const AuthRoute = ({ children, ...props } : {children : Route.propTypes.children}) => (
+    <Route
+        {...props}
+    >
+        <Authenticator>
+            {children}
+        </Authenticator>
+    </Route>
+);
+
 const mount : HTMLElement | null = document.getElementById('app');
 
 if (mount) {
@@ -58,7 +73,11 @@ if (mount) {
                 theme={theme}
             >
                 <Router>
-                    <div />
+                    <Switch>
+                        <AuthRoute path="/">
+                            <News />
+                        </AuthRoute>
+                    </Switch>
                 </Router>
             </ThemeProvider>
         </ReduxProvider>,

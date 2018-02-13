@@ -1,7 +1,7 @@
 [ignore]
-server/dist/
-frontend/dist/
-node_modules/
+./server/dist/
+./frontend/dist/
+./node_modules/*
 
 [include]
 

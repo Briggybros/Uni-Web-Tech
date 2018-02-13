@@ -13,17 +13,17 @@ const DIST : string = path.join(__dirname, '..', '..', 'frontend', 'dist');
 
 const app = express();
 
-function xhtmlify(req, res, done) {
-    if (req.accepts('application/xhtml+xml')) {
-        res.type('application/xhtml+xml');
-    } else {
-        res.type('text/html');
-    }
-    done();
-}
+// function xhtmlify(req, res, done) {
+//     if (req.accepts('application/xhtml+xml')) {
+//         res.type('application/xhtml+xml');
+//     } else {
+//         res.type('text/html');
+//     }
+//     done();
+// }
 
 app.use(session({
-    secret: '',
+    secret: 'UMRQlXrka6MIYrBMVMZOz5JvsPq1i9EymesiDdAa0AQtEt9yRj5wHHQ8IHtqCKmP',
     resave: false,
     saveUninitialized: true,
 }));
@@ -31,11 +31,11 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(express.static(DIST));
 app.use(passport.initialize());
-app.use(passport.session);
+app.use(passport.session());
 
 app.use('/api', api);
 
-app.get('*', xhtmlify, (req, res) => {
+app.get('*', (req, res) => {
     res.sendFile(path.join(DIST, 'index.html'));
 });
 
