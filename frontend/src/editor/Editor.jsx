@@ -1,53 +1,41 @@
-// @flow
+// It is important to import the Editor which accepts plugins.
 import * as React from 'react';
-import { Editor, EditorState, RichUtils } from 'draft-js';
-import { connect } from 'react-redux';
+import { EditorState } from 'draft-js';
+import Editor from 'draft-js-plugins-editor';
+import createToolbarPlugin from 'draft-js-static-toolbar-plugin';
 
-import EditorControls from './EditorControls';
-import { updateContent } from './reducer';
 
-type State = {
-    editorState : EditorState,
-}
+import 'draft-js/dist/Draft.css';
+import 'draft-js-static-toolbar-plugin/lib/plugin.css';
 
-class ContentEditor extends React.Component<{}, State> {
-    constructor(props : {}) {
+// Creates an Instance. At this step, a configuration object can be passed in
+// as an argument.
+const toolbarPlugin = createToolbarPlugin();
+
+// The Editor accepts an array of plugins. In this case, only the toolbarPlugin
+// is passed in, although it is possible to pass in multiple plugins.
+class MyEditor extends React.Component {
+    constructor(props) {
         super(props);
-        this.state = { editorState: EditorState.createEmpty() };
+        this.state = {
+            editorState: EditorState.createEmpty(),
+        };
     }
 
-    onChange(editorState : EditorState) {
+    onChange(editorState) {
         this.setState({ editorState });
-    }
-
-    onBoldClick() {
-        this.onChange(RichUtils.toggleInlineStyle(this.state.editorState, 'BOLD'));
-    }
-
-    handleKeyCommand(command : string, editorState : EditorState) {
-        const newState = RichUtils.handleKeyCommand(editorState, command);
-        if (newState) {
-            this.onChange(newState);
-            return 'handled';
-        }
-        return 'not-handled';
     }
 
     render() {
         return (
-            <div>
-                <EditorControls
-                    editorState={this.state.editorState}
-                    onChange={this.onChange.bind(this)}
-                />
-                <Editor
-                    editorState={this.state.editorState}
-                    handleKeyCommand={this.handleKeyCommand.bind(this)}
-                    onChange={this.onChange.bind(this)}
-                />
-            </div>
+            <Editor
+                editorState={this.state.editorState}
+                onChange={this.onChange.bind(this)}
+                plugins={[toolbarPlugin]}
+            />
         );
     }
 }
 
-export default connect(null, { updateContent })(ContentEditor);
+
+export default MyEditor;
