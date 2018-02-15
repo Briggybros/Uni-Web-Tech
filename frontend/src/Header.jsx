@@ -10,8 +10,6 @@ const Navigation = styled.nav`
     width: 100%;
     background-color: ${props => props.theme.primary};
     height: ${navHeight};
-    display:flex;
-    align-items:stretch;
 `;
 
 const MenuContainer = Container.extend`
