@@ -25,7 +25,7 @@ type State = {
     posts : Array<Object>,
 };
 
-export function authReducer(state : State = {
+export function newsReducer(state : State = {
     posts: [],
 }, action : Action) {
     switch (action.type) {

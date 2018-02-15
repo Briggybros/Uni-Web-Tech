@@ -4,7 +4,8 @@
         "react/jsx-indent-props": ["error", 4],
         "no-unused-expressions": ["error", {
             "allowTaggedTemplates": true
-        }]
+        }],
+        "react/jsx-no-bind": "off"
     },
     "env": {
         "browser": true,

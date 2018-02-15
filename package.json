@@ -7,7 +7,7 @@
   "private": true,
   "scripts": {
     "start": "npm run build:server && npm run build:frontend && node server/dist/index.js",
-    "start:hot": "npm run build:server && nodemon server/dist/index.js -L & npm run build:frontend:hot",
+    "start:hot": "npm run build:server && nodemon -L server/dist/index.js & npm run build:frontend:hot",
     "build:server": "babel ./server/src -d ./server/dist",
     "build:frontend": "ENV=dev webpack --config ./frontend/webpack.config.js",
     "build:frontend:hot": "ENV=dev webpack --watch --config ./frontend/webpack.config.js",
@@ -27,7 +27,6 @@
     "passport-json": "^1.2.0",
     "prop-types": "^15.6.0",
     "react": "^16.2.0",
-    "react-ckeditor-component": "^1.0.7",
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.6",
     "react-router": "^4.2.0",

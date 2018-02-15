@@ -9,7 +9,7 @@ COPY ./package.json /usr/src/ragsite/package.json
 COPY ./yarn.lock /usr/src/ragsite/yarn.lock
 
 # Install packages from lockfile
-RUN yarn install --pure-lockfile
+RUN yarn install
 
 # Copy code into directory
 COPY . /usr/src/ragsite

@@ -29,6 +29,10 @@ module.exports = {
         new CopyWebpackPlugin([{
             from: path.join(__dirname, 'src', 'static'),
             to: path.join(__dirname, 'dist'),
+        },
+        {
+            from: path.join(__dirname, '..', 'node_modules', 'draft-js', 'dist', 'Draft.css'),
+            to: path.join(__dirname, 'dist', 'Draft.css'),
         }]),
     ],
 };
