@@ -50,8 +50,11 @@ const Link = styled.a`
 const Mobile = styled.div`
     display: flex;
     position: fixed;
-    width: 100%;
+    width: 80%;
     top: ${navHeight};
+    right:0;
+    height:100vh;
+    background-color: ${props => props.theme.primary};
 `;
 
 const Desktop = styled.div`
@@ -59,11 +62,19 @@ const Desktop = styled.div`
 `;
 
 const MobileMenu = styled.ul`
-
+    width: 100%;
+    display:flex;
+    flex-direction: column;
+    padding:0;
+    margin:0;
 `;
 
-const MobileButton = styled.button`
-
+const MobileButton = styled.i`
+    align-self:flex-end;
+    height: ${navHeight};
+    font-size: 1.5em;
+    padding-right:1em;
+    color: white;
 `;
 
 const Header = () => {
@@ -77,8 +88,8 @@ const Header = () => {
                         <MenuItem><Link href="#">About</Link></MenuItem>
                     </Menu>
                 </Desktop>
+                <MobileButton className="fa fa-bars"></MobileButton>
                 <Mobile>
-                    {/* <MobileButton /> */}
                     <MobileMenu>
                         <MenuItem><Link href="#">Home</Link></MenuItem>
                         <MenuItem><Link href="#">About</Link></MenuItem>
