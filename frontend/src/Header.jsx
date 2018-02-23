@@ -94,14 +94,14 @@ const Icon = styled.i`
     height:${navHeight};
 `
 
-class Header extends React.Component<{}, {thingIsOpen: bool}> {
+class Header extends React.Component<{}, {menuOpen: bool}> {
     state = {
-        thingIsOpen: false,
+        menuOpen: false,
     };
 
     buttonClicked = () => {
         this.setState(prevState => ({
-            thingIsOpen: !prevState.thingIsOpen,
+            menuOpen: !prevState.menuOpen,
         }));
     };
 
@@ -117,7 +117,7 @@ class Header extends React.Component<{}, {thingIsOpen: bool}> {
                         </Menu>
                     </Desktop>
                     <MobileButton onClick={this.buttonClicked}><Icon className="fa fa-bars" /></MobileButton>
-                    <Mobile isOpen={this.state.thingIsOpen}>
+                    <Mobile isOpen={this.state.menuOpen}>
                         <MobileMenu>
                             <MenuItem><Link href="#">Home</Link></MenuItem>
                             <MenuItem><Link href="#">About</Link></MenuItem>
