@@ -49,16 +49,24 @@ const Link = styled.a`
 
 const Mobile = styled.div`
     display: flex;
+    @media (min-width: 768px) {
+        display: none;
+    }
     position: fixed;
     width: 80%;
     top: ${navHeight};
     right:0;
     height:100vh;
     background-color: ${props => props.theme.primary};
+    transform: ${props => !props.isOpen ? 'translateX(100%)' : 'none'};
+    transition: transform 0.2s ease-in;
 `;
 
 const Desktop = styled.div`
-    display: none;
+    display:none;
+    @media (min-width: 767px) {
+        display: flex;
+    }
 `;
 
 const MobileMenu = styled.ul`
@@ -77,27 +85,39 @@ const MobileButton = styled.i`
     color: white;
 `;
 
-const Header = () => {
-    return (
-        <Navigation>
-            <MenuContainer>
-                <Logo src="/logo.svg"/>
-                <Desktop>
-                    <Menu>
-                        <MenuItem><Link href="#">Home</Link></MenuItem>
-                        <MenuItem><Link href="#">About</Link></MenuItem>
-                    </Menu>
-                </Desktop>
-                <MobileButton className="fa fa-bars"></MobileButton>
-                <Mobile>
-                    <MobileMenu>
-                        <MenuItem><Link href="#">Home</Link></MenuItem>
-                        <MenuItem><Link href="#">About</Link></MenuItem>
-                    </MobileMenu>
-                </Mobile>
-            </MenuContainer>
-        </Navigation>
-    );
+class Header extends React.Component<{}, {thingIsOpen: bool}> {
+    state = {
+        thingIsOpen: false,
+    };
+
+    buttonClicked = () => {
+        this.setState(prevState => ({
+            thingIsOpen: !prevState.thingIsOpen,
+        }));
+    };
+
+    render() {
+        return (
+            <Navigation>
+                <MenuContainer>
+                    <Logo src="/logo.svg"/>
+                    <Desktop>
+                        <Menu>
+                            <MenuItem><Link href="#">Home</Link></MenuItem>
+                            <MenuItem><Link href="#">About</Link></MenuItem>
+                        </Menu>
+                    </Desktop>
+                    <MobileButton onClick={this.buttonClicked} className="fa fa-bars"><button>hey</button></MobileButton>
+                    <Mobile isOpen={this.state.thingIsOpen}>
+                        <MobileMenu>
+                            <MenuItem><Link href="#">Home</Link></MenuItem>
+                            <MenuItem><Link href="#">About</Link></MenuItem>
+                        </MobileMenu>
+                    </Mobile>
+                </MenuContainer>
+            </Navigation>
+        );
+    }
 };
 
 export default Header;
