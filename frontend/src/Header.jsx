@@ -2,134 +2,71 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import { FaBars } from 'react-icons/lib/fa';
+
+import Navigation from './Navigation';
 import { Container } from './style-utils';
-// import { Link } from 'react-router-dom';
 
-const navHeight = '10vh';
+const headerHeight = '10vh';
 
-const Navigation = styled.nav`
-    width: 100%;
+const Header = styled.header`
+    width: 100vw;
     background-color: ${props => props.theme.colours.primary};
-    height: ${navHeight};
+    height: ${headerHeight};
 `;
 
 const MenuContainer = Container.extend`
-    display:flex;
-    justify-content: space-between;
-    align-items:stretch;
-`;
-
-const Menu = styled.ul`
-    list-style: none;
-    margin: 0;
     display: flex;
-    flex-flow: row wrap;
-    align-items:stretch;
-`
+    justify-content: space-between;
+    align-items: stretch;
+`;
 
 const Logo = styled.img`
-    align-self:flex-start;
-    height:100%;
-    width:${navHeight};
+    align-self: flex-start;
+    height: 100%;
+    width: ${headerHeight};
 `;
 
-const MenuItem = styled.li`
-    display:flex;
-    &:hover {
-      background-color: ${props => props.theme.colours.primaryDark};
-    }
-`;
-
-const Link = styled.a`
-  text-decoration: none;
-  display: flex;
-  align-self:center;
-  color: white;
-  padding: 0 1em;
-  font-family: ${props => props.theme.fontFams.headerLinks};
-  font-size: 2em;
-`;
-
-const Mobile = styled.div`
-    display: flex;
-    @media (min-width: 768px) {
-        display: none;
-    }
-    position: fixed;
-    width: 80%;
-    top: ${navHeight};
-    right:0;
-    height:100vh;
-    background-color: ${props => props.theme.colours.primary};
-    transform: ${props => !props.isOpen ? 'translateX(100%)' : 'none'};
-    transition: transform 0.2s ease-in;
-`;
-
-const Desktop = styled.div`
-    display:none;
-    @media (min-width: 768px) {
-        display: flex;
-    }
-`;
-
-const MobileMenu = styled.ul`
-    width: 100%;
-    display:flex;
-    flex-direction: column;
-    padding:0;
-    margin:0;
-`;
-
-const MobileButton = styled.div`
-    display: flex;
-    @media (min-width: 768px) {
-        display: none;
-    }
-    align-self:flex-end;
-    align-items: stretch;
-    height: ${navHeight};
+const MobileMenuButton = styled.button`
+    ${props => (!props.theme.media.mobile ? 'display: none;' : '')}
     font-size: 1.5em;
-    padding-right:1em;
+    padding-right: 1em;
     color: white;
+    background: none;
+    border: none;
 `;
 
 const Bars = styled(FaBars)`
-    height:${navHeight};
+    height: 100%;
 `;
 
-class Header extends React.Component<{}, {menuOpen: bool}> {
-    state = {
-        menuOpen: false,
-    };
+type State = {
+    isNavOpen : boolean,
+}
 
-    buttonClicked = () => {
-        this.setState(prevState => ({
-            menuOpen: !prevState.menuOpen,
-        }));
-    };
+export default class HeaderBar extends React.Component<{}, State> {
+    constructor(props : any) {
+        super(props);
+        this.state = {
+            isNavOpen: false,
+        };
+    }
 
     render() {
         return (
-            <Navigation>
+            <Header>
                 <MenuContainer>
-                    <Logo src="/logo.svg"/>
-                    <Desktop>
-                        <Menu>
-                            <MenuItem><Link href="#">Home</Link></MenuItem>
-                            <MenuItem><Link href="#">About</Link></MenuItem>
-                        </Menu>
-                    </Desktop>
-                    <MobileButton onClick={this.buttonClicked}><Bars /></MobileButton>
-                    <Mobile isOpen={this.state.menuOpen}>
-                        <MobileMenu>
-                            <MenuItem><Link href="#">Home</Link></MenuItem>
-                            <MenuItem><Link href="#">About</Link></MenuItem>
-                        </MobileMenu>
-                    </Mobile>
+                    <Logo src="/logo.svg" />
+                    <MobileMenuButton
+                        onClick={() => this.setState(prevState => ({ isNavOpen: !prevState.isNavOpen }))}
+                    >
+                        <Bars />
+                    </MobileMenuButton>
+                    <Navigation
+                        isOpen={this.state.isNavOpen}
+                        headerHeight={headerHeight}
+                    />
                 </MenuContainer>
-            </Navigation>
+            </Header>
         );
     }
-};
-
-export default Header;
+}
