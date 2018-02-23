@@ -43,17 +43,13 @@ injectGlobal`
 const theme = {
     colors: {
         primary: '#ea504b',
+        primaryDark: '#b12538',
         white: '#fff',
         black: '#242020',
     },
 };
  
 const mount : HTMLElement | null = document.getElementById('app');
-
-const theme = {
-    primary: '#e9304a',
-    primaryDark: '#b12538'
-};
 
 if (mount) {
     render(
