@@ -11,7 +11,7 @@ const Navigation = styled.nav`
     ${props => (props.theme.media.mobile ? `top: ${props.headerHeight};` : '')}
     ${props => (props.theme.media.mobile ? 'right: 0;' : '')}
     ${props => (props.theme.media.mobile ? 'height: 100vh;' : '')}
-    ${props => (props.theme.media.mobile ? `background-color: ${props.theme.colours.primary};` : '')}
+    ${props => (props.theme.media.mobile ? `background: ${props.theme.colours.primaryDark};` : '')}
     ${props => (props.theme.media.mobile ? `transform: ${!props.isOpen ? 'translateX(100%)' : 'none'};` : '')}
     ${props => (props.theme.media.mobile ? 'transition: transform 0.2s ease-in;' : '')}
 `;
@@ -28,7 +28,7 @@ const Menu = styled.ul`
 const MenuItem = styled.li`
     display:flex;
     &:hover {
-      background-color: ${props => props.theme.colours.primaryDark};
+      background-color: ${props => (props.theme.media.mobile ? props.theme.colours.primary : props.theme.colours.primaryDark)};
     }
 `;
 
