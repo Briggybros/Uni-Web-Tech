@@ -64,7 +64,7 @@ const Mobile = styled.div`
 
 const Desktop = styled.div`
     display:none;
-    @media (min-width: 767px) {
+    @media (min-width: 768px) {
         display: flex;
     }
 `;
@@ -77,13 +77,22 @@ const MobileMenu = styled.ul`
     margin:0;
 `;
 
-const MobileButton = styled.i`
+const MobileButton = styled.div`
+    display: flex;
+    @media (min-width: 768px) {
+        display: none;
+    }
     align-self:flex-end;
+    align-items: stretch;
     height: ${navHeight};
     font-size: 1.5em;
     padding-right:1em;
     color: white;
 `;
+
+const Icon = styled.i`
+    height:${navHeight};
+`
 
 class Header extends React.Component<{}, {thingIsOpen: bool}> {
     state = {
@@ -107,7 +116,7 @@ class Header extends React.Component<{}, {thingIsOpen: bool}> {
                             <MenuItem><Link href="#">About</Link></MenuItem>
                         </Menu>
                     </Desktop>
-                    <MobileButton onClick={this.buttonClicked} className="fa fa-bars"><button>hey</button></MobileButton>
+                    <MobileButton onClick={this.buttonClicked}><Icon className="fa fa-bars" /></MobileButton>
                     <Mobile isOpen={this.state.thingIsOpen}>
                         <MobileMenu>
                             <MenuItem><Link href="#">Home</Link></MenuItem>
