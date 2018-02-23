@@ -23,7 +23,7 @@ function xhtmlify(req, res, done) {
 }
 
 app.use(session({
-    secret: '',
+    secret: 'UMRQlXrka6MIYrBMVMZOz5JvsPq1i9EymesiDdAa0AQtEt9yRj5wHHQ8IHtqCKmP',
     resave: false,
     saveUninitialized: true,
 }));

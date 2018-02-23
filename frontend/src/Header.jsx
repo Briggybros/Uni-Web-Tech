@@ -1,6 +1,7 @@
 // @flow
 import * as React from 'react';
 import styled from 'styled-components';
+import { FaBars } from 'react-icons/lib/fa';
 import { Container } from './style-utils';
 // import { Link } from 'react-router-dom';
 
@@ -8,7 +9,7 @@ const navHeight = '10vh';
 
 const Navigation = styled.nav`
     width: 100%;
-    background-color: ${props => props.theme.primary};
+    background-color: ${props => props.theme.colours.primary};
     height: ${navHeight};
 `;
 
@@ -35,7 +36,7 @@ const Logo = styled.img`
 const MenuItem = styled.li`
     display:flex;
     &:hover {
-      background-color: ${props => props.theme.primaryDark};
+      background-color: ${props => props.theme.colours.primaryDark};
     }
 `;
 
@@ -45,6 +46,8 @@ const Link = styled.a`
   align-self:center;
   color: white;
   padding: 0 1em;
+  font-family: ${props => props.theme.fontFams.headerLinks};
+  font-size: 2em;
 `;
 
 const Mobile = styled.div`
@@ -57,7 +60,7 @@ const Mobile = styled.div`
     top: ${navHeight};
     right:0;
     height:100vh;
-    background-color: ${props => props.theme.primary};
+    background-color: ${props => props.theme.colours.primary};
     transform: ${props => !props.isOpen ? 'translateX(100%)' : 'none'};
     transition: transform 0.2s ease-in;
 `;
@@ -90,9 +93,9 @@ const MobileButton = styled.div`
     color: white;
 `;
 
-const Icon = styled.i`
+const Bars = styled(FaBars)`
     height:${navHeight};
-`
+`;
 
 class Header extends React.Component<{}, {menuOpen: bool}> {
     state = {
@@ -116,7 +119,7 @@ class Header extends React.Component<{}, {menuOpen: bool}> {
                             <MenuItem><Link href="#">About</Link></MenuItem>
                         </Menu>
                     </Desktop>
-                    <MobileButton onClick={this.buttonClicked}><Icon className="fa fa-bars" /></MobileButton>
+                    <MobileButton onClick={this.buttonClicked}><Bars /></MobileButton>
                     <Mobile isOpen={this.state.menuOpen}>
                         <MobileMenu>
                             <MenuItem><Link href="#">Home</Link></MenuItem>

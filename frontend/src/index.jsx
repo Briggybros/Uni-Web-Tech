@@ -40,11 +40,14 @@ injectGlobal`
 `;
 
 const theme = {
-    colors: {
-        primary: '#ea504b',
+    colours: {
+        primary: '#e9304a',
         primaryDark: '#b12538',
         white: '#fff',
         black: '#242020',
+    },
+    fontFams: {
+        headerLinks:'bebas neue light, sans-serif'
     },
 };
  
@@ -59,7 +62,7 @@ if (mount) {
                 theme={theme}
             >
                 <Router>
-                    <Header />,
+                    <Header />
                 </Router>
             </ThemeProvider>
         </ReduxProvider>,
