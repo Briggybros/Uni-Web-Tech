@@ -6,7 +6,6 @@ import { createStore } from 'redux';
 import { Provider as ReduxProvider } from 'react-redux';
 import { injectGlobal, ThemeProvider } from 'styled-components';
 import Header from './Header';
-
 import reducer from './reducer';
 
 const store = createStore(reducer, {});
