@@ -8,6 +8,7 @@ import { Provider as ReduxProvider } from 'react-redux';
 import { injectGlobal, ThemeProvider } from 'styled-components';
 
 import News from './news/Router';
+import Editor from './editor/Editor';
 
 import Authenticator from './auth/Authenticator';
 
@@ -74,8 +75,11 @@ if (mount) {
             >
                 <Router>
                     <Switch>
-                        <AuthRoute path="/">
+                        <AuthRoute exact path="/">
                             <News />
+                        </AuthRoute>
+                        <AuthRoute path="/editor">
+                            <Editor />
                         </AuthRoute>
                     </Switch>
                 </Router>
