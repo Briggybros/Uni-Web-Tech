@@ -59,4 +59,4 @@ typings/
 
 frontend/dist/
 server/dist/
-database/databases
+database/

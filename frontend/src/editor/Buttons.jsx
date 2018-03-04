@@ -34,7 +34,37 @@ const Row = styled.span`
     flex-direction: row;
 `;
 
-const Button = styled.button`
+const FocusslessButton = ({
+    children,
+    onClick,
+    ...props
+} : {
+    children : any,
+    onClick : Function
+}) => (
+    <div
+        onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            onClick(e);
+        }}
+        onKeyPress={(e) => {
+            if (e.key === 'space') {
+                e.preventDefault();
+                e.stopPropagation();
+                onClick(e);
+            }
+        }}
+        role="button"
+        tabIndex={0}
+    >
+        <button {...props}>
+            {children}
+        </button>
+    </div>
+);
+
+const Button = styled(FocusslessButton)`
 
 `;
 
