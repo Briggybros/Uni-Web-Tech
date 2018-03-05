@@ -3,35 +3,55 @@ import * as React from 'react';
 import styled from 'styled-components';
 
 import {
-    FaCode,
-} from 'react-icons/lib/fa';
+    MdFormatBold,
+    MdFormatItalic,
+    MdFormatUnderlined,
+    MdFormatStrikethrough,
+    MdFormatAlignJustify,
+    MdFormatAlignLeft,
+    MdFormatAlignRight,
+    MdFormatAlignCenter,
+    MdInsertPhoto,
+    MdFormatListBulleted,
+    MdFormatListNumbered,
+} from 'react-icons/lib/md';
 
+import Dropdown from './Dropdown';
 
 import {
-    HEADER_1_MARK,
-    HEADER_2_MARK,
-    HEADER_3_MARK,
-    HEADER_4_MARK,
-    HEADER_5_MARK,
-    HEADER_6_MARK,
+    // HEADER_1_MARK,
+    // HEADER_2_MARK,
+    // HEADER_3_MARK,
+    // HEADER_4_MARK,
+    // HEADER_5_MARK,
+    // HEADER_6_MARK,
     BOLD_MARK,
     ITALIC_MARK,
     UNDERLINE_MARK,
     STRIKETHROUGH_MARK,
 } from './Marks';
 
-import {
-    CODE_NODE,
-} from './Nodes';
+// import {
+//     CODE_NODE,
+// } from './Nodes';
 
 const Container = styled.div`
     display: flex;
+    background: ${props => props.theme.white};
     flex-direction: column;
+    flex-shrink: 0;
+    width: 100%;
+    border: 1px solid lightgrey;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom: none;
 `;
 
 const Row = styled.span`
     display: flex;
     flex-direction: row;
+    align-items: center;
+    margin: 0.5rem 0.5rem;
 `;
 
 const FocusslessButton = ({
@@ -65,7 +85,23 @@ const FocusslessButton = ({
 );
 
 const Button = styled(FocusslessButton)`
+    margin-right: 0.5rem;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    border: none;
+    outline: none;
+    background: none;
+    cursor: pointer;
 
+    &:hover {
+        color: ${props => props.theme.colors.primary}
+    }
+
+    & > svg {
+        width: 100%;
+        height: auto;
+    }
 `;
 
 export default ({ onClick, ...props } : { onClick : (button : string) => any}) => (
@@ -74,64 +110,54 @@ export default ({ onClick, ...props } : { onClick : (button : string) => any}) =
     >
         <Row>
             <Button
-                onClick={() => onClick(HEADER_1_MARK)}
-            >
-                <strong>Title</strong>
-            </Button>
-            <Button
-                onClick={() => onClick(HEADER_2_MARK)}
-            >
-                <strong>Sub Title</strong>
-            </Button>
-            <Button
-                onClick={() => onClick(HEADER_3_MARK)}
-            >
-                <strong>Section</strong>
-            </Button>
-            <Button
-                onClick={() => onClick(HEADER_4_MARK)}
-            >
-                <strong>SubSection</strong>
-            </Button>
-            <Button
-                onClick={() => onClick(HEADER_5_MARK)}
-            >
-                <strong>SubSubSection</strong>
-            </Button>
-            <Button
-                onClick={() => onClick(HEADER_6_MARK)}
-            >
-                <strong>SubSubSubSection</strong>
-            </Button>
-        </Row>
-        <Row>
-            <Button
                 onClick={() => onClick(BOLD_MARK)}
             >
-                <strong>B</strong>
+                <MdFormatBold />
             </Button>
             <Button
                 onClick={() => onClick(ITALIC_MARK)}
             >
-                <em>i</em>
+                <MdFormatItalic />
             </Button>
             <Button
                 onClick={() => onClick(UNDERLINE_MARK)}
             >
-                <u>U</u>
+                <MdFormatUnderlined />
             </Button>
             <Button
                 onClick={() => onClick(STRIKETHROUGH_MARK)}
             >
-                <del>S</del>
+                <MdFormatStrikethrough />
             </Button>
-        </Row>
-        <Row>
-            <Button
-                onClick={() => onClick(CODE_NODE)}
-            >
-                <FaCode />
+            <Button>
+                <MdFormatAlignLeft />
             </Button>
+            <Button>
+                <MdFormatAlignCenter />
+            </Button>
+            <Button>
+                <MdFormatAlignRight />
+            </Button>
+            <Button>
+                <MdFormatAlignJustify />
+            </Button>
+            <Button>
+                <MdInsertPhoto />
+            </Button>
+            <Button>
+                <MdFormatListBulleted />
+            </Button>
+            <Button>
+                <MdFormatListNumbered />
+            </Button>
+            <Dropdown>
+                <span>Heading 1</span>
+                <span>Heading 2</span>
+                <span>Heading 3</span>
+                <span>Heading 4</span>
+                <span>Heading 5</span>
+                <span>Heading 6</span>
+            </Dropdown>
         </Row>
     </Container>
 );

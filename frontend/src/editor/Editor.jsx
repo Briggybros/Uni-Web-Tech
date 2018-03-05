@@ -52,8 +52,11 @@ const Container = styled.div`
 `;
 
 const StyledEditor = styled(SlateEditor)`
-    background: lightgrey;
-    border: 1px solid grey;
+    border: 1px solid lightgrey;
+    border-radius: 0 0 10px 10px;
+    padding: 5px 5px 10px 5px;
+    flex-grow: 2;
+    overflow-y: auto;
 `;
 
 type State = {
@@ -85,7 +88,7 @@ export default class Editor extends React.Component<{}, State> {
 
     render() {
         return (
-            <Container>
+            <Container {...this.props}>
                 <EditorButtons
                     onClick={this.onClick}
                 />
@@ -94,7 +97,6 @@ export default class Editor extends React.Component<{}, State> {
                     value={this.state.value}
                     onChange={this.onChange}
                     plugins={plugins}
-                    // onKeyDown={onKeyDown}
                     renderNode={renderNode}
                     renderMark={renderMark}
                 />

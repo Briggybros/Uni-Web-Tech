@@ -34,6 +34,7 @@ injectGlobal`
     }
 
     @import url('fonts.googleapis.com/css?family=Raleway');
+    @import url('https://necolas.github.io/normalize.css/8.0.0/normalize.css');
 
     body {
         margin: 0;
@@ -42,6 +43,10 @@ injectGlobal`
 
     h1, h2, h3, h4 h5, h6 {
         font-family: 'bebas neue bold', sans-serif;
+    }
+
+    * {
+        box-sizing: border-box;
     }
 `;
 
