@@ -53,13 +53,9 @@ const exclusives = [
 ];
 export function exclusiveMarks(mark : Mark) {
     const lists = exclusives.filter(list => list.includes(mark));
-    console.log('lists: ', lists);
     const concat = lists.reduce((collect, list) => collect.concat(list), []);
-    console.log('concatted: ', concat);
     const uniq = unique(concat);
-    console.log('unique: ', uniq);
     const final = remove(uniq, mark);
-    console.log('final: ', final);
     return final;
 }
 
@@ -113,6 +109,15 @@ function StrikeMark(props : Props) {
 function UnderlineMark(props : Props) {
     return <u>{props.children}</u>;
 }
+
+// function ImageMark(props : Props) {
+//     const { mark } = props;
+//     console.log('rendering image: ', props);
+//     // return <img {...props.attributes} />;
+//     const src = mark.data.get('src');
+//     console.log(src);
+//     return <img src={src} />;
+// }
 
 export function renderMark(props : Props) : React.Element<*> | null {
     switch (props.mark.type) {

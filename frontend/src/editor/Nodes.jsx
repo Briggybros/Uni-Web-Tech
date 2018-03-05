@@ -5,11 +5,13 @@ import styled from 'styled-components';
 export const LEFT_ALIGN_NODE = 'LEFT_ALIGN_NODE';
 export const CENTER_ALIGN_NODE = 'CENTER_ALIGN_NODE';
 export const RIGHT_ALIGN_NODE = 'RIGHT_ALIGN_NODE';
+export const IMAGE_NODE = 'IMAGE_NODE';
 
 export type Node =
     | 'LEFT_ALIGN_NODE'
     | 'CENTER_ALIGN_NODE'
     | 'RIGHT_ALIGN_NODE'
+    | 'IMAGE_NODE'
 
 type Props = {
     attributes : any,
@@ -38,6 +40,12 @@ function RightNode(props : Props) {
     return <RightAlign {...props.attributes}>{props.children}</RightAlign>;
 }
 
+function ImageNode(props : Props) {
+    const { attributes, node } = props;
+    const src = node.data.get('src');
+    return <img src={src} alt="" {...attributes} />;
+}
+
 export function renderNode(props : Props) {
     switch (props.node.type) {
     case LEFT_ALIGN_NODE:
@@ -46,6 +54,8 @@ export function renderNode(props : Props) {
         return <CenterNode {...props} />;
     case RIGHT_ALIGN_NODE:
         return <RightNode {...props} />;
+    case IMAGE_NODE:
+        return <ImageNode {...props} />;
     default:
         return <LeftAlign {...props} />;
     }

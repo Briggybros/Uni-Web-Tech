@@ -17,7 +17,7 @@ import {
 
 import Dropdown from './Dropdown';
 
-import { Mark,
+import {
     NORMAL_MARK,
     HEADER_1_MARK,
     HEADER_2_MARK,
@@ -30,12 +30,15 @@ import { Mark,
     UNDERLINE_MARK,
     STRIKETHROUGH_MARK,
 } from './Marks';
+import type { Mark } from './Marks';
 
-import { Node,
+import {
     LEFT_ALIGN_NODE,
     CENTER_ALIGN_NODE,
     RIGHT_ALIGN_NODE,
+    IMAGE_NODE,
 } from './Nodes';
+import type { Node } from './Nodes';
 
 const Container = styled.div`
     display: flex;
@@ -122,7 +125,7 @@ export default ({
     editor,
     ...props
 } : {
-    onClick : (button : Mark | Node) => any,
+    onClick : (button : Mark | Node, data? : any) => any,
     editor : Object
 }) => (
     <Container
@@ -171,7 +174,12 @@ export default ({
             >
                 <MdFormatAlignRight />
             </Button>
-            <Button>
+            <Button
+                onClick={() => {
+                    const url = prompt('Image URL:');
+                    onClick(IMAGE_NODE, url);
+                }}
+            >
                 <MdInsertPhoto />
             </Button>
             <Button>

@@ -14,7 +14,9 @@ import { renderMark, markHotkey, exclusiveMarks,
 } from './Marks';
 import type { Mark } from './Marks';
 
-import { renderNode /* nodeHotkey, */} from './Nodes';
+import { renderNode,
+    IMAGE_NODE,
+} from './Nodes';
 import type { Node } from './Nodes';
 
 const plugins = [
@@ -71,12 +73,23 @@ export default class Editor extends React.Component<{}, State> {
         this.setState({ value });
     }
 
-    onClick = (button : Mark | Node) => {
+    onClick = (button : Mark | Node, data? : any) => {
         if (button.endsWith('_NODE')) {
-            const change = this.state.value.change().setBlocks(button).focus();
-            this.setState({
-                value: change.value,
-            });
+            if (button === IMAGE_NODE) {
+                const change = this.state.value.change().insertInline({
+                    type: button,
+                    isVoid: true,
+                    data: { src: data },
+                }).focus();
+                this.setState({
+                    value: change.value,
+                });
+            } else {
+                const change = this.state.value.change().setBlocks(button).focus();
+                this.setState({
+                    value: change.value,
+                });
+            }
         } else if (button.endsWith('_MARK')) {
             const change = this.state.value.change();
             exclusiveMarks(button).forEach(mark => change.removeMark(mark));
