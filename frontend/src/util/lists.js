@@ -8,9 +8,17 @@ export function safeSplice(
     const clone = array.splice(0);
     const removed = clone.splice(start, deleteCount, ...replace);
     return {
-        array,
+        array: clone,
         removed,
     };
 }
 
-export const placeholder = 'placeholder';
+export function remove(array : Array<any>, item : any) : Array<any> {
+    const index = array.indexOf(item);
+    if (index !== -1) return safeSplice(array, index, 1).array;
+    return array;
+}
+
+export function unique(array : Array<any>) : Array<any> {
+    return Array.from(new Set(array));
+}

@@ -1,5 +1,5 @@
 // @flow
-import { safeSplice } from '../util/reducer';
+import { safeSplice } from '../util/lists';
 
 const UPDATE_POSTS = 'UPDATE_POSTS';
 type UpdatePostsAction = {

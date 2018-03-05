@@ -92,7 +92,15 @@ export default class Dropdown extends React.Component<Props, State> {
                     <MdArrowDropDown />
                 </Selected>
                 <Menu open={this.state.open}>
-                    {children.map((option, idx) => (<Option id={idx} selected={idx === this.state.selected} onClick={this.optionClicked}>{option}</Option>))}
+                    {children.map((option, idx) => (
+                        <Option
+                            key={idx} // eslint-disable-line
+                            id={idx}
+                            selected={idx === this.state.selected}
+                            onClick={this.optionClicked}
+                        >{option}
+                        </Option>
+                    ))}
                 </Menu>
             </Container>
         );

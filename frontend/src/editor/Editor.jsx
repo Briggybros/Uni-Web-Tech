@@ -6,23 +6,22 @@ import styled from 'styled-components';
 
 import EditorButtons from './Buttons';
 
-import { renderMark, markHotkey,
+import { renderMark, markHotkey, exclusiveMarks,
     BOLD_MARK,
     ITALIC_MARK,
     STRIKETHROUGH_MARK,
     UNDERLINE_MARK,
 } from './Marks';
+import type { Mark } from './Marks';
 
-import { renderNode, nodeHotkey,
-    CODE_NODE,
-} from './Nodes';
+import { renderNode /* nodeHotkey, */} from './Nodes';
+import type { Node } from './Nodes';
 
 const plugins = [
     markHotkey({ key: 'b', type: BOLD_MARK }),
     markHotkey({ key: 'i', type: ITALIC_MARK }),
     markHotkey({ key: '~', type: STRIKETHROUGH_MARK }),
     markHotkey({ key: 'u', type: UNDERLINE_MARK }),
-    nodeHotkey({ key: '`', type: CODE_NODE }),
 ];
 
 const initialValue = Value.fromJSON({
@@ -72,14 +71,17 @@ export default class Editor extends React.Component<{}, State> {
         this.setState({ value });
     }
 
-    onClick = (button : string) => {
+    onClick = (button : Mark | Node) => {
         if (button.endsWith('_NODE')) {
-            const change = this.state.value.change().setBlocks(button);
+            const change = this.state.value.change().setBlocks(button).focus();
             this.setState({
                 value: change.value,
             });
         } else if (button.endsWith('_MARK')) {
-            const change = this.state.value.change().toggleMark(button);
+            const change = this.state.value.change();
+            exclusiveMarks(button).forEach(mark => change.removeMark(mark));
+            change.toggleMark(button);
+            change.focus();
             this.setState({
                 value: change.value,
             });
@@ -91,6 +93,7 @@ export default class Editor extends React.Component<{}, State> {
             <Container {...this.props}>
                 <EditorButtons
                     onClick={this.onClick}
+                    editor={this.state.value}
                 />
                 <StyledEditor
                     {...this.props}

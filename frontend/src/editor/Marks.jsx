@@ -1,6 +1,9 @@
 // @flow
 import * as React from 'react';
 
+import { unique, remove } from '../util/lists';
+
+export const NORMAL_MARK = 'NORMAL_MARK';
 export const HEADER_1_MARK = 'HEADER_1_MARK';
 export const HEADER_2_MARK = 'HEADER_2_MARK';
 export const HEADER_3_MARK = 'HEADER_3_MARK';
@@ -12,9 +15,63 @@ export const ITALIC_MARK = 'ITALIC_MARK';
 export const STRIKETHROUGH_MARK = 'STRIKETHROUGH_MARK';
 export const UNDERLINE_MARK = 'UNDERLINE_MARK';
 
+export type Mark =
+    | 'NORMAL_MARK'
+    | 'HEADER_1_MARK'
+    | 'HEADER_2_MARK'
+    | 'HEADER_3_MARK'
+    | 'HEADER_4_MARK'
+    | 'HEADER_5_MARK'
+    | 'HEADER_6_MARK'
+    | 'BOLD_MARK'
+    | 'ITALIC_MARK'
+    | 'STRIKETHROUGH_MARK'
+    | 'UNDERLINE_MARK'
+
+const exclusives = [
+    [
+        NORMAL_MARK,
+        HEADER_1_MARK,
+        HEADER_2_MARK,
+        HEADER_3_MARK,
+        HEADER_4_MARK,
+        HEADER_5_MARK,
+        HEADER_6_MARK,
+    ],
+    [
+        BOLD_MARK,
+    ],
+    [
+        ITALIC_MARK,
+    ],
+    [
+        STRIKETHROUGH_MARK,
+    ],
+    [
+        UNDERLINE_MARK,
+    ],
+];
+export function exclusiveMarks(mark : Mark) {
+    const lists = exclusives.filter(list => list.includes(mark));
+    console.log('lists: ', lists);
+    const concat = lists.reduce((collect, list) => collect.concat(list), []);
+    console.log('concatted: ', concat);
+    const uniq = unique(concat);
+    console.log('unique: ', uniq);
+    const final = remove(uniq, mark);
+    console.log('final: ', final);
+    return final;
+}
+
 type Props = {
     children : any,
-    mark: any,
+    mark: {
+        type: Mark,
+    },
+}
+
+function NormalMark(props : Props) {
+    return <span>{props.children}</span>;
 }
 
 function H1Mark(props : Props) {
@@ -59,6 +116,8 @@ function UnderlineMark(props : Props) {
 
 export function renderMark(props : Props) : React.Element<*> | null {
     switch (props.mark.type) {
+    case NORMAL_MARK:
+        return <NormalMark {...props} />;
     case HEADER_1_MARK:
         return <H1Mark {...props} />;
     case HEADER_2_MARK:
@@ -84,7 +143,7 @@ export function renderMark(props : Props) : React.Element<*> | null {
     }
 }
 
-export function markHotkey(options : { type : string, key : string }) {
+export function markHotkey(options : { type : Mark, key : string }) {
     const { type, key } = options;
     return {
         onKeyDown(event : Object, change : Object) {
