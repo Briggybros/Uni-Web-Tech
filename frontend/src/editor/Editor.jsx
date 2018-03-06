@@ -11,6 +11,8 @@ import { renderMark, markHotkey, exclusiveMarks, marks } from './content/marks/i
 
 import { renderNode, nodes } from './content/nodes/index';
 
+import { toHTML } from './serializer';
+
 const plugins = [
     markHotkey({ key: 'b', type: marks.BOLD_MARK }),
     markHotkey({ key: 'i', type: marks.ITALIC_MARK }),
@@ -69,6 +71,7 @@ export default class Editor extends React.Component<{}, State> {
     }
 
     onChange = ({ value } : { value : Value}) => {
+        console.log(toHTML(value));
         this.setState({ value });
     }
 

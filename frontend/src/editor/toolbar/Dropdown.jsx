@@ -15,13 +15,17 @@ type State = {
 
 const Container = styled.div`
     position: relative;
+    width: fit-content;
 `;
 
 const Selected = styled.div`
+    display: flex;
+    flex-direction: row;
     border-right: 1px solid lightgrey;
     border-left: 1px solid lightgrey;
     padding: 0 0.5rem;
     cursor: pointer;
+    width: fit-content;
 `;
 
 const Menu = styled.div`
@@ -30,9 +34,8 @@ const Menu = styled.div`
     position: absolute;
     background: ${props => props.theme.colors.white};
     border: 1px solid lightgrey;
-    border-top: none;
     border-radius: 0 0 5px 5px;
-    width: 100%;
+    width: fit-content;
 `;
 
 const OptionBox = styled.div`

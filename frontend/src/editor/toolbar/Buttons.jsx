@@ -2,39 +2,9 @@
 import * as React from 'react';
 import styled from 'styled-components';
 
-type Children = any;
+import FocusslessButton from '../../util/FocusslessButton';
 
-const FocusslessButton = ({
-    children,
-    onClick,
-    active,
-    ...props
-} : {
-    children : Children,
-    active: boolean,
-    onClick : Function,
-}) => (
-    <div
-        onMouseDown={(e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            onClick(e);
-        }}
-        onKeyPress={(e) => {
-            if (e.key === 'space') {
-                e.preventDefault();
-                e.stopPropagation();
-                onClick(e);
-            }
-        }}
-        role="button"
-        tabIndex={0}
-    >
-        <button {...props}>
-            {children}
-        </button>
-    </div>
-);
+type Children = any;
 
 const EditorButton = ({
     children,
@@ -57,11 +27,11 @@ const EditorButton = ({
     </FocusslessButton>
 );
 
-const Button = styled(EditorButton)`
-    color: ${props => (props.active ? props.theme.colors.primary : 'black')};
-    margin-right: 0.5rem;
-    width: 24px;
-    height: 24px;
+const Button = styled(({ dropdown, ...rest }) => <EditorButton {...rest} />)`
+    color: ${props => (props.active(props.id) ? props.theme.colors.primary : 'black')};
+    margin-right: ${props => (props.dropdown ? '0' : '0.5rem')};
+    width: ${props => (props.dropdown ? 'initial' : '24px')};
+    height: ${props => (props.dropdown ? 'initial' : '24px')};
     padding: 0;
     border: none;
     outline: none;

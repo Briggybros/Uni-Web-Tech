@@ -3,8 +3,8 @@ import createDOMPurify from 'dompurify';
 import { Value } from 'slate';
 import Html from 'slate-html-serializer';
 
-import { renderNode } from './nodes/index';
-import { renderMark } from './marks/index';
+import { renderNode } from './content/nodes/index';
+import { renderMark } from './content/marks/index';
 
 createDOMPurify();
 
