@@ -11,7 +11,7 @@ import { renderMark, markHotkey, exclusiveMarks, marks } from './content/marks/i
 
 import { renderNode, nodes } from './content/nodes/index';
 
-import { toHTML } from './serializer';
+import { serializeToJSONString } from './serializer';
 
 const plugins = [
     markHotkey({ key: 'b', type: marks.BOLD_MARK }),
@@ -19,15 +19,23 @@ const plugins = [
     markHotkey({ key: '~', type: marks.STRIKETHROUGH_MARK }),
     markHotkey({ key: 'u', type: marks.UNDERLINE_MARK }),
     DropOrPasteImages({
-        insertImage: (transform, file) => transform.insertBlock({
-            type: nodes.IMAGE_NODE,
-            isVoid: true,
-            data: { file },
+        insertImage: (transform, file) => new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.addEventListener('load', () => {
+                const src = reader.result;
+                transform.insertBlock({
+                    type: nodes.IMAGE_NODE,
+                    isVoid: true,
+                    data: { src },
+                });
+                resolve();
+            });
+            reader.readAsDataURL(file);
         }),
     }),
 ];
 
-const initialValue = Value.fromJSON({
+const initialValue = {
     document: {
         nodes: [
             {
@@ -46,7 +54,7 @@ const initialValue = Value.fromJSON({
             },
         ],
     },
-});
+};
 
 const Container = styled.div`
     display: flex;
@@ -66,12 +74,22 @@ type State = {
 }
 
 export default class Editor extends React.Component<{}, State> {
-    state = {
-        value: initialValue,
+    constructor(props : Object) {
+        super(props);
+        const storedString = localStorage.getItem('draft');
+        if (storedString) {
+            this.state = { value: Value.fromJSON(JSON.parse(storedString)) };
+        } else {
+            this.state = {
+                value: Value.fromJSON(initialValue),
+            };
+        }
     }
 
     onChange = ({ value } : { value : Value}) => {
-        console.log(toHTML(value));
+        if (value.document !== this.state.value.document) {
+            localStorage.setItem('draft', serializeToJSONString(value));
+        }
         this.setState({ value });
     }
 

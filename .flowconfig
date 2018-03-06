@@ -1,14 +1,3 @@
 [ignore]
-./server/dist/
-./frontend/dist/
-./node_modules/*
-
-[include]
-
-[libs]
-
-[lints]
-
-[options]
-
-[strict]
+.*/server/dist/.*
+.*/frontend/dist/.*
