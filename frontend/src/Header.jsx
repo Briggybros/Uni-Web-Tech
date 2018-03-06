@@ -57,7 +57,8 @@ export default class HeaderBar extends React.Component<{}, State> {
                 <MenuContainer>
                     <Logo src="/logo.svg" />
                     <MobileMenuButton
-                        onClick={() => this.setState(prevState => ({ isNavOpen: !prevState.isNavOpen }))}
+                        onClick={() => this.setState(prevState => (
+                            { isNavOpen: !prevState.isNavOpen }))}
                     >
                         <Bars />
                     </MobileMenuButton>

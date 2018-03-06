@@ -7,9 +7,10 @@ export const theme = {
         primaryDark: '#b12538',
         white: '#fff',
         black: '#242020',
+        grey: '#e2e2e2',
     },
     fontFamilies: {
-        title: 'Bebas Nueue',
+        title: 'Bebas Neue',
         content: 'Raleway, sans-serif',
     },
 };
@@ -54,3 +55,11 @@ export const Container = styled.div`
         width:80%;
     }
 `;
+
+export function column(size : number) {
+    const actualSize : number = 8.33 * size; // 100/12 = 8.33
+    const Column = styled.div`
+        width: ${`${actualSize.toString()}%`};
+    `;
+    return Column;
+}

@@ -28,7 +28,7 @@ const Menu = styled.ul`
 const MenuItem = styled.li`
     display:flex;
     &:hover {
-      background-color: ${props => (props.theme.media.mobile ? props.theme.colours.primary : props.theme.colours.primaryDark)};
+        background-color: ${props => (props.theme.media.mobile ? props.theme.colours.primary : props.theme.colours.primaryDark)};
     }
 `;
 

@@ -9,6 +9,7 @@ import ThemeProvider from './providers/ThemeProvider';
 import { theme, injectGlobalStyles } from './style-utils';
 
 import Header from './Header';
+import Footer from './Footer';
 import reducer from './reducer';
 
 const store = createStore(reducer, {});
@@ -26,7 +27,7 @@ if (mount) {
                 theme={theme}
             >
                 <Router>
-                    <Header />
+                    <Footer />
                 </Router>
             </ThemeProvider>
         </ReduxProvider>,
