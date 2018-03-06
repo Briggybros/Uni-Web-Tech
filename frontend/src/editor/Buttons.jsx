@@ -17,28 +17,8 @@ import {
 
 import Dropdown from './Dropdown';
 
-import {
-    NORMAL_MARK,
-    HEADER_1_MARK,
-    HEADER_2_MARK,
-    HEADER_3_MARK,
-    HEADER_4_MARK,
-    HEADER_5_MARK,
-    HEADER_6_MARK,
-    BOLD_MARK,
-    ITALIC_MARK,
-    UNDERLINE_MARK,
-    STRIKETHROUGH_MARK,
-} from './Marks';
-import type { Mark } from './Marks';
-
-import {
-    LEFT_ALIGN_NODE,
-    CENTER_ALIGN_NODE,
-    RIGHT_ALIGN_NODE,
-    IMAGE_NODE,
-} from './Nodes';
-import type { Node } from './Nodes';
+import { marks } from './content/marks/index';
+import { nodes } from './content/nodes/index';
 
 const Container = styled.div`
     display: flex;
@@ -125,7 +105,7 @@ export default ({
     editor,
     ...props
 } : {
-    onClick : (button : Mark | Node, data? : any) => any,
+    onClick : (button : string, data? : any) => any,
     editor : Object
 }) => (
     <Container
@@ -133,51 +113,51 @@ export default ({
     >
         <Row>
             <Button
-                active={editor.activeMarks.some(mark => mark.type === BOLD_MARK)}
-                onClick={() => onClick(BOLD_MARK)}
+                active={editor.activeMarks.some(mark => mark.type === marks.BOLD_MARK)}
+                onClick={() => onClick(marks.BOLD_MARK)}
             >
                 <MdFormatBold />
             </Button>
             <Button
-                active={editor.activeMarks.some(mark => mark.type === ITALIC_MARK)}
-                onClick={() => onClick(ITALIC_MARK)}
+                active={editor.activeMarks.some(mark => mark.type === marks.ITALIC_MARK)}
+                onClick={() => onClick(marks.ITALIC_MARK)}
             >
                 <MdFormatItalic />
             </Button>
             <Button
-                active={editor.activeMarks.some(mark => mark.type === UNDERLINE_MARK)}
-                onClick={() => onClick(UNDERLINE_MARK)}
+                active={editor.activeMarks.some(mark => mark.type === marks.UNDERLINE_MARK)}
+                onClick={() => onClick(marks.UNDERLINE_MARK)}
             >
                 <MdFormatUnderlined />
             </Button>
             <Button
-                active={editor.activeMarks.some(mark => mark.type === STRIKETHROUGH_MARK)}
-                onClick={() => onClick(STRIKETHROUGH_MARK)}
+                active={editor.activeMarks.some(mark => mark.type === marks.STRIKETHROUGH_MARK)}
+                onClick={() => onClick(marks.STRIKETHROUGH_MARK)}
             >
                 <MdFormatStrikethrough />
             </Button>
             <Button
-                active={editor.blocks.some(node => node.type === LEFT_ALIGN_NODE)}
-                onClick={() => onClick(LEFT_ALIGN_NODE)}
+                active={editor.blocks.some(node => node.type === nodes.LEFT_ALIGN_NODE)}
+                onClick={() => onClick(nodes.LEFT_ALIGN_NODE)}
             >
                 <MdFormatAlignLeft />
             </Button>
             <Button
-                active={editor.blocks.some(node => node.type === CENTER_ALIGN_NODE)}
-                onClick={() => onClick(CENTER_ALIGN_NODE)}
+                active={editor.blocks.some(node => node.type === nodes.CENTER_ALIGN_NODE)}
+                onClick={() => onClick(nodes.CENTER_ALIGN_NODE)}
             >
                 <MdFormatAlignCenter />
             </Button>
             <Button
-                active={editor.blocks.some(node => node.type === RIGHT_ALIGN_NODE)}
-                onClick={() => onClick(RIGHT_ALIGN_NODE)}
+                active={editor.blocks.some(node => node.type === nodes.RIGHT_ALIGN_NODE)}
+                onClick={() => onClick(nodes.RIGHT_ALIGN_NODE)}
             >
                 <MdFormatAlignRight />
             </Button>
             <Button
                 onClick={() => {
                     const url = prompt('Image URL:');
-                    onClick(IMAGE_NODE, url);
+                    onClick(nodes.IMAGE_NODE, url);
                 }}
             >
                 <MdInsertPhoto />
@@ -190,31 +170,31 @@ export default ({
             </Button>
             <Dropdown>
                 <DropdownButton
-                    onClick={() => onClick(NORMAL_MARK)}
+                    onClick={() => onClick(marks.NORMAL_MARK)}
                 >Normal Text
                 </DropdownButton>
                 <DropdownButton
-                    onClick={() => onClick(HEADER_1_MARK)}
+                    onClick={() => onClick(marks.H1_MARK)}
                 >Heading 1
                 </DropdownButton>
                 <DropdownButton
-                    onClick={() => onClick(HEADER_2_MARK)}
+                    onClick={() => onClick(marks.H2_MARK)}
                 >Heading 2
                 </DropdownButton>
                 <DropdownButton
-                    onClick={() => onClick(HEADER_3_MARK)}
+                    onClick={() => onClick(marks.H3_MARK)}
                 >Heading 3
                 </DropdownButton>
                 <DropdownButton
-                    onClick={() => onClick(HEADER_4_MARK)}
+                    onClick={() => onClick(marks.H4_MARK)}
                 >Heading 4
                 </DropdownButton>
                 <DropdownButton
-                    onClick={() => onClick(HEADER_5_MARK)}
+                    onClick={() => onClick(marks.H5_MARK)}
                 >Heading 5
                 </DropdownButton>
                 <DropdownButton
-                    onClick={() => onClick(HEADER_6_MARK)}
+                    onClick={() => onClick(marks.H6_MARK)}
                 >Heading 6
                 </DropdownButton>
             </Dropdown>

@@ -2,28 +2,27 @@
 import * as React from 'react';
 import { Editor as SlateEditor } from 'slate-react';
 import { Value } from 'slate';
+import DropOrPasteImages from 'slate-drop-or-paste-images';
 import styled from 'styled-components';
 
 import EditorButtons from './Buttons';
 
-import { renderMark, markHotkey, exclusiveMarks,
-    BOLD_MARK,
-    ITALIC_MARK,
-    STRIKETHROUGH_MARK,
-    UNDERLINE_MARK,
-} from './Marks';
-import type { Mark } from './Marks';
+import { renderMark, markHotkey, exclusiveMarks, marks } from './content/marks/index';
 
-import { renderNode,
-    IMAGE_NODE,
-} from './Nodes';
-import type { Node } from './Nodes';
+import { renderNode, nodes } from './content/nodes/index';
 
 const plugins = [
-    markHotkey({ key: 'b', type: BOLD_MARK }),
-    markHotkey({ key: 'i', type: ITALIC_MARK }),
-    markHotkey({ key: '~', type: STRIKETHROUGH_MARK }),
-    markHotkey({ key: 'u', type: UNDERLINE_MARK }),
+    markHotkey({ key: 'b', type: marks.BOLD_MARK }),
+    markHotkey({ key: 'i', type: marks.ITALIC_MARK }),
+    markHotkey({ key: '~', type: marks.STRIKETHROUGH_MARK }),
+    markHotkey({ key: 'u', type: marks.UNDERLINE_MARK }),
+    DropOrPasteImages({
+        insertImage: (transform, file) => transform.insertBlock({
+            type: nodes.IMAGE_NODE,
+            isVoid: true,
+            data: { file },
+        }),
+    }),
 ];
 
 const initialValue = Value.fromJSON({
@@ -69,13 +68,13 @@ export default class Editor extends React.Component<{}, State> {
         value: initialValue,
     }
 
-    onChange = ({ value } : { value : Object}) => {
+    onChange = ({ value } : { value : Value}) => {
         this.setState({ value });
     }
 
-    onClick = (button : Mark | Node, data? : any) => {
+    onClick = (button : string, data? : any) => {
         if (button.endsWith('_NODE')) {
-            if (button === IMAGE_NODE) {
+            if (button === nodes.IMAGE_NODE) {
                 const change = this.state.value.change().insertInline({
                     type: button,
                     isVoid: true,
