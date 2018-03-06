@@ -8,7 +8,6 @@ import styled from 'styled-components';
 import EditorButtons from './toolbar/Toolbar';
 import { renderMark, markHotkey, exclusiveMarks, marks } from './content/marks/index';
 import { renderNode, nodes } from './content/nodes/index';
-import { noop } from '../util/util';
 
 
 const plugins = [
@@ -56,8 +55,27 @@ type State = {
 }
 
 export default class Editor extends React.Component<Props, State> {
-    defaultProps = {
-        defaultValue: { document: {} },
+    static defaultProps = {
+        defaultValue: {
+            document: {
+                nodes: [
+                    {
+                        object: 'block',
+                        type: nodes.LEFT_ALIGN_NODE,
+                        nodes: [
+                            {
+                                object: 'text',
+                                leaves: [
+                                    {
+                                        text: '',
+                                    },
+                                ],
+                            },
+                        ],
+                    },
+                ],
+            },
+        },
         onChange: () => {},
     }
 
