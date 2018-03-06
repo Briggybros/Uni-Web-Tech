@@ -5,7 +5,7 @@ import { Value } from 'slate';
 import DropOrPasteImages from 'slate-drop-or-paste-images';
 import styled from 'styled-components';
 
-import EditorButtons from './Buttons';
+import EditorButtons from './toolbar/Toolbar';
 
 import { renderMark, markHotkey, exclusiveMarks, marks } from './content/marks/index';
 
