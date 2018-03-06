@@ -6,12 +6,10 @@ import DropOrPasteImages from 'slate-drop-or-paste-images';
 import styled from 'styled-components';
 
 import EditorButtons from './toolbar/Toolbar';
-
 import { renderMark, markHotkey, exclusiveMarks, marks } from './content/marks/index';
-
 import { renderNode, nodes } from './content/nodes/index';
+import { noop } from '../util/util';
 
-import { serializeToJSONString } from './serializer';
 
 const plugins = [
     markHotkey({ key: 'b', type: marks.BOLD_MARK }),
@@ -35,27 +33,6 @@ const plugins = [
     }),
 ];
 
-const initialValue = {
-    document: {
-        nodes: [
-            {
-                object: 'block',
-                type: 'paragraph',
-                nodes: [
-                    {
-                        object: 'text',
-                        leaves: [
-                            {
-                                text: 'A line of text in a paragraph.',
-                            },
-                        ],
-                    },
-                ],
-            },
-        ],
-    },
-};
-
 const Container = styled.div`
     display: flex;
     flex-direction: column;
@@ -69,29 +46,31 @@ const StyledEditor = styled(SlateEditor)`
     overflow-y: auto;
 `;
 
-type State = {
-    value : Object,
+type Props = {
+    defaultValue? : Object,
+    onChange? : (value : Value) => any,
 }
 
-export default class Editor extends React.Component<{}, State> {
-    constructor(props : Object) {
-        super(props);
-        const storedString = localStorage.getItem('draft');
-        if (storedString) {
-            this.state = { value: Value.fromJSON(JSON.parse(storedString)) };
-        } else {
-            this.state = {
-                value: Value.fromJSON(initialValue),
-            };
-        }
+type State = {
+    value : Value,
+}
+
+export default class Editor extends React.Component<Props, State> {
+    defaultProps = {
+        defaultValue: { document: {} },
+        onChange: () => {},
     }
 
-    onChange = ({ value } : { value : Value}) => {
-        if (value.document !== this.state.value.document) {
-            localStorage.setItem('draft', serializeToJSONString(value));
-        }
-        this.setState({ value });
+    constructor(props : Props) {
+        super(props);
+        this.state = {
+            value: Value.fromJSON(props.defaultValue),
+        };
     }
+
+    onChange = ({ value } : { value : Value}) => this.setState({ value }, () => {
+        if (this.props.onChange) this.props.onChange(value);
+    })
 
     onClick = (button : string, data? : any) => {
         if (button.endsWith('_NODE')) {
