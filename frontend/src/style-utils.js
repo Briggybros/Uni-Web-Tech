@@ -7,7 +7,7 @@ export const theme = {
         primaryDark: '#b12538',
         white: '#fff',
         black: '#242020',
-        grey: '#e2e2e2',
+        grey: '#949494',
     },
     fontFamilies: {
         title: 'Bebas Neue',
@@ -56,10 +56,16 @@ export const Container = styled.div`
     }
 `;
 
+export const FlexContainer = styled(Container)`
+    display: flex;
+    flex-wrap: wrap;
+`;
+
 export function column(size : number) {
     const actualSize : number = 8.33 * size; // 100/12 = 8.33
     const Column = styled.div`
         width: ${`${actualSize.toString()}%`};
+    ${props => (props.theme.media.mobile ? 'width: 100vw;' : '')}
     `;
     return Column;
 }
