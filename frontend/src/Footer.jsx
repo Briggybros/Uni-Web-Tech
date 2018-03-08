@@ -7,6 +7,7 @@ import { column, FlexContainer } from './style-utils';
 const Column = column(3);
 
 const FooterContainer = styled.div`
+    border-top: 1px solid ${props => props.theme.colours.grey};
 `;
 
 const FooterText = styled.div`
@@ -22,7 +23,6 @@ const Link = styled(UnstyledLink)`
 
 const Footer = () => (
     <FooterContainer>
-        <hr />
         <FlexContainer>
             <Column>
                 <FooterText>
