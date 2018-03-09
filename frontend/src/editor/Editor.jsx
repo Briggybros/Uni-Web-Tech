@@ -9,29 +9,7 @@ import EditorButtons from './toolbar/Toolbar';
 import { renderMark, markHotkey, exclusiveMarks, marks } from './content/marks/index';
 import { renderNode, nodes } from './content/nodes/index';
 
-
-const plugins = [
-    markHotkey({ key: 'b', type: marks.BOLD_MARK }),
-    markHotkey({ key: 'i', type: marks.ITALIC_MARK }),
-    markHotkey({ key: '~', type: marks.STRIKETHROUGH_MARK }),
-    markHotkey({ key: 'u', type: marks.UNDERLINE_MARK }),
-    DropOrPasteImages({
-        insertImage: (transform, file) => new Promise((resolve) => {
-            const reader = new FileReader();
-            reader.addEventListener('load', () => {
-                const src = reader.result;
-                transform.insertBlock({
-                    type: nodes.IMAGE_NODE,
-                    isVoid: true,
-                    data: { src },
-                });
-                resolve();
-            });
-            reader.readAsDataURL(file);
-        }),
-    }),
-];
-
+// ----- STYLES ----- //
 const Container = styled.div`
     display: flex;
     flex-direction: column;
@@ -54,6 +32,30 @@ type State = {
     value : Value,
 }
 
+// ----- SLATE PLUGINS ----- //
+const plugins = [
+    markHotkey({ key: 'b', type: marks.BOLD_MARK }),
+    markHotkey({ key: 'i', type: marks.ITALIC_MARK }),
+    markHotkey({ key: '~', type: marks.STRIKETHROUGH_MARK }),
+    markHotkey({ key: 'u', type: marks.UNDERLINE_MARK }),
+    DropOrPasteImages({
+        insertImage: (transform, file) => new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.addEventListener('load', () => {
+                const src = reader.result;
+                transform.insertBlock({
+                    type: nodes.IMAGE_NODE,
+                    isVoid: true,
+                    data: { src },
+                });
+                resolve();
+            });
+            reader.readAsDataURL(file);
+        }),
+    }),
+];
+
+// ----- COMPONENT ----- //
 export default class Editor extends React.Component<Props, State> {
     static defaultProps = {
         defaultValue: {
