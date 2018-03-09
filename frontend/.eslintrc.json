@@ -4,7 +4,12 @@
         "react/jsx-indent-props": ["error", 4],
         "no-unused-expressions": ["error", {
             "allowTaggedTemplates": true
-        }]
+        }],
+        "jsx-a11y/anchor-is-valid": [ "error", {
+            "components": [ "Link" ],
+            "specialLink": [ "to", "hrefLeft", "hrefRight" ],
+            "aspects": [ "noHref", "invalidHref", "preferButton" ]
+          }]
     },
     "env": {
         "browser": true,

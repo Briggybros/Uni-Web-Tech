@@ -6,7 +6,7 @@ node_modules/
 [include]
 
 [libs]
-
+flow-typed/styled-components_v2.x.x.js
 [lints]
 
 [options]
