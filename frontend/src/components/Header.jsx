@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { FaBars } from 'react-icons/lib/fa';
 
 import Navigation from './Navigation';
-import { Container } from './style-utils';
+import { Container } from '../style-utils';
 
 const headerHeight = '10vh';
 
