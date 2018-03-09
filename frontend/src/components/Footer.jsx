@@ -4,10 +4,9 @@ import { FaTwitter, FaFacebook } from 'react-icons/lib/fa';
 
 const Footer = styled.footer`
     border-top: 1px solid ${props => props.theme.colours.grey};
-    position: relative;
     bottom: 0;
     width: 100%;
-    margin-top: 1rem;
+    margin-top: auto;
 `;
 
 const Container = styled.div`
@@ -19,6 +18,7 @@ const Container = styled.div`
 const Column = styled.div`
     display: flex;
     flex-direction: column;
+    margin-bottom: 1.5rem;
 `;
 
 const FooterText = styled.div`

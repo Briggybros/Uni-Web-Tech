@@ -22,7 +22,8 @@ const mount : HTMLElement | null = document.getElementById('app');
 
 const Page = styled.div`
     min-height: 100vh;
-    position: relative;
+    display: flex;
+    flex-direction: column;
 `;
 
 if (mount) {
