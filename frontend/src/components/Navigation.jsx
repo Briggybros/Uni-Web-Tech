@@ -17,12 +17,12 @@ const Navigation = styled.nav`
 `;
 
 const Menu = styled.div`
-    list-style: none;
     margin: 0;
     display: flex;
     flex-direction: ${props => (props.theme.media.mobile ? 'column' : 'row')};
     ${props => (props.theme.media.mobile ? 'width: 100%;' : '')}
     ${props => (props.theme.media.mobile ? 'padding: 0;' : '')}
+    height: ${props => (props.theme.media.mobile ? 'fit-content' : '100%')};
 `;
 
 const Link = styled(UnstyledLink)`
@@ -30,13 +30,14 @@ const Link = styled(UnstyledLink)`
   display: flex;
   align-self:center;
   color: white;
-  padding: 0 1em;
   font-family: ${props => props.theme.fontFamilies.title};
   font-weight: lighter;
   font-size: 2em;
   height: 100%;
+  padding: ${props => (props.theme.media.mobile ? '0' : '0 1rem')};
+  width: ${props => (props.theme.media.mobile ? '100%' : 'initial')};
   display: flex;
-  flex-direction: column;
+  flex-direction: ${props => (props.theme.media.mobile ? 'row' : 'column')};
   justify-content: center;
   &:hover {
         background-color: ${props => (props.theme.media.mobile ? props.theme.colours.primary : props.theme.colours.primaryDark)};
