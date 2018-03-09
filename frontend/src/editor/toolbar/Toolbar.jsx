@@ -112,14 +112,14 @@ export default ({
                 <MdInsertPhoto />
             </NodeButton>
             <NodeButton
-                node={nodes.LEFT_ALIGN_NODE}
+                node={nodes.BULLET_LIST_NODE}
                 editor={editor}
                 onClick={onClick}
             >
                 <MdFormatListBulleted />
             </NodeButton>
             <NodeButton
-                node={nodes.LEFT_ALIGN_NODE}
+                node={nodes.NUMBERED_LIST_NODE}
                 editor={editor}
                 onClick={onClick}
             >

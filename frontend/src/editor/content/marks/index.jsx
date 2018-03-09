@@ -1,5 +1,6 @@
 // @flow
 import * as React from 'react';
+import { Value, Change } from 'slate';
 
 import { unique, remove } from '../../../util/lists';
 
@@ -14,6 +15,7 @@ import { Italic, ITALIC_MARK } from './Italic';
 import { Normal, NORMAL_MARK } from './Normal';
 import { Strikethrough, STRIKETHROUGH_MARK } from './Strikethrough';
 import { Underline, UNDERLINE_MARK } from './Underline';
+
 
 const exclusives = [
     [
@@ -45,6 +47,28 @@ export function exclusiveMarks(mark : string) {
     const uniq = unique(concat);
     const final = remove(uniq, mark);
     return final;
+}
+
+export function isMark(id : string) : boolean {
+    return id === BOLD_MARK
+        || id === H1_MARK
+        || id === H2_MARK
+        || id === H3_MARK
+        || id === H4_MARK
+        || id === H5_MARK
+        || id === H6_MARK
+        || id === ITALIC_MARK
+        || id === NORMAL_MARK
+        || id === STRIKETHROUGH_MARK
+        || id === UNDERLINE_MARK;
+}
+
+export function toggleMark(type : string, value : Value) : Change {
+    const change = value.change();
+    return exclusiveMarks(type).reduce(
+        (changeCollector, mark) => changeCollector.removeMark(mark),
+        change,
+    ).toggleMark(type);
 }
 
 export function markHotkey(options : { type : string, key : string }) {

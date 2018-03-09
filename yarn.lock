@@ -5566,14 +5566,6 @@ slate-drop-or-paste-images@^0.8.0:
     mime-types "^2.1.11"
     slate-dev-logger "^0.1.0"
 
-slate-edit-blockquote@^0.5.0:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/slate-edit-blockquote/-/slate-edit-blockquote-0.5.0.tgz#637c3f46dd0c483810be22d782940c4f9ef1f79b"
-
-slate-edit-list@^0.11.2:
-  version "0.11.2"
-  resolved "https://registry.yarnpkg.com/slate-edit-list/-/slate-edit-list-0.11.2.tgz#c67b961d98435f9f7747d20b870cbc51d25af7a8"
-
 slate-html-serializer@^0.5.6:
   version "0.5.6"
   resolved "https://registry.yarnpkg.com/slate-html-serializer/-/slate-html-serializer-0.5.6.tgz#458fef3354299240ce4ebe9268c5622cef618db4"

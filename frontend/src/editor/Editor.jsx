@@ -6,8 +6,8 @@ import DropOrPasteImages from 'slate-drop-or-paste-images';
 import styled from 'styled-components';
 
 import EditorButtons from './toolbar/Toolbar';
-import { renderMark, markHotkey, exclusiveMarks, marks } from './content/marks/index';
-import { renderNode, nodes } from './content/nodes/index';
+import { isMark, toggleMark, renderMark, markHotkey, marks } from './content/marks/index';
+import { isNode, toggleNode, renderNode, nodes } from './content/nodes/index';
 
 // ----- STYLES ----- //
 const Container = styled.div`
@@ -92,28 +92,14 @@ export default class Editor extends React.Component<Props, State> {
         if (this.props.onChange) this.props.onChange(value);
     })
 
-    onClick = (button : string, data? : any) => {
-        if (button.endsWith('_NODE')) {
-            if (button === nodes.IMAGE_NODE) {
-                const change = this.state.value.change().insertInline({
-                    type: button,
-                    isVoid: true,
-                    data: { src: data },
-                }).focus();
-                this.setState({
-                    value: change.value,
-                });
-            } else {
-                const change = this.state.value.change().setBlocks(button).focus();
-                this.setState({
-                    value: change.value,
-                });
-            }
-        } else if (button.endsWith('_MARK')) {
-            const change = this.state.value.change();
-            exclusiveMarks(button).forEach(mark => change.removeMark(mark));
-            change.toggleMark(button);
-            change.focus();
+    onClick = (type : string, data? : any) => {
+        if (isNode(type)) {
+            const change = toggleNode(type, this.state.value, data).focus();
+            this.setState({
+                value: change.value,
+            });
+        } else if (isMark(type)) {
+            const change = toggleMark(type, this.state.value, data).focus();
             this.setState({
                 value: change.value,
             });
