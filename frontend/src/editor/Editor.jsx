@@ -99,7 +99,7 @@ export default class Editor extends React.Component<Props, State> {
                 value: change.value,
             });
         } else if (isMark(type)) {
-            const change = toggleMark(type, this.state.value, data).focus();
+            const change = toggleMark(type, this.state.value).focus();
             this.setState({
                 value: change.value,
             });

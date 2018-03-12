@@ -10,7 +10,7 @@ import { BulletList, BULLET_LIST_NODE } from './BulletList';
 import { NumberedList, NUMBERED_LIST_NODE } from './NumberedList';
 import { ListItem, LIST_ITEM_NODE } from './ListItem';
 
-export function isNode(id : String) : boolean {
+export function isNode(id : string) : boolean {
     return id === CENTER_ALIGN_NODE
         || id === IMAGE_NODE
         || id === LEFT_ALIGN_NODE
