@@ -60,3 +60,6 @@ typings/
 frontend/dist/
 server/dist/
 database/
+
+#editor
+.vscode/
