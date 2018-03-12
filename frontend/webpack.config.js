@@ -16,6 +16,10 @@ module.exports = {
                 loader: 'babel-loader?cacheDirectory',
                 exclude: path.resolve(__dirname, '..', 'node_modules'),
             },
+            {
+                test: /\.css$/,
+                use: ['style-loader', 'css-loader'],
+            },
         ],
     },
     resolve: {

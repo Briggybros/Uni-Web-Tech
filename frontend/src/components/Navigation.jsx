@@ -9,10 +9,10 @@ const Navigation = styled.nav`
     ${props => (props.theme.media.mobile ? 'position: fixed;' : '')}
     ${props => (props.theme.media.mobile ? 'width: 80%;' : '')}
     ${props => (props.theme.media.mobile ? `top: ${props.headerHeight};` : '')}
-    ${props => (props.theme.media.mobile ? 'right: 0;' : '')}
+    ${props => (props.theme.media.mobile ? 'left: 100%;' : '')}
     ${props => (props.theme.media.mobile ? 'height: 100vh;' : '')}
     ${props => (props.theme.media.mobile ? `background: ${props.theme.colours.primaryDark};` : '')}
-    ${props => (props.theme.media.mobile ? `transform: ${!props.isOpen ? 'translateX(100%)' : 'none'};` : '')}
+    ${props => (props.theme.media.mobile ? `transform: ${props.isOpen ? 'translateX(-100%)' : 'none'};` : '')}
     ${props => (props.theme.media.mobile ? 'transition: transform 0.2s ease-in;' : '')}
 `;
 

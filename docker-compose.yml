@@ -1,20 +1,23 @@
 version: '3.3'
 services:
-  ragsite:
+  website:
     build: .
     ports:
       - "8080:8080"
-    container_name: rag-site
+    container_name: rag
     depends_on:
-      - "ragneo4j"
+      - "database"
     volumes:
       - "./frontend/src:/usr/src/ragsite/frontend/src"
       - "./server/src:/usr/src/ragsite/server/src"
-  ragneo4j:
-    image: "neo4j:latest"
+  database:
+    image: "mysql:latest"
     ports:
-      - "7474:7474"
-      - "7687:7687"
-    container_name: rag-neo4j
+      - "3306:3306"
     volumes:
-      - "./database:/data"
+      - "./database:/var/lib/mysql"
+    environment:
+      MYSQL_RANDOM_ROOT_PASSWORD: "yes"
+      MYSQL_DATABASE: rag
+      MYSQL_USER: rag
+      MYSQL_PASSWORD: rag

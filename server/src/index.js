@@ -8,6 +8,10 @@ import cookieParser from 'cookie-parser';
 
 import api from './api';
 
+import { init } from './models/Database';
+
+init().catch(console.error);
+
 const PORT : number | string = process.env.PORT || 8080;
 const DIST : string = path.join(__dirname, '..', '..', 'frontend', 'dist');
 
@@ -31,7 +35,7 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(express.static(DIST));
 app.use(passport.initialize());
-app.use(passport.session);
+app.use(passport.session());
 
 app.use('/api', api);
 
