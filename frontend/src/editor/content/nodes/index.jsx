@@ -20,6 +20,10 @@ export function isNode(id : String) : boolean {
         || id === LIST_ITEM_NODE;
 }
 
+function hasBlock(type : string, value : Value) : boolean {
+    return value.blocks.some(node => node.type === type);
+}
+
 export function toggleNode(type : string, value : Value, data? : any) : Change {
     const change = value.change();
     if (type === IMAGE_NODE && data) {
@@ -29,7 +33,7 @@ export function toggleNode(type : string, value : Value, data? : any) : Change {
             data: { src: data },
         });
     } else if (type === BULLET_LIST_NODE || type === NUMBERED_LIST_NODE) {
-        const isList = value.blocks.some(node => node.type === LIST_ITEM_NODE);
+        const isList = hasBlock(NUMBERED_LIST_NODE, value);
         const isType = value.blocks.some(block => !!value.document.getClosest(
             block.key,
             parent => parent.type === type,
@@ -45,10 +49,10 @@ export function toggleNode(type : string, value : Value, data? : any) : Change {
                 .unwrapBlock(type === BULLET_LIST_NODE ? NUMBERED_LIST_NODE : BULLET_LIST_NODE)
                 .wrapBlock(type);
         }
-        return change.setBlocks('list-item').wrapBlock(type);
+        return change.setBlocks(LIST_ITEM_NODE).wrapBlock(type);
     }
-    const isList = this.hasBlock(LIST_ITEM_NODE);
-    const isActive = this.hasBlock(type);
+    const isList = hasBlock(LIST_ITEM_NODE, value);
+    const isActive = hasBlock(type, value);
     if (isList) {
         return change
             .setBlocks(isActive ? LEFT_ALIGN_NODE : type)

@@ -18,4 +18,4 @@ COPY . /usr/src/ragsite
 EXPOSE 8080
 
 # Set the startup command
-CMD ["yarn", "start"]
+CMD ["yarn", "start:hot"]
