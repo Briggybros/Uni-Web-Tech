@@ -8,10 +8,6 @@ import cookieParser from 'cookie-parser';
 
 import api from './api';
 
-import { init } from './models/Database';
-
-init().catch(console.error);
-
 const PORT : number | string = process.env.PORT || 8080;
 const DIST : string = path.join(__dirname, '..', '..', 'frontend', 'dist');
 
@@ -23,7 +19,7 @@ function xhtmlify(req, res, done) {
     } else {
         res.type('text/html');
     }
-    done();
+    return done();
 }
 
 app.use(session({

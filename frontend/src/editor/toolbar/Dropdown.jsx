@@ -2,7 +2,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 
-import { MdArrowDropDown } from 'react-icons/lib/md';
+import MdArrowDropDown from 'react-icons/md/arrow-drop-down';
 
 type Props = {
     children : Array<React.Element<any>>

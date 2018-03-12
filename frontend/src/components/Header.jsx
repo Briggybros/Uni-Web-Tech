@@ -1,7 +1,7 @@
 // @flow
 import * as React from 'react';
 import styled from 'styled-components';
-import { FaBars } from 'react-icons/lib/fa';
+import FaBars from 'react-icons/fa/bars';
 
 import Navigation from './Navigation';
 import { Container } from '../style-utils';
