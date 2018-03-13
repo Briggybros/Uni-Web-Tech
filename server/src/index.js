@@ -1,19 +1,23 @@
 // @flow
 import path from 'path';
 import express from 'express';
+import type { $Response, $Request, NextFunction } from 'express';
 import passport from 'passport';
 import session from 'express-session';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 
-import api from './api';
+import api from './api/index';
+import { init as initDatabase } from './database';
+
+initDatabase();
 
 const PORT : number | string = process.env.PORT || 8080;
 const DIST : string = path.join(__dirname, '..', '..', 'frontend', 'dist');
 
 const app = express();
 
-function xhtmlify(req, res, done) {
+function xhtmlify(req: $Request, res: $Response, done: NextFunction) {
     if (req.accepts('application/xhtml+xml')) {
         res.type('application/xhtml+xml');
     } else {
@@ -35,7 +39,7 @@ app.use(passport.session());
 
 app.use('/api', api);
 
-app.get('*', xhtmlify, (req, res) => {
+app.get('*', xhtmlify, (req: $Request, res: $Response) => {
     res.sendFile(path.join(DIST, 'index.html'));
 });
 

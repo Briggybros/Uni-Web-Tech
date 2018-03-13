@@ -4,37 +4,60 @@ import containerized from 'containerized';
 
 import { PromiseReduce } from './util';
 
-export default function init() : Promise<knex> {
-    const db = knex({
-        client: 'mysql',
-        connection: {
-            host: containerized() ? 'database' : process.env.DB_URL || 'localhost',
-            user: process.env.DB_USER || 'rag',
-            password: process.env.DB_PASSWORD || 'rag',
-            database: process.env.DB_DATABASE || 'rag',
-        },
-    });
+const db = knex({
+    client: 'mysql',
+    connection: {
+        host: containerized() ? 'database' : process.env.DB_URL || 'localhost',
+        user: process.env.DB_USER || 'rag',
+        password: process.env.DB_PASSWORD || 'rag',
+        database: process.env.DB_DATABASE || 'rag',
+    },
+});
 
+export type UserRow = {
+    username: string,
+    email: string,
+    password: string,
+};
+
+export type RolesRow = {
+    id: number,
+    name: string,
+};
+
+export type UserRolesRow = {
+    username: string,
+    role_id: number,
+};
+
+export type PagesRow = {
+    path: string,
+    content: string,
+    meta: string,
+}
+
+export default db;
+
+export function init(): Promise<knex> {
     return new Promise((resolve, reject) => {
         resolve(PromiseReduce([
             db.schema.createTableIfNotExists('users', (table) => {
-                table.increments('user_id').notNullable().unsigned().primary();
+                table.string('username').notNullable().primary();
                 table.string('email');
-                table.string('name');
                 table.string('password', 60);
             }),
             db.schema.createTableIfNotExists('roles', (table) => {
-                table.increments('role_id').notNullable().unsigned().primary();
+                table.increments('id').notNullable().unsigned().primary();
                 table.string('name');
             }),
             db.schema.createTableIfNotExists('user_roles', (table) => {
-                table.integer('user_id').unsigned().notNullable();
+                table.string('username').notNullable();
                 table.integer('role_id').unsigned().notNullable();
-                table.foreign('user_id').references('user_id').inTable('users');
-                table.foreign('role_id').references('role_id').inTable('roles');
+                table.foreign('username').references('username').inTable('users');
+                table.foreign('role_id').references('id').inTable('roles');
             }),
             db.schema.createTableIfNotExists('pages', (table) => {
-                table.string('page_path').notNullable().primary();
+                table.string('path').notNullable().primary();
                 table.json('content').notNullable();
                 table.json('meta');
             }),
