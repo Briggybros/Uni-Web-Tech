@@ -11,7 +11,8 @@
     "build:server": "babel ./server/src -d ./server/dist",
     "build:frontend": "ENV=dev webpack --config ./frontend/webpack.config.js",
     "build:frontend:hot": "ENV=dev webpack --watch --config ./frontend/webpack.config.js",
-    "test": "eslint ./ && flow && npm run build:server && npm run build:frontend"
+    "test": "eslint ./ && flow && npm run build:server && npm run build:frontend",
+    "postinstall": "npx flow-typed install"
   },
   "dependencies": {
     "bcrypt": "^1.0.3",
