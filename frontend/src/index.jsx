@@ -14,6 +14,8 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import reducer from './reducer';
 
+import PageLoader from './pageloader/PageLoader';
+
 const store = createStore(reducer, {});
 
 injectGlobalStyles();
@@ -38,8 +40,9 @@ if (mount) {
                     <Page>
                         <Header />
                         <Switch>
+                            {/* Add specific routes above this */}
                             <Route>
-                                <span>Content</span>
+                                <PageLoader />
                             </Route>
                         </Switch>
                         <Footer />
