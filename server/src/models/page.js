@@ -40,4 +40,12 @@ export default class Page {
         this.meta = meta;
         Page.pages[path] = this;
     }
+
+    toJSON(): Object {
+        return {
+            path: this.path,
+            content: this.content,
+            meta: this.meta,
+        };
+    }
 }

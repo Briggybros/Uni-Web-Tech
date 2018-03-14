@@ -29,7 +29,20 @@ export default class News extends Page {
         });
     }
 
+    author: User;
+    timestamp: string;
+
     constructor(path: string, content: Object, author: User, timestamp: string, meta: Object) {
-        super(path, content, { author, timestamp, ...meta });
+        super(path, content, { author: author.toJSON(), timestamp, ...meta });
+        this.author = author;
+        this.timestamp = timestamp;
+    }
+
+    toJSON() {
+        return {
+            ...super.toJSON(),
+            author: this.author.toJSON(),
+            timestamp: this.timestamp,
+        };
     }
 }

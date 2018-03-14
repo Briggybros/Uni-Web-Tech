@@ -8,7 +8,7 @@ const newsRouter = Router();
 
 newsRouter.get('/:path', (req: $Request, res: $Response) => News.getArticle(req.param.path).then((article) => {
     if (article) {
-        res.status(200).send(JSON.stringify(article));
+        res.status(200).send(article.toJSON());
     } else {
         res.sendStatus(404);
     }
