@@ -33,6 +33,7 @@ export type UserRolesRow = {
 export type PagesRow = {
     path: string,
     content: string,
+    type: 'NEWS' | 'EVENT' | null,
     meta: string,
 }
 
@@ -59,6 +60,7 @@ export function init(): Promise<knex> {
             db.schema.createTableIfNotExists('pages', (table) => {
                 table.string('path').notNullable().primary();
                 table.json('content').notNullable();
+                table.enu('type', ['NEWS', 'EVENT']);
                 table.json('meta');
             }),
         ]).catch(reject));

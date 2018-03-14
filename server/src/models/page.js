@@ -2,8 +2,11 @@
 import database from '../database';
 import type { PagesRow } from '../database';
 
+import News from './news';
+import Event from './event';
+
 export default class Page {
-    static pages: {[path: string]: Page} = {}
+    static pages: {[path: string]: Page | News | Event} = {}
 
     static getPageRow(path: string): Promise<Array<PagesRow>> {
         return database.select().from('pages').where({
@@ -11,7 +14,7 @@ export default class Page {
         });
     }
 
-    static getPage(path: string): Promise<Page | null> {
+    static getPage(path: string): Promise<Page | News | Event | null> {
         if (Page.pages[path]) {
             return Promise.resolve(Page.pages[path]);
         }
@@ -21,11 +24,20 @@ export default class Page {
             } else if (rows.length > 1) {
                 throw new Error(`Multiple pages with path: ${path}`);
             } else {
-                return new Page(
+                const params = [
                     rows[0].path,
                     JSON.parse(rows[0].content),
                     JSON.parse(rows[0].meta),
-                );
+                ];
+
+                switch (rows[0].type) {
+                case 'NEWS':
+                    return News.create(...params);
+                case 'EVENT':
+                    return Event.create(...params);
+                default:
+                    return new Page(...params);
+                }
             }
         });
     }
