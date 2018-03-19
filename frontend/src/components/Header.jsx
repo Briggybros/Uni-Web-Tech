@@ -1,7 +1,7 @@
 // @flow
 import * as React from 'react';
 import styled from 'styled-components';
-import { FaBars } from 'react-icons/lib/fa';
+import MenuIcon from 'react-icons/lib/md/menu';
 
 import Navigation from './Navigation';
 import { Container } from '../style-utils';
@@ -35,7 +35,7 @@ const MobileMenuButton = styled.button`
     border: none;
 `;
 
-const Bars = styled(FaBars)`
+const MenuBars = styled(MenuIcon)`
     height: 100%;
 `;
 
@@ -60,7 +60,7 @@ export default class HeaderBar extends React.Component<{}, State> {
                         onClick={() => this.setState(prevState => (
                             { isNavOpen: !prevState.isNavOpen }))}
                     >
-                        <Bars />
+                        <MenuBars />
                     </MobileMenuButton>
                     <Navigation
                         isOpen={this.state.isNavOpen}

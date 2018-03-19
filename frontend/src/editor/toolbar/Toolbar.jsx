@@ -2,18 +2,16 @@
 import * as React from 'react';
 import styled from 'styled-components';
 
-import {
-    MdFormatBold,
-    MdFormatItalic,
-    MdFormatUnderlined,
-    MdFormatStrikethrough,
-    MdFormatAlignLeft,
-    MdFormatAlignRight,
-    MdFormatAlignCenter,
-    MdInsertPhoto,
-    MdFormatListBulleted,
-    MdFormatListNumbered,
-} from 'react-icons/lib/md';
+import MdFormatBold from 'react-icons/md/format-bold';
+import MdFormatItalic from 'react-icons/md/format-italic';
+import MdFormatUnderlined from 'react-icons/md/format-underlined';
+import MdFormatStrikethrough from 'react-icons/md/format-strikethrough';
+import MdFormatAlignLeft from 'react-icons/md/format-align-left';
+import MdFormatAlignRight from 'react-icons/md/format-align-right';
+import MdFormatAlignCenter from 'react-icons/md/format-align-center';
+import MdInsertPhoto from 'react-icons/md/insert-photo';
+import MdFormatListBulleted from 'react-icons/md/format-list-bulleted';
+import MdFormatListNumbered from 'react-icons/md/format-list-numbered';
 
 import { MarkButton, NodeButton } from './Buttons';
 import Dropdown from './Dropdown';

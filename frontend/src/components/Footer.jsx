@@ -1,6 +1,8 @@
+// @flow
 import * as React from 'react';
 import styled from 'styled-components';
-import { FaTwitter, FaFacebook } from 'react-icons/lib/fa';
+import TwitterIcon from 'react-icons/lib/fa/twitter';
+import FacebookIcon from 'react-icons/lib/fa/facebook';
 
 const Footer = styled.footer`
     border-top: 1px solid ${props => props.theme.colours.grey};
@@ -51,7 +53,12 @@ export default () => (
                 <FooterText>
                     <h2>Social</h2>
                     <p>Follow us on:</p>
-                    <Link href="/"><FaFacebook /></Link> <Link href="/"><FaTwitter /></Link>
+                    <Link href="/">
+                        <FacebookIcon />
+                    </Link>
+                    <Link href="/">
+                        <TwitterIcon />
+                    </Link>
                 </FooterText>
             </Column>
         </Container>

@@ -2,8 +2,8 @@
 import { Router } from 'express';
 // import type { $Request, $Response } from 'express';
 
-// import News from '../models/news';
+// import Event from '../models/event';
 
-const newsRouter = Router();
+const eventRouter = Router();
 
-export default newsRouter;
+export default eventRouter;

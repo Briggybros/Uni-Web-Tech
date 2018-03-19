@@ -1,3 +1,4 @@
 node_modules/
 server/dist/
 frontend/dist/
+flow-typed/

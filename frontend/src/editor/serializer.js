@@ -5,11 +5,11 @@ import Html from 'slate-html-serializer';
 import { renderNode } from './content/nodes/index';
 import { renderMark } from './content/marks/index';
 
-export function serializeToJSONString(value : Value) : string {
+export function serializeToJSONString(value: Value): string {
     return JSON.stringify(value.toJSON());
 }
 
-export function deserializeFromJSONString(string : string) : Value {
+export function deserializeFromJSONString(string: string): Value {
     return Value.fromJSON(JSON.parse(string));
 }
 
@@ -30,7 +30,7 @@ const rules = [
     },
 ];
 
-export function JSXFromJSONString(string : string) : string {
+export function JSXFromJSONString(string: string): string {
     const html = new Html({ rules });
     return html.serialize(deserializeFromJSONString(string), { render: false });
 }

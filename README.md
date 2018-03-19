@@ -18,23 +18,23 @@ Don't need all of these, just an interpretation of Ian's grading system.
 
 ### CSS ###
 
-- [ ] Get styles to work
+- [x] Get styles to work
 - [x] No style tags or atributes in html (No <div style="..." width="420px" /> type stuff I assume)
 - [ ] Investigate issues and get high level confidence (slightly ambiguous)
 
 ### JS ###
 
 - [x] Get some scripting working
-- [ ] Write substantial js
-- [ ] Experience with client side frameworks
-- [ ] High level of understanding of client-side JS
-- [ ] High level of understanding of frameworks
+- [x] Write substantial js
+- [x] Experience with client side frameworks
+- [x] High level of understanding of client-side JS
+- [x] High level of understanding of frameworks
 
 ### PNG ###
 
-- [ ] Convert images to PNG
+- [x] Convert images to PNG
 - [ ] Cropping
-- [ ] Change resolution
+- [x] Change resolution
 - [ ] Filters
 - [ ] Change colours
 - [ ] Combine images
@@ -47,12 +47,12 @@ Don't need all of these, just an interpretation of Ian's grading system.
 
 ### SVG ###
 
-- [ ] Basic drawing (by copying)
-- [ ] Shape tools
+- [x] Basic drawing (by copying)
+- [x] Shape tools
 - [ ] Freehand
-- [ ] Simplification (SVGOMG?)
-- [ ] Path editing
-- [ ] Grouping
+- [x] Simplification (SVGOMG?)
+- [x] Path editing
+- [x] Grouping
 - [ ] Transformations
 - [ ] Gradients
 - [ ] Patterns

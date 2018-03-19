@@ -60,6 +60,7 @@ typings/
 frontend/dist/
 server/dist/
 database/
+flow-typed/
 
 #editor
 .vscode/
