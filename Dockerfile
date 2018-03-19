@@ -6,10 +6,10 @@ WORKDIR /usr/src/ragsite
 
 # Copy package.json and yarn.lock into directory
 COPY ./package.json /usr/src/ragsite/package.json
-COPY ./yarn.lock /usr/src/ragsite/yarn.lock
+COPY ./package-lock.json /usr/src/ragsite/package-lock.json
 
 # Install packages from lockfile
-RUN yarn install
+RUN npm install
 
 # Copy code into directory
 COPY . /usr/src/ragsite
