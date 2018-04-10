@@ -48,11 +48,16 @@ if (mount) {
                             </Route>
                             <Route
                                 path="/:id"
-                                render={(({ match }: {match: {params: {id: string}}}) => (
-                                    <StaticPageLoader
-                                        path={`/api/page/${match.params.id}`}
-                                    />
-                                ))}
+                                render={(props) => {
+                                    if (props.match.params && props.match.params.id) {
+                                        return (
+                                            <StaticPageLoader
+                                                path={`/api/page/${props.match.params.id}`}
+                                            />
+                                        );
+                                    }
+                                    return <span>React Router has broken</span>;
+                                }}
                             />
                         </Switch>
                         <Footer />

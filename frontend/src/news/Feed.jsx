@@ -32,8 +32,16 @@ class News extends React.Component<Props> {
     }
 }
 
-export default connect(state => ({
-    posts: state.news.posts,
-}), {
-    updatePosts,
-})(News);
+function mapStateToProps(state: Object): Object {
+    return {
+        posts: state.news.posts,
+    };
+}
+
+function mapDispatchToProps(): Object {
+    return {
+        updatePosts,
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(News);
