@@ -48,7 +48,7 @@ if (mount) {
                             </Route>
                             <Route
                                 path="/:id"
-                                render={(({ match }) => (
+                                render={(({ match }: {match: {params: {id: string}}}) => (
                                     <StaticPageLoader
                                         path={`/api/page/${match.params.id}`}
                                     />

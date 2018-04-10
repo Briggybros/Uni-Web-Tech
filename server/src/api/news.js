@@ -7,8 +7,8 @@ import News from '../models/News';
 const newsRouter = Router();
 
 newsRouter.get('/', (req: $Request, res: $Response) => {
-    const num = req.query.num || 10;
-    const offset = req.query.offset || 0;
+    const num: number = req.query.num || 10;
+    const offset: number = req.query.offset || 0;
     News.getArticles(num, offset).then((articles) => {
         res.send(JSON.stringify({
             content: articles.map(article => article.toJSON()),
