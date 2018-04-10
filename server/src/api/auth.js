@@ -2,7 +2,7 @@
 import { Router } from 'express';
 import passport from 'passport';
 import { Strategy as JSONStrategy } from 'passport-json';
-import User from '../models/user';
+import User from '../models/User';
 
 passport.serializeUser((user: User, done) => done(null, user.username));
 passport.deserializeUser((username: string, done) => User.getUser(username)

@@ -2,20 +2,20 @@
 import bcrypt from 'bcrypt';
 
 import database from '../database';
-import type { UserRow } from '../database';
+import type { UserData } from '../database';
 
 export default class User {
     static users: {[username: string]: User} = {};
 
-    static getUser(username: string): Promise<User | null> {
+    static getUser(username: string): Promise<User> {
         if (User.users[username]) {
             return Promise.resolve(User.users[username]);
         }
         return database.select().from('users').where({
             username,
-        }).then((rows: Array<UserRow>) => {
+        }).then((rows: Array<UserData>) => {
             if (rows.length === 0) {
-                return null;
+                throw new Error(`No user with username: ${username}`);
             } else if (rows.length > 1) {
                 throw new Error(`Multiple users with username: ${username}`);
             } else {

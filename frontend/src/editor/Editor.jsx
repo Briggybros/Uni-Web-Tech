@@ -6,8 +6,8 @@ import DropOrPasteImages from 'slate-drop-or-paste-images';
 import styled from 'styled-components';
 
 import EditorButtons from './toolbar/Toolbar';
-import { isMark, toggleMark, renderMark, markHotkey, marks } from './content/marks/index';
-import { isNode, toggleNode, renderNode, nodes } from './content/nodes/index';
+import { isMark, toggleMark, renderMark, markHotkey, marks } from '../dynamic/marks/index';
+import { isNode, toggleNode, renderNode, nodes } from '../dynamic/nodes/index';
 
 // ----- STYLES ----- //
 const Container = styled.div`
@@ -24,12 +24,12 @@ const StyledEditor = styled(SlateEditor)`
 `;
 
 type Props = {
-    defaultValue? : Object,
-    onChange? : (value : Value) => any,
+    defaultValue?: Object,
+    onChange?: (value: Value) => any,
 }
 
 type State = {
-    value : Value,
+    value: Value,
 }
 
 // ----- SLATE PLUGINS ----- //
@@ -81,18 +81,18 @@ export default class Editor extends React.Component<Props, State> {
         onChange: () => {},
     }
 
-    constructor(props : Props) {
+    constructor(props: Props) {
         super(props);
         this.state = {
             value: Value.fromJSON(props.defaultValue),
         };
     }
 
-    onChange = ({ value } : { value : Value}) => this.setState({ value }, () => {
+    onChange = ({ value }: { value: Value}) => this.setState({ value }, () => {
         if (this.props.onChange) this.props.onChange(value);
     })
 
-    onClick = (type : string, data? : any) => {
+    onClick = (type: string, data?: any) => {
         if (isNode(type)) {
             const change = toggleNode(type, this.state.value, data).focus();
             this.setState({

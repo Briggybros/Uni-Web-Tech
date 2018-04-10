@@ -14,7 +14,9 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import reducer from './reducer';
 
-import PageLoader from './pageloader/PageLoader';
+import NewsFeed from './news/Feed';
+
+import StaticPageLoader from './util/StaticPageLoader';
 
 const store = createStore(reducer, {});
 
@@ -39,11 +41,19 @@ if (mount) {
                 <Router>
                     <Page>
                         <Header />
+
                         <Switch>
-                            {/* Add specific routes above this */}
-                            <Route>
-                                <PageLoader />
+                            <Route exact path="/">
+                                <NewsFeed />
                             </Route>
+                            <Route
+                                path="/:id"
+                                render={(({ match }) => (
+                                    <StaticPageLoader
+                                        path={`/api/page/${match.params.id}`}
+                                    />
+                                ))}
+                            />
                         </Switch>
                         <Footer />
                     </Page>

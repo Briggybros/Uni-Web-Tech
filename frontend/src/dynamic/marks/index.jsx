@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { Value, Change } from 'slate';
 
-import { unique, remove } from '../../../util/lists';
+import { unique, remove } from '../../util/lists';
 
 import { Bold, BOLD_MARK } from './Bold';
 import { H1, H1_MARK } from './H1';
@@ -41,7 +41,7 @@ const exclusives = [
     ],
 ];
 
-export function exclusiveMarks(mark : string) {
+export function exclusiveMarks(mark: string) {
     const lists = exclusives.filter(list => list.includes(mark));
     const concat = lists.reduce((collect, list) => collect.concat(list), []);
     const uniq = unique(concat);
@@ -49,7 +49,7 @@ export function exclusiveMarks(mark : string) {
     return final;
 }
 
-export function isMark(id : string) : boolean {
+export function isMark(id: string): boolean {
     return id === BOLD_MARK
         || id === H1_MARK
         || id === H2_MARK
@@ -63,7 +63,7 @@ export function isMark(id : string) : boolean {
         || id === UNDERLINE_MARK;
 }
 
-export function toggleMark(type : string, value : Value) : Change {
+export function toggleMark(type: string, value: Value): Change {
     const change = value.change();
     return exclusiveMarks(type).reduce(
         (changeCollector, mark) => changeCollector.removeMark(mark),
@@ -71,10 +71,10 @@ export function toggleMark(type : string, value : Value) : Change {
     ).toggleMark(type);
 }
 
-export function markHotkey(options : { type : string, key : string }) {
+export function markHotkey(options: { type: string, key: string }) {
     const { type, key } = options;
     return {
-        onKeyDown(event : Object, change : Object) {
+        onKeyDown(event: Object, change: Object) {
             if (event.ctrlKey && event.key === key) {
                 event.preventDefault();
                 change.toggleMark(type);
@@ -85,7 +85,7 @@ export function markHotkey(options : { type : string, key : string }) {
     };
 }
 
-export function renderMark(props : Object) : React.Element<any> | null {
+export function renderMark(props: Object): React.Element<any> | null {
     switch (props.mark.type) {
     case NORMAL_MARK:
         return <Normal {...props} />;

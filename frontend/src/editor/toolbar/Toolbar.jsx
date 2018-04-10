@@ -16,8 +16,8 @@ import MdFormatListNumbered from 'react-icons/md/format-list-numbered';
 import { MarkButton, NodeButton } from './Buttons';
 import Dropdown from './Dropdown';
 
-import { marks } from '../content/marks/index';
-import { nodes } from '../content/nodes/index';
+import { marks } from '../../dynamic/marks/index';
+import { nodes } from '../../dynamic/nodes/index';
 
 const Container = styled.div`
     display: flex;
@@ -42,9 +42,9 @@ export default ({
     onClick,
     editor,
     ...props
-} : {
-    onClick : (button : string, data? : any) => any,
-    editor : Object
+}: {
+    onClick: (button: string, data?: any) => any,
+    editor: Object
 }) => (
     <Container
         {...props}

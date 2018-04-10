@@ -2,19 +2,19 @@
 import { Router } from 'express';
 import type { $Request, $Response } from 'express';
 
-import * as PageFactory from '../models/pagefactory';
+import Page from '../models/StaticPage';
 
 const pageRouter = Router();
 
-pageRouter.get('/:path', (req: $Request, res: $Response) => PageFactory.getPage(req.param.path).then((page) => {
-    if (page) {
-        res.status(200).send(page.toJSON());
-    } else {
-        res.sendStatus(404);
-    }
-}).catch((e) => {
-    console.error(e);
-    res.sendStatus(500);
+pageRouter.get('/:path', (req: $Request, res: $Response) => Page.getPage(req.param.path).then((page) => {
+    res.status(200).send(JSON.stringify({
+        content: page.toJSON(),
+    }));
+}).catch((error) => {
+    console.error(error);
+    res.send(JSON.stringify({
+        error: error.message,
+    }));
 }));
 
 export default pageRouter;

@@ -1,11 +1,7 @@
 // @flow
-import Page from './page';
+import DynamicContent from './DynamicContent';
 
-export default class Event extends Page {
-    static create(path: string, content: Object, meta: Object): Promise<Event | null> {
-        return Promise.resolve(new Event(path, content, meta.datetime, meta.location, meta));
-    }
-
+export default class Event extends DynamicContent {
     datetime: string;
     location: string;
 

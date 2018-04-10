@@ -14,26 +14,27 @@ const db = knex({
     },
 });
 
-export type UserRow = {
+export type UserData = {
     username: string,
     email: string,
     password: string,
 };
 
-export type RolesRow = {
+export type RolesData = {
     id: number,
     name: string,
 };
 
-export type UserRolesRow = {
+export type UserRolesData = {
     username: string,
     role_id: number,
 };
 
-export type PagesRow = {
-    path: string,
+export type ContentData = {
+    id: string,
     content: string,
     type: 'NEWS' | 'EVENT' | null,
+    timestamp: string,
     meta: string,
 }
 
@@ -72,11 +73,12 @@ export function init(): Promise<knex> {
                 }
                 return null;
             }),
-            db.schema.hasTable('pages').then((exists) => {
+            db.schema.hasTable('dynamic_content').then((exists) => {
                 if (!exists) {
-                    return db.schema.createTable('pages', (table) => {
-                        table.string('path').notNullable().primary();
+                    return db.schema.createTable('dynamic_content', (table) => {
+                        table.string('id').notNullable().primary();
                         table.json('content').notNullable();
+                        table.timestamp('timestamp').notNullable();
                         table.enu('type', ['NEWS', 'EVENT']);
                         table.json('meta');
                     });

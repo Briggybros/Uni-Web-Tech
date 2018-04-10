@@ -2,8 +2,8 @@
 import { Value } from 'slate';
 import Html from 'slate-html-serializer';
 
-import { renderNode } from './content/nodes/index';
-import { renderMark } from './content/marks/index';
+import { renderNode } from './nodes/index';
+import { renderMark } from './marks/index';
 
 export function serializeToJSONString(value: Value): string {
     return JSON.stringify(value.toJSON());
@@ -30,7 +30,7 @@ const rules = [
     },
 ];
 
-export function JSXFromJSONString(string: string): string {
+export function JSXFromJSONString(string: string) {
     const html = new Html({ rules });
     return html.serialize(deserializeFromJSONString(string), { render: false });
 }
