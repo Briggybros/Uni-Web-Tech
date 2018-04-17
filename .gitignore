@@ -64,3 +64,5 @@ flow-typed/
 
 #editor
 .vscode/
+
+yarn.lock
