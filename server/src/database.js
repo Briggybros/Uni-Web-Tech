@@ -66,7 +66,6 @@ export function init(): Promise<knex> {
                 if (!exists) {
                     return db.schema.createTable('user_roles', (table) => {
                         table.string('username').notNullable();
-                        table.integer('role_id').unsigned().notNullable();
                         table.foreign('username').references('username').inTable('users');
                         table.foreign('role_id').references('id').inTable('roles');
                     });
