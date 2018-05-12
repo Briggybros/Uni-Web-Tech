@@ -23,7 +23,7 @@ type Action =
 
 type State = User | null
 
-export function authReducer(state: State = null, action: Action) {
+export function userReducer(state: State = null, action: Action) {
     switch (action.type) {
     case UPDATE_USER:
         return action.user;

@@ -1,5 +1,6 @@
 // @flow
 import * as React from 'react';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
 
 import { Link as UnstyledLink } from 'react-router-dom';
@@ -48,9 +49,10 @@ const Link = styled(UnstyledLink)`
 type Props = {
     isOpen: boolean,
     headerHeight: string,
+    user: Object,
 }
 
-export default ({ isOpen, headerHeight }: Props) => (
+const Nav = ({ isOpen, headerHeight, user }: Props) => (
     <Navigation
         isOpen={isOpen}
         headerHeight={headerHeight}
@@ -58,7 +60,11 @@ export default ({ isOpen, headerHeight }: Props) => (
         <Menu>
             <Link to="/">Home</Link>
             <Link to="/about">About</Link>
-            <Link to="/login">Login</Link>
+            {user ? <Link to="/logout">Logout</Link> : <Link to="/login">Login</Link>}
         </Menu>
     </Navigation>
 );
+
+export default connect(state => ({
+    user: state.user,
+}))(Nav);
