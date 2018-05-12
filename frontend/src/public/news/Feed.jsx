@@ -16,13 +16,13 @@ const News = (props: Props) => (
 
 function mapStateToProps(state: Object): Object {
     return {
-        posts: state.news.posts,
+        // posts: state.news.posts,
     };
 }
 
 function mapDispatchToProps(): Object {
     return {
-        updatePosts,
+        // updatePosts,
     };
 }
 

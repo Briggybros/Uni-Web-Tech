@@ -46,11 +46,11 @@ const Link = styled(UnstyledLink)`
 
 
 type Props = {
-    isOpen : boolean,
-    headerHeight : string,
+    isOpen: boolean,
+    headerHeight: string,
 }
 
-export default ({ isOpen, headerHeight } : Props) => (
+export default ({ isOpen, headerHeight }: Props) => (
     <Navigation
         isOpen={isOpen}
         headerHeight={headerHeight}
@@ -58,6 +58,7 @@ export default ({ isOpen, headerHeight } : Props) => (
         <Menu>
             <Link to="/">Home</Link>
             <Link to="/about">About</Link>
+            <Link to="/login">Login</Link>
         </Menu>
     </Navigation>
 );
