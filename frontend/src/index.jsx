@@ -16,6 +16,8 @@ import reducer from './reducer';
 
 import PageLoader from './pageloader/PageLoader';
 
+import Timeline from './events/Timeline';
+
 const store = createStore(reducer, {});
 
 injectGlobalStyles();
@@ -39,6 +41,7 @@ if (mount) {
                 <Router>
                     <Page>
                         <Header />
+                        <Timeline />
                         <Switch>
                             {/* Add specific routes above this */}
                             <Route>
