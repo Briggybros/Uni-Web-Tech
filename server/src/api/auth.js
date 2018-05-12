@@ -9,13 +9,18 @@ import User from '../models/User';
 const authRouter = Router();
 
 let verify: {[confirm: string]: User} = {};
-
-authRouter.post('/login', passport.authenticate('json'));
-
 function genString() {
     return Math.random().toString(36).replace(/[^a-z0-9]+/g, '').substr(0, 6)
         .toUpperCase();
 }
+
+authRouter.post('/login', passport.authenticate('json'), (req: $Request, res: $Response) => {
+    if (req.user && req.user instanceof User) {
+        res.send(JSON.stringify(req.user.toJSON()));
+    } else {
+        res.sendStatus(401);
+    }
+});
 
 authRouter.post('/register', (req: $Request, res: $Response) => {
     if (
@@ -33,7 +38,7 @@ authRouter.post('/register', (req: $Request, res: $Response) => {
             lastName,
         } = req.body;
 
-        User.createUser(
+        return User.createUser(
             email,
             password,
             firstName,
@@ -52,23 +57,21 @@ authRouter.post('/register', (req: $Request, res: $Response) => {
             };
             return res.sendStatus(200);
         }).catch(console.error);
-    } else {
-        return res.sendStatus(400);
     }
+    return res.sendStatus(400);
 });
 
 authRouter.post('/confirm', (req: $Request, res: $Response) => {
     if (req.body && typeof req.body === 'object' && typeof req.body.code === 'string') {
         const user = verify[req.body.code];
         if (user) {
-            user.verify().then(() => res.sendStatus(200));
+            return user.verify().then(() => res.sendStatus(200));
         }
-    } else {
-        return res.sendStatus(400);
     }
+    return res.sendStatus(400);
 });
 
-authRouter.get('/vbodyalidate', passport.authenticate('json'), (req: {user: User}, res) => {
+authRouter.get('/validate', passport.authenticate('json'), (req: {user: User}, res) => {
     if (req.user) {
         return res.status(200).send(JSON.stringify(req.user.toJSON()));
     }

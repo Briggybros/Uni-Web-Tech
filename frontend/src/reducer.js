@@ -1,7 +1,9 @@
 import { combineReducers } from 'redux';
 
-import Public from './public/reducer';
+import { authReducer as auth } from './public/login/reducer';
+import { newsReducer as news } from './public/news/reducer';
 
 export default combineReducers({
-    Public,
+    auth,
+    news,
 });

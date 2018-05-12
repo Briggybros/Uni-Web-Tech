@@ -10,8 +10,8 @@ export default function init(app: express$Application) {
         .then(user => done(null, user)));
 
     passport.use(new JSONStrategy({
-        usernameField: 'email',
-        passwordField: 'password',
+        usernameProp: 'email',
+        passwordProp: 'password',
     }, (email, password, done) => {
         User.getUser(email)
             .then((user) => {
