@@ -16,8 +16,8 @@ import MdFormatListNumbered from 'react-icons/md/format-list-numbered';
 import { MarkButton, NodeButton } from './Buttons';
 import Dropdown from './Dropdown';
 
-import { marks } from '../../dynamic/marks/index';
-import { nodes } from '../../dynamic/nodes/index';
+import { marks } from '../../../dynamic/marks/index';
+import { nodes } from '../../../dynamic/nodes/index';
 
 const Container = styled.div`
     display: flex;

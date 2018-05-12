@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import MenuIcon from 'react-icons/lib/md/menu';
 
 import Navigation from './Navigation';
-import { Container } from '../style-utils';
+import { Container } from '../../style-utils';
 
 const headerHeight = '10vh';
 
@@ -40,11 +40,11 @@ const MenuBars = styled(MenuIcon)`
 `;
 
 type State = {
-    isNavOpen : boolean,
+    isNavOpen: boolean,
 }
 
 export default class HeaderBar extends React.Component<{}, State> {
-    constructor(props : any) {
+    constructor(props: any) {
         super(props);
         this.state = {
             isNavOpen: false,

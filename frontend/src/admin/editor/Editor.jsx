@@ -6,8 +6,8 @@ import DropOrPasteImages from 'slate-drop-or-paste-images';
 import styled from 'styled-components';
 
 import EditorButtons from './toolbar/Toolbar';
-import { isMark, toggleMark, renderMark, markHotkey, marks } from '../dynamic/marks/index';
-import { isNode, toggleNode, renderNode, nodes } from '../dynamic/nodes/index';
+import { isMark, toggleMark, renderMark, markHotkey, marks } from '../../dynamic/marks/index';
+import { isNode, toggleNode, renderNode, nodes } from '../../dynamic/nodes/index';
 
 // ----- STYLES ----- //
 const Container = styled.div`

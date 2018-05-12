@@ -3,7 +3,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 
 import PostSummary from './PostSummary';
-import Authed from '../auth/Authed';
+import Authed from '../../auth/Authed';
 import { updatePosts } from './reducer';
 
 type Props = {

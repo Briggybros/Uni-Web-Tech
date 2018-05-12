@@ -1,5 +1,5 @@
 // @flow
-import { functionalSplice } from '../util/lists';
+import { functionalSplice } from '../../util/lists';
 
 const UPDATE_POSTS = 'UPDATE_POSTS';
 type UpdatePostsAction = {

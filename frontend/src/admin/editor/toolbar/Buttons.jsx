@@ -2,7 +2,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 
-import FocusslessButton from '../../util/FocusslessButton';
+import FocusslessButton from '../../../util/FocusslessButton';
 
 type Children = any;
 
@@ -12,11 +12,11 @@ const EditorButton = ({
     onClick,
     active,
     ...props
-} : {
-    children : Children,
-    id : string,
-    onClick : Function,
-    active : (string : string) => boolean,
+}: {
+    children: Children,
+    id: string,
+    onClick: Function,
+    active: (string: string) => boolean,
 }) => (
     <FocusslessButton
         onClick={() => onClick(id)}
@@ -55,12 +55,12 @@ export const MarkButton = ({
     onClick,
     dropdown,
     ...props
-} : {
-    children : Children,
-    mark : string,
-    editor : Object,
-    onClick : Function,
-    dropdown? : boolean,
+}: {
+    children: Children,
+    mark: string,
+    editor: Object,
+    onClick: Function,
+    dropdown?: boolean,
 }) => (
     <Button
         active={markType => editor.activeMarks.some(activeMark => activeMark.type === markType)}
@@ -83,12 +83,12 @@ export const NodeButton = ({
     onClick,
     dropdown,
     ...props
-} : {
-    children : Children,
-    node : string,
-    editor : Object,
-    onClick : Function,
-    dropdown? : boolean,
+}: {
+    children: Children,
+    node: string,
+    editor: Object,
+    onClick: Function,
+    dropdown?: boolean,
 }) => (
     <Button
         active={nodeType => editor.blocks.some(activeNode => activeNode.type === nodeType)}
