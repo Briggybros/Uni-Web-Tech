@@ -8,6 +8,7 @@ export const theme = {
         white: '#fff',
         black: '#242020',
         grey: '#949494',
+        lightgrey: '#eee',
     },
     fontFamilies: {
         title: 'Bebas Neue',

@@ -5,43 +5,65 @@ import database from '../database';
 import type { UserData } from '../database';
 
 export default class User {
-    static users: {[username: string]: User} = {};
+    static users: {[email: string]: User} = {};
 
-    static getUser(username: string): Promise<User> {
-        if (User.users[username]) {
-            return Promise.resolve(User.users[username]);
+    static createUser(email: string, password: string, firstName: string, lastName: string) {
+        return bcrypt.hash(password, 10).then(hash => database('users').insert({
+            email,
+            password: hash,
+            firstName,
+            lastName,
+            verified: false,
+        }).then(() => new User(email, hash, firstName, lastName, false)));
+    }
+
+    static getUser(email: string): Promise<User> {
+        if (User.users[email]) {
+            return Promise.resolve(User.users[email]);
         }
         return database.select().from('users').where({
-            username,
+            email,
         }).then((rows: Array<UserData>) => {
             if (rows.length === 0) {
-                throw new Error(`No user with username: ${username}`);
+                throw new Error(`No user with email: ${email}`);
             } else if (rows.length > 1) {
-                throw new Error(`Multiple users with username: ${username}`);
+                throw new Error(`Multiple users with email: ${email}`);
             } else {
                 return new User(
-                    rows[0].username,
                     rows[0].email,
                     rows[0].password,
+                    rows[0].firstName,
+                    rows[0].lastName,
+                    rows[0].verified,
                 );
             }
         });
     }
 
-    username: string;
     email: string;
     passwordHash: string;
+    firstName: string;
+    lastName: string;
+    verified: boolean;
 
-    constructor(username: string, email: string, passwordHash: string) {
-        this.username = username;
+    constructor(
+        email: string,
+        passwordHash: string,
+        firstName: string,
+        lastName: string,
+        verified: boolean,
+    ) {
         this.email = email;
         this.passwordHash = passwordHash;
-        User.users[username] = this;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.verified = verified;
+        User.users[email] = this;
     }
 
     set password(password: string) {
         bcrypt.hash(password, 10).then(hash => database('users').where({
-            username: this.username,
+            email: this.email,
         }).update({
             password: hash,
         }).then(() => {
@@ -54,10 +76,20 @@ export default class User {
         return bcrypt.compare(password, this.passwordHash);
     }
 
-    toJSON(): {username: string, email: string} {
-        return {
-            username: this.username,
+    verify() {
+        return database('users').where({
             email: this.email,
+        }).update({
+            verified: true,
+        });
+    }
+
+    toJSON() {
+        return {
+            email: this.email,
+            firstName: this.firstName,
+            lastName: this.lastName,
+            verified: this.verified,
         };
     }
 }

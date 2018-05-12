@@ -2,13 +2,13 @@
 import path from 'path';
 import express from 'express';
 import type { $Response, $Request, NextFunction } from 'express';
-import passport from 'passport';
 import session from 'express-session';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 
 import api from './api/index';
 import { init as initDatabase } from './database';
+import initPassport from './passport';
 
 initDatabase();
 
@@ -34,8 +34,8 @@ app.use(session({
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(express.static(DIST));
-app.use(passport.initialize());
-app.use(passport.session());
+
+initPassport(app);
 
 app.use('/api', api);
 

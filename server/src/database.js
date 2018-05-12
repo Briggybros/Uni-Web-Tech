@@ -15,9 +15,11 @@ const db = knex({
 });
 
 export type UserData = {
-    username: string,
     email: string,
     password: string,
+    firstName: string,
+    lastName: string,
+    verified: boolean,
 };
 
 export type RolesData = {
@@ -26,7 +28,7 @@ export type RolesData = {
 };
 
 export type UserRolesData = {
-    username: string,
+    email: string,
     role_id: number,
 };
 
@@ -46,9 +48,11 @@ export function init(): Promise<knex> {
             db.schema.hasTable('users').then((exists) => {
                 if (!exists) {
                     return db.schema.createTable('users', (table) => {
-                        table.string('username').notNullable().primary();
-                        table.string('email');
+                        table.string('email').notNullable().primary();
                         table.string('password', 60);
+                        table.string('firstName');
+                        table.string('lastName');
+                        table.boolean('verified');
                     });
                 }
                 return null;
@@ -65,8 +69,7 @@ export function init(): Promise<knex> {
             db.schema.hasTable('user_roles').then((exists) => {
                 if (!exists) {
                     return db.schema.createTable('user_roles', (table) => {
-                        table.string('username').notNullable();
-                        table.foreign('username').references('username').inTable('users');
+                        table.foreign('email').references('email').inTable('users');
                         table.foreign('role_id').references('id').inTable('roles');
                     });
                 }
