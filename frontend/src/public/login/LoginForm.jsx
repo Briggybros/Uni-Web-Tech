@@ -39,9 +39,6 @@ class LoginForm extends React.Component<Props, State> {
             }),
         }).then((response) => {
             if (response.ok) {
-                this.setState({
-                    loggedIn: true,
-                });
                 return response.json();
             }
             throw new Error('Invalid credentials');
