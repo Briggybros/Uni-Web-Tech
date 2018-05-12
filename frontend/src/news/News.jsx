@@ -7,8 +7,8 @@ import Authed from '../auth/Authed';
 import { updatePosts } from './reducer';
 
 type Props = {
-    posts : Array<Object>,
-    updatePosts : (Array<Object>, number) => void,
+    posts: Array<Object>,
+    updatePosts: (Array<Object>, number) => void,
 }
 
 class News extends React.Component<Props> {

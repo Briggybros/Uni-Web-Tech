@@ -40,11 +40,11 @@ const MenuBars = styled(MenuIcon)`
 `;
 
 type State = {
-    isNavOpen : boolean,
+    isNavOpen: boolean,
 }
 
 export default class HeaderBar extends React.Component<{}, State> {
-    constructor(props : any) {
+    constructor(props: any) {
         super(props);
         this.state = {
             isNavOpen: false,
