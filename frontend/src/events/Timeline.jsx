@@ -28,6 +28,7 @@ const TimeLineContainer = styled.div`
 
 const TimelineEventEntry = styled.div`
     position: relative;
+    margin-top: 3rem;
     &:not(:last-of-type){
         margin-bottom: 30px;
     }
@@ -41,7 +42,7 @@ const TimelineEventEntry = styled.div`
         z-index: -1;
     }
     @media (min-width: 641px){
-        padding-left:80px;
+        padding-left:120px;
         &:before {
             top: 50%;
             transform: translateY(-50%);
@@ -56,8 +57,8 @@ const TimelineEventEntry = styled.div`
     }
 `;
 
-const TimelineMonthEntry = styled.div`
-    padding: .5rem, 1.5rem;
+const TimelineMonthEntry = styled.h2`
+    padding: 0.5rem 1.5rem;
     color: white;
     background-color: ${props => props.theme.colours.primary};
     position: absolute;
@@ -112,13 +113,15 @@ const Post = styled.div`
     margin-left: 10px;
     border-left: 3px solid ${props => props.theme.colours.primary};
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .12), 0 1px 2px 0 rgba(0, 0, 0, .24);
-    padding: 1.5rem 2rem;
+    padding: 1rem 2rem;
     background-color: white;
 `;
 
 const Content = styled.div``;
 
-const Title = styled.h2``;
+const Title = styled.h2`
+    margin-top: 0;
+`;
 
 export default () => (
     <Container>
