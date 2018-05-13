@@ -29,11 +29,12 @@ class ConfirmForm extends React.Component<Props, State> {
         event.preventDefault();
 
         fetch('/api/auth/confirm', {
-            credentials: 'include',
             method: 'POST',
             headers: {
+                Accept: 'application/json',
                 'Content-Type': 'application/json',
             },
+            credentials: 'same-origin',
             body: JSON.stringify({
                 code: this.state.code,
             }),

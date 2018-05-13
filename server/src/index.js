@@ -26,16 +26,21 @@ function xhtmlify(req: $Request, res: $Response, done: NextFunction) {
     return done();
 }
 
+const passport = initPassport();
+
+app.use(express.static(DIST));
+app.use(bodyParser.json());
 app.use(session({
     secret: 'UMRQlXrka6MIYrBMVMZOz5JvsPq1i9EymesiDdAa0AQtEt9yRj5wHHQ8IHtqCKmP',
-    resave: false,
-    saveUninitialized: true,
+    resave: true,
+    saveUninitialized: false,
+    cookie: {
+        secure: false,
+    },
 }));
-app.use(cookieParser());
-app.use(bodyParser.json());
-app.use(express.static(DIST));
+app.use(passport.initialize);
+app.use(passport.session);
 
-initPassport(app);
 
 app.use('/api', api);
 

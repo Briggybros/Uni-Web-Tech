@@ -29,8 +29,10 @@ export default class LoginForm extends React.Component<{}, State> {
         fetch('/api/auth/register', {
             method: 'POST',
             headers: {
+                Accept: 'application/json',
                 'Content-Type': 'application/json',
             },
+            credentials: 'same-origin',
             body: JSON.stringify({
                 firstName: this.state.firstName,
                 lastName: this.state.lastName,

@@ -26,11 +26,12 @@ class LoginForm extends React.Component<Props, State> {
         event.preventDefault();
 
         fetch('/api/auth/login', {
-            credentials: 'include',
             method: 'POST',
             headers: {
+                Accept: 'application/json',
                 'Content-Type': 'application/json',
             },
+            credentials: 'same-origin',
             body: JSON.stringify({
                 email: this.state.email,
                 password: this.state.password,

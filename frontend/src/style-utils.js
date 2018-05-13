@@ -1,19 +1,25 @@
 // @flow
 import styled, { injectGlobal } from 'styled-components';
 
+const colours = {
+    primary: '#e9304a',
+    primaryDark: '#b12538',
+    white: '#fff',
+    black: '#242020',
+    grey: '#949494',
+    lightgrey: '#eee',
+};
+
+const fontFamilies = {
+    title: 'Bebas Neue',
+    content: 'Raleway, sans-serif',
+};
+
 export const theme = {
-    colours: {
-        primary: '#e9304a',
-        primaryDark: '#b12538',
-        white: '#fff',
-        black: '#242020',
-        grey: '#949494',
-        lightgrey: '#eee',
-    },
-    fontFamilies: {
-        title: 'Bebas Neue',
-        content: 'Raleway, sans-serif',
-    },
+    colours,
+    colors: colours,
+    fontFamilies,
+    fonts: fontFamilies,
 };
 
 export function injectGlobalStyles() {

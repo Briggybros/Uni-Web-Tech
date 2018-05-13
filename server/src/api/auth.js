@@ -65,13 +65,13 @@ authRouter.post('/confirm', (req: $Request, res: $Response) => {
     if (req.body && typeof req.body === 'object' && typeof req.body.code === 'string') {
         const user = verify[req.body.code];
         if (user) {
-            return user.verify().then(() => res.sendStatus(200));
+            return user.verify().then(() => res.send(user.toJSON()));
         }
     }
     return res.sendStatus(400);
 });
 
-authRouter.get('/validate', passport.authenticate('json'), (req: {user: User}, res) => {
+authRouter.get('/validate', (req: {user: User}, res) => {
     if (req.user) {
         return res.send(JSON.stringify(req.user.toJSON()));
     }
