@@ -4,7 +4,6 @@ import express from 'express';
 import type { $Response, $Request, NextFunction } from 'express';
 import session from 'express-session';
 import bodyParser from 'body-parser';
-import cookieParser from 'cookie-parser';
 
 import api from './api/index';
 import { init as initDatabase } from './database';
@@ -36,6 +35,7 @@ app.use(session({
     saveUninitialized: false,
     cookie: {
         secure: false,
+        maxAge: 31536000000,
     },
 }));
 app.use(passport.initialize);
