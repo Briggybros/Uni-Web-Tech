@@ -49,7 +49,9 @@ const Link = styled(UnstyledLink)`
 type Props = {
     isOpen: boolean,
     headerHeight: string,
-    user: Object,
+    user: {
+        roles: string[],
+    },
 }
 
 const Nav = ({ isOpen, headerHeight, user }: Props) => (
@@ -60,6 +62,7 @@ const Nav = ({ isOpen, headerHeight, user }: Props) => (
         <Menu>
             <Link to="/">Home</Link>
             <Link to="/about">About</Link>
+            {user && user.roles && user.roles.length > 0 && <Link to="/staff">Staff</Link>}
             {user ? <Link to="/logout">Logout</Link> : <Link to="/login">Login</Link>}
         </Menu>
     </Navigation>

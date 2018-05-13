@@ -3,7 +3,7 @@ import database from '../database';
 import type { ContentData } from '../database';
 
 export default class DynamicContent {
-    static content: {[id: string]: ContentData}
+    static content: {[id: string]: ContentData} = {};
 
     static getContent(id: string): Promise<ContentData> {
         if (DynamicContent.content[id]) {

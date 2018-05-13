@@ -26,7 +26,7 @@ export default function init(app: express$Application) {
                 }
                 return done(null, false);
             })
-            .catch(err => done(err));
+            .catch(() => done(null, false));
     }));
 
     app.use(passport.initialize());

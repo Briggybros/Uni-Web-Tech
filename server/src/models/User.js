@@ -2,7 +2,7 @@
 import bcrypt from 'bcrypt';
 
 import database from '../database';
-import type { UserData } from '../database';
+import type { UserData, UserRolesData } from '../database';
 
 export default class User {
     static users: {[email: string]: User} = {};
@@ -14,7 +14,7 @@ export default class User {
             firstName,
             lastName,
             verified: false,
-        }).then(() => new User(email, hash, firstName, lastName, false)));
+        }).then(() => new User(email, hash, firstName, lastName, false, [])));
     }
 
     static getUser(email: string): Promise<User> {
@@ -23,19 +23,22 @@ export default class User {
         }
         return database.select().from('users').where({
             email,
-        }).then((rows: Array<UserData>) => {
+        }).then((rows: UserData[]) => {
             if (rows.length === 0) {
                 throw new Error(`No user with email: ${email}`);
             } else if (rows.length > 1) {
                 throw new Error(`Multiple users with email: ${email}`);
             } else {
-                return new User(
+                return database.select().from('user_roles').where({
+                    email,
+                }).then((rows2: UserRolesData[]) => new User(
                     rows[0].email,
                     rows[0].password,
                     rows[0].firstName,
                     rows[0].lastName,
                     rows[0].verified,
-                );
+                    rows2.map(userRole => userRole.role),
+                ));
             }
         });
     }
@@ -45,6 +48,7 @@ export default class User {
     firstName: string;
     lastName: string;
     verified: boolean;
+    roles: string[];
 
     constructor(
         email: string,
@@ -52,12 +56,14 @@ export default class User {
         firstName: string,
         lastName: string,
         verified: boolean,
+        roles: string[],
     ) {
         this.email = email;
         this.passwordHash = passwordHash;
         this.firstName = firstName;
         this.lastName = lastName;
         this.verified = verified;
+        this.roles = roles;
         User.users[email] = this;
     }
 
@@ -90,6 +96,7 @@ export default class User {
             firstName: this.firstName,
             lastName: this.lastName,
             verified: this.verified,
+            roles: this.roles,
         };
     }
 }
