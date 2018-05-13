@@ -37,6 +37,7 @@
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
     "redux": "^3.7.2",
+    "redux-persist": "^5.9.1",
     "slate": "^0.33.6",
     "slate-drop-or-paste-images": "^0.8.2",
     "slate-html-serializer": "^0.5.9",

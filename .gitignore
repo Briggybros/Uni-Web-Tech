@@ -63,5 +63,8 @@ database/
 flow-typed/
 mail/
 
-#editor
+# editor
 .vscode/
+
+# Using custom flow-type for redux-persist
+!flow-typed/npm/redux-persist_vx.x.x.js
