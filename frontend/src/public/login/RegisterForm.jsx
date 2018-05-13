@@ -39,11 +39,10 @@ export default class LoginForm extends React.Component<{}, State> {
             }),
         }).then((response) => {
             if (response.ok) {
-                // Redirect to confirm email
-            } else {
-                alert('Something went wrong, please try again!'); // Sever error / input error
+                window.location.replace('/login/confirm');
             }
-        }).catch(console.error);// Connection error
+            throw new Error('Something went wrong, try again!');
+        }).catch(alert);// Connection error
     }
 
     render() {

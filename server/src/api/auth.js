@@ -73,7 +73,7 @@ authRouter.post('/confirm', (req: $Request, res: $Response) => {
 
 authRouter.get('/validate', passport.authenticate('json'), (req: {user: User}, res) => {
     if (req.user) {
-        return res.status(200).send(JSON.stringify(req.user.toJSON()));
+        return res.send(JSON.stringify(req.user.toJSON()));
     }
     return res.sendStatus(400);
 });

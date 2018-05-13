@@ -1,13 +1,20 @@
 // @flow
 import * as React from 'react';
+import { connect } from 'react-redux';
 
 import { Form, Title, Entry, SubmitButton } from './components';
+
+import { updateUser } from './reducer';
+
+type Props = {
+    updateUser: Function,
+}
 
 type State = {
     code: string,
 }
 
-export default class ConfirmForm extends React.Component<{}, State> {
+class ConfirmForm extends React.Component<Props, State> {
     constructor(props: Object) {
         super(props);
 
@@ -31,8 +38,14 @@ export default class ConfirmForm extends React.Component<{}, State> {
                 code: this.state.code,
             }),
         }).then((response) => {
-            console.log(response.status);
-        });
+            if (response.ok) {
+                return response.json();
+            }
+            throw new Error('Bad confirmation code');
+        }).then((user) => {
+            this.props.updateUser(user);
+            window.location.replace('/');
+        }).catch(alert);
     }
 
     render() {
@@ -56,3 +69,7 @@ export default class ConfirmForm extends React.Component<{}, State> {
         );
     }
 }
+
+export default connect(null, {
+    updateUser,
+})(ConfirmForm);

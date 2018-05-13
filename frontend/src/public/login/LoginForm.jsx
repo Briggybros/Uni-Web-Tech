@@ -1,6 +1,6 @@
 // @flow
 import * as React from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { Form, Title, Entry, SubmitButton } from './components';
@@ -14,14 +14,12 @@ type Props = {
 type State = {
     email: string,
     password: string,
-    loggedIn: boolean,
 }
 
 class LoginForm extends React.Component<Props, State> {
     state = {
         email: '',
         password: '',
-        loggedIn: false,
     }
 
     onSubmit = (event: SyntheticEvent<*>) => {
@@ -44,18 +42,11 @@ class LoginForm extends React.Component<Props, State> {
             throw new Error('Invalid credentials');
         }).then((user) => {
             this.props.updateUser(user);
-            this.setState({
-                loggedIn: true,
-            });
-        }).catch(console.error);
+            window.location.replace('/');
+        }).catch(alert);
     }
 
     render() {
-        if (this.state.loggedIn) {
-            return (
-                <Redirect to="/" />
-            );
-        }
         return (
             <Form onSubmit={this.onSubmit}>
                 <Title>Login</Title>
