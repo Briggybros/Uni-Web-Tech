@@ -17,12 +17,12 @@ const TimeLineContainer = styled.div`
         background-color: ${props => props.theme.colours.primary};
         position: absolute;
         top: 0;
-    }
-    @media (min-width: 641px){
-        left:30px;
-    }
-    @media (max-width: 640px){
-        left:0;
+        @media (min-width: 641px){
+            left:30px;
+        }
+        @media (max-width: 640px){
+            left:0;
+        }
     }
 `;
 
