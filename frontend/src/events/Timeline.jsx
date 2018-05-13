@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Container as StandardContainer } from '../style-utils';
 
 const Container = StandardContainer.extend`
-    margin: 1rem, 0;
+    margin-top: 1rem;
 `;
 
 const TimeLineContainer = styled.div`
@@ -113,7 +113,7 @@ const Post = styled.div`
     border-left: 3px solid ${props => props.theme.colours.primary};
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .12), 0 1px 2px 0 rgba(0, 0, 0, .24);
     padding: 1.5rem 2rem;
-    background-color: #c1c1c1;
+    background-color: white;
 `;
 
 const Content = styled.div``;
@@ -131,19 +131,33 @@ export default () => (
                     <Date><Day>10</Day><Month>June</Month></Date>
                     <Post>
                         <Title>Charity Event</Title>
-                        <Content>Event thing</Content>
+                        <Content>Details</Content>
+                    </Post>
+                </TimelineEventEntry>
+                <TimelineEventEntry>
+                    <Date><Day>15</Day><Month>June</Month></Date>
+                    <Post>
+                        <Title>Charity Event</Title>
+                        <Content>Details</Content>
                     </Post>
                 </TimelineEventEntry>
             </TimelineGroup>
             <TimelineGroup>
                 <TimelineMonthEntry>
-                    June 2018
+                    July 2018
                 </TimelineMonthEntry>
                 <TimelineEventEntry>
-                    <Date><Day>10</Day><Month>June</Month></Date>
+                    <Date><Day>10</Day><Month>July</Month></Date>
                     <Post>
                         <Title>Charity Event</Title>
-                        <Content>Event thing</Content>
+                        <Content>Details</Content>
+                    </Post>
+                </TimelineEventEntry>
+                <TimelineEventEntry>
+                    <Date><Day>15</Day><Month>July</Month></Date>
+                    <Post>
+                        <Title>Charity Event</Title>
+                        <Content>Details</Content>
                     </Post>
                 </TimelineEventEntry>
             </TimelineGroup>

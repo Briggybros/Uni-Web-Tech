@@ -6,6 +6,7 @@ import { Link as UnstyledLink } from 'react-router-dom';
 
 const Navigation = styled.nav`
     display: flex;
+    z-index:1;
     ${props => (props.theme.media.mobile ? 'position: fixed;' : '')}
     ${props => (props.theme.media.mobile ? 'width: 80%;' : '')}
     ${props => (props.theme.media.mobile ? `top: ${props.headerHeight};` : '')}
