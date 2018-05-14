@@ -39,7 +39,7 @@ export type PagesRow = {
 
 export default db;
 
-export function init(): Promise<knex> {
+export function init(): Promise<Knex$Knex<*>> {
     return new Promise((resolve, reject) => {
         resolve(PromiseReduce([
             db.schema.hasTable('users').then((exists) => {

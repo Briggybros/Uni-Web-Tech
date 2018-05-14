@@ -11,7 +11,7 @@
     "build:server": "rm -rf ./server/dist && babel ./server/src -d ./server/dist",
     "build:frontend": "ENV=dev webpack --config ./frontend/webpack.config.js",
     "build:frontend:hot": "ENV=dev webpack --watch --config ./frontend/webpack.config.js",
-    "test": "flow-typed install ; eslint ./ && flow && npm run build:server && npm run build:frontend",
+    "test": "eslint ./ && flow && npm run build:server && npm run build:frontend",
     "postinstall": "flow-typed install"
   },
   "dependencies": {
