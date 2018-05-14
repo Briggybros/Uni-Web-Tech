@@ -4,7 +4,7 @@ import type { $Request, $Response } from 'express';
 import passport from 'passport';
 
 import * as Response from './responses';
-import sendMail from '../email';
+import sendMail, { confirmEmailTemplates } from '../email';
 import User from '../models/User';
 
 const authRouter = Router();
@@ -51,22 +51,28 @@ authRouter.post('/register', (req: $Request, res: $Response) => {
             lastName,
         ).then((user) => {
             const confirm = genString();
-            sendMail(
-                email,
-                'Please confirm your email:',
-                `http://localhost:8080/login/confirm?code=${confirm}`,
-                `<a href="http://localhost:8080/login/confirm?code=${confirm}">Confirm your email</a>`,
-            );
-            verify = {
-                ...verify,
-                [confirm]: user,
-            };
-            return res.send(JSON.stringify({
-                response: Response.Success.USER_CREATED,
+
+            confirmEmailTemplates(confirm).then(({ plain, html }) => {
+                sendMail(
+                    email,
+                    'Confirm your email address',
+                    plain,
+                    html,
+                );
+                verify = {
+                    ...verify,
+                    [confirm]: user,
+                };
+                return res.send(JSON.stringify({
+                    response: Response.Success.USER_CREATED,
+                }));
+            });
+        }).catch((error) => {
+            console.error(error);
+            res.send(JSON.stringify({
+                response: Response.ServerError.REGISTRATION_FAILED,
             }));
-        }).catch(() => res.send(JSON.stringify({
-            response: Response.ServerError.REGISTRATION_FAILED,
-        })));
+        });
     }
     return res.send(JSON.stringify({
         response: Response.ClientError.INVALID_REGISTRATION,

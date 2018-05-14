@@ -7,24 +7,36 @@ import styledProperty from 'styled-property';
 const Navigation = styled.nav`
     display: flex;
     flex-direction: row;
+    align-items: center;
     padding: 0 10%;
-    background: ${props => props.theme.grey};
+    background: ${props => props.theme.colours.grey};
+    height: 3vh;
 `;
 
 const Link = styled(UnstyledLink)`
     text-decoration: none;
     color: ${props => props.theme.colors.black};
     background: ${props => props.theme.colors.grey};
+    padding: 0 0.5rem;
+    height: 100%;
 `;
 
-const ActiveLink = styledProperty(Link, 'activeClassName')`
+const NavLink = styledProperty(Link, 'activeClassName')`
     background: ${props => props.theme.colors.lightgrey};
+`;
+
+const TextWrapper = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
 `;
 
 export default () => (
     <Navigation>
-        <ActiveLink exact to="/staff">News</ActiveLink>
-        <ActiveLink to="/staff/events">Events</ActiveLink>
-        <ActiveLink to="/staff/pages">Pages</ActiveLink>
+        <NavLink to="/staff/news"><TextWrapper>News</TextWrapper></NavLink>
+        <NavLink to="/staff/events"><TextWrapper>Events</TextWrapper></NavLink>
+        <NavLink to="/staff/pages"><TextWrapper>Pages</TextWrapper></NavLink>
+        <NavLink to="/staff/users"><TextWrapper>Users</TextWrapper></NavLink>
     </Navigation>
 );
