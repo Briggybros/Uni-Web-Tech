@@ -47,11 +47,11 @@ const Link = styled(UnstyledLink)`
 
 
 type Props = {
-    isOpen : boolean,
-    headerHeight : string,
+    isOpen: boolean,
+    headerHeight: string,
 }
 
-export default ({ isOpen, headerHeight } : Props) => (
+export default ({ isOpen, headerHeight }: Props) => (
     <Navigation
         isOpen={isOpen}
         headerHeight={headerHeight}
