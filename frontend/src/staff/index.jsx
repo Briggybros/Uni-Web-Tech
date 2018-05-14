@@ -27,12 +27,11 @@ export default class Staff extends React.Component<{}> {
                 throw new Error('Library Error');
             })
             .then((body) => {
-                if (body.response.isError) {
-                    alert(`${body.response.code}: ${body.response.message}`);
-                } else if (!(body.user && body.user.roles && body.user.roles.length > 0)) {
+                if (
+                    body.response.isError ||
+                    !(body.user && body.user.roles && body.user.roles.length > 0)
+                ) {
                     window.location.replace('/');
-                } else {
-                    throw new Error('User has no roles - this should never happen');
                 }
             })
             .catch((error) => {
