@@ -31,7 +31,6 @@ export type ContentData = {
     id: string,
     content: string,
     type: 'NEWS' | 'EVENT' | null,
-    timestamp: string,
     meta: string,
 }
 
@@ -70,7 +69,6 @@ export function init(): Promise<Knex$Knex<*>> {
                 return db.schema.createTable('dynamic_content', (table) => {
                     table.string('id').notNullable().primary();
                     table.json('content').notNullable();
-                    table.timestamp('timestamp').notNullable();
                     table.enu('type', ['NEWS', 'EVENT']);
                     table.json('meta');
                 })

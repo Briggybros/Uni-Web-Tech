@@ -2,12 +2,14 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 
+import type { Article } from '../../types';
+
 import PostSummary from './PostSummary';
-import { updatePosts } from './reducer';
+import { updatePosts } from '../../reducers/newsReducer';
 
 type Props = {
-    posts: Array<Object>,
-    updatePosts: (Array<Object>, number) => void,
+    posts: Article[],
+    updatePosts: (Article[], number) => void,
 }
 
 const News = (props: Props) => (

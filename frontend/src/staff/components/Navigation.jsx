@@ -8,9 +8,10 @@ const Navigation = styled.nav`
     display: flex;
     flex-direction: row;
     align-items: center;
-    padding: 0 10%;
+    justify-content: flex-end;
     background: ${props => props.theme.colours.grey};
-    height: 3vh;
+    height: 1.5rem;
+    flex-shrink: 0;
 `;
 
 const Link = styled(UnstyledLink)`

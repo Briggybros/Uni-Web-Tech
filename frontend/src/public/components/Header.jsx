@@ -6,12 +6,13 @@ import MenuIcon from 'react-icons/lib/md/menu';
 import Navigation from './Navigation';
 import { Container } from '../../style-utils';
 
-const headerHeight = '10vh';
+const headerHeight = '5.5rem';
 
 const Header = styled.header`
     width: 100vw;
     background-color: ${props => props.theme.colours.primary};
     height: ${headerHeight};
+    flex-shrink: 0;
 `;
 
 const MenuContainer = Container.extend`

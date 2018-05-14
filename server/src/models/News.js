@@ -24,18 +24,21 @@ export default class News extends DynamicContent {
         return User.getUser(JSON.parse(data.meta).author)
             .then(author => new News(
                 data.id,
+                JSON.parse(data.meta).title,
                 JSON.parse(data.content),
                 author,
-                data.timestamp,
+                JSON.parse(data.meta).timestamp,
                 JSON.parse(data.meta),
             ));
     }
 
+    title: string;
     author: User;
     timestamp: string;
 
-    constructor(id: string, content: Object, author: User, timestamp: string, meta: Object) {
+    constructor(id: string, title: string, content: Object, author: User, timestamp: string, meta: Object) {
         super(id, content, { author: author.toJSON(), timestamp, ...meta });
+        this.title = title;
         this.author = author;
         this.timestamp = timestamp;
     }
@@ -44,6 +47,7 @@ export default class News extends DynamicContent {
         return {
             ...super.toJSON(),
             type: 'NEWS',
+            title: this.title,
             author: this.author.toJSON(),
             timestamp: this.timestamp,
         };

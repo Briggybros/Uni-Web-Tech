@@ -12,7 +12,7 @@ import Login from './login/Login';
 
 import StaticPageLoader from './StaticPageLoader';
 
-import { updateUser } from './login/reducer';
+import { updateUser } from '../reducers/userReducer';
 
 const Page = styled.div`
     display: flex;

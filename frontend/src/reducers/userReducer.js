@@ -1,17 +1,12 @@
 // @flow
-type User = {
-    firstName: string,
-    lastName: string,
-    email: string,
-    verified: boolean,
-};
+import type { UserType } from '../types';
 
 const UPDATE_USER = 'UPDATE_USER';
 type UpdateUserAction = {
     type: 'UPDATE_USER',
-    user: User,
+    user: UserType,
 }
-export function updateUser(user: User): UpdateUserAction {
+export function updateUser(user: UserType): UpdateUserAction {
     return {
         type: UPDATE_USER,
         user,
@@ -21,7 +16,7 @@ export function updateUser(user: User): UpdateUserAction {
 type Action =
     | UpdateUserAction
 
-type State = User | null
+type State = UserType | null
 
 export function userReducer(state: State = null, action: Action) {
     switch (action.type) {

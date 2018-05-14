@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { Form, Title, Entry, SubmitButton } from './components';
 
-import { updateUser } from './reducer';
+import { updateUser } from '../../reducers/userReducer';
 
 type Props = {
     updateUser: Function,

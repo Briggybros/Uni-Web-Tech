@@ -4,9 +4,9 @@ import { Link as UnstyledLink } from 'react-router-dom';
 import styled from 'styled-components';
 
 const Header = styled.header`
-    width: 100vw;
     background-color: ${props => props.theme.colours.primary};
-    height: 10vh;
+    height: 5.5rem;
+    flex-shrink: 0;
     display: flex;
     justify-content: space-between;
     align-items: stretch;

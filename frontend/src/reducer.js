@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 
-import { userReducer as user } from './public/login/reducer';
-import { newsReducer as news } from './public/news/reducer';
+import { userReducer as user } from './reducers/userReducer';
+import { newsReducer as news } from './reducers/newsReducer';
 
 export default combineReducers({
     user,
