@@ -2,6 +2,8 @@
 import { Router } from 'express';
 import type { $Request, $Response } from 'express';
 
+import * as Response from './responses';
+
 import News from '../models/News';
 
 const newsRouter = Router();
@@ -12,11 +14,11 @@ newsRouter.get('/', (req: $Request, res: $Response) => {
     News.getArticles(num, offset).then((articles) => {
         res.send(JSON.stringify({
             content: articles.map(article => article.toJSON()),
+            response: Response.Success.DATA_FOUND,
         }));
-    }).catch((error) => {
-        console.error(error);
+    }).catch(() => {
         res.send(JSON.stringify({
-            error: error.message,
+            response: Response.ClientError.DATA_NOT_FOUND,
         }));
     });
 });

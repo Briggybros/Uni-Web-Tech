@@ -14,7 +14,7 @@ export default class News extends DynamicContent {
     static getArticles(limit: number, offset: number): Promise<News[]> {
         return database.select()
             .from('pages')
-            .orderBy('timestamp', 'DESC')
+            .orderBy('timestamp', 'desc')
             .limit(limit)
             .offset(offset)
             .then((rows: ContentData[]) => Promise.all(rows.map(row => News.createNews(row))));

@@ -12,37 +12,34 @@ type Props = {
 }
 
 type State = {
-    content: Object | null,
+    content: string,
     error: string,
 }
 
 export default class PageLoader extends React.Component<Props, State> {
     state = {
-        content: null,
+        content: '',
         error: '',
     }
 
     componentWillMount() {
-        fetch(`/api/page/${this.props.match.params.id}`).then((response) => {
-            if (response.status === 200) {
-                return response.json();
-            }
-            throw new Error('404');
-        }).then((data) => {
-            if (data.error) {
-                this.setState({
-                    error: data.error,
-                });
-            } else {
-                this.setState({
-                    content: data,
-                });
-            }
-        }).catch((err: Error) => {
-            this.setState({
-                error: err.message,
-            });
-        });
+        fetch(`/api/page/${this.props.match.params.id}`)
+            .then((response) => {
+                if (response.ok) {
+                    return response.json();
+                }
+                throw new Error('Library Error');
+            }).then((body) => {
+                if (body.response.isError) {
+                    this.setState({
+                        error: `${body.response.code}: ${body.response.message}`,
+                    });
+                } else {
+                    this.setState({
+                        content: body.content,
+                    });
+                }
+            }).catch(console.error);
     }
 
     render() {
@@ -51,7 +48,7 @@ export default class PageLoader extends React.Component<Props, State> {
                 <span>{this.state.error}</span>
             );
         } else if (this.state.content) {
-            return JSXFromJSONString(this.state.content.content);
+            return JSXFromJSONString(this.state.content);
         }
         return (
             <span>Loading...</span>

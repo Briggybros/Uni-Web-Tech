@@ -3,6 +3,7 @@ import { Router } from 'express';
 import type { $Request, $Response } from 'express';
 import passport from 'passport';
 
+import * as Response from './responses';
 import sendMail from '../email';
 import User from '../models/User';
 
@@ -16,9 +17,14 @@ function genString() {
 
 authRouter.post('/login', passport.authenticate('json'), (req: $Request, res: $Response) => {
     if (req.user && req.user instanceof User) {
-        res.send(JSON.stringify(req.user.toJSON()));
+        res.send(JSON.stringify({
+            user: req.user.toJSON(),
+            response: Response.Success.AUTH_SUCCESS,
+        }));
     } else {
-        res.sendStatus(401);
+        res.send(JSON.stringify({
+            response: Response.ClientError.AUTH_FAILED,
+        }));
     }
 });
 
@@ -55,27 +61,43 @@ authRouter.post('/register', (req: $Request, res: $Response) => {
                 ...verify,
                 [confirm]: user,
             };
-            return res.sendStatus(200);
-        }).catch(console.error);
+            return res.send(JSON.stringify({
+                response: Response.Success.USER_CREATED,
+            }));
+        }).catch(() => res.send(JSON.stringify({
+            response: Response.ServerError.REGISTRATION_FAILED,
+        })));
     }
-    return res.sendStatus(400);
+    return res.send(JSON.stringify({
+        response: Response.ClientError.INVALID_REGISTRATION,
+    }));
 });
 
 authRouter.post('/confirm', (req: $Request, res: $Response) => {
     if (req.body && typeof req.body === 'object' && typeof req.body.code === 'string') {
         const user = verify[req.body.code];
         if (user) {
-            return user.verify().then(() => res.send(user.toJSON()));
+            return user.verify().then(() => res.send(JSON.stringify({
+                user: user.toJSON(),
+                response: Response.Success.EMAIL_CONFIRMED,
+            })));
         }
     }
-    return res.sendStatus(400);
+    return res.send(JSON.stringify({
+        response: Response.ClientError.EMAIL_CONFIRMATION_FAILED,
+    }));
 });
 
 authRouter.get('/validate', (req: {user: User}, res) => {
     if (req.user) {
-        return res.send(JSON.stringify(req.user.toJSON()));
+        return res.send(JSON.stringify({
+            user: req.user.toJSON(),
+            response: Response.Success.AUTH_SUCCESS,
+        }));
     }
-    return res.sendStatus(400);
+    return res.send(JSON.stringify({
+        response: Response.ClientError.AUTH_FAILED,
+    }));
 });
 
 export default authRouter;

@@ -24,12 +24,20 @@ export default class Staff extends React.Component<{}> {
                 if (response.ok) {
                     return response.json();
                 }
-                return window.location.replace('/login');
+                throw new Error('Library Error');
             })
-            .then((user) => {
-                if (!(user && user.roles && user.roles.length > 0)) {
+            .then((body) => {
+                if (body.response.isError) {
+                    alert(`${body.response.code}: ${body.response.message}`);
+                } else if (!(body.user && body.user.roles && body.user.roles.length > 0)) {
                     window.location.replace('/');
+                } else {
+                    throw new Error('User has no roles - this should never happen');
                 }
+            })
+            .catch((error) => {
+                console.error(error);
+                return window.location.replace('/login');
             });
     }
 

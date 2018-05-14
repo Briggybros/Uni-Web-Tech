@@ -41,10 +41,16 @@ export default class LoginForm extends React.Component<{}, State> {
             }),
         }).then((response) => {
             if (response.ok) {
+                return response.json();
+            }
+            throw new Error('Library Error');
+        }).then((body) => {
+            if (body.response.isError) {
+                alert(`${body.response.code}: ${body.response.message}`);
+            } else {
                 window.location.replace('/login/confirm');
             }
-            throw new Error('Something went wrong, try again!');
-        }).catch(alert);// Connection error
+        }).catch(console.error);
     }
 
     render() {

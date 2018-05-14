@@ -37,7 +37,7 @@ export type ContentData = {
 
 export default db;
 
-export function init(): Promise<knex> {
+export function init(): Promise<Knex$Knex<*>> {
     return new Promise((resolve, reject) => PromiseReduce([
         () => db.schema.hasTable('users').then((exists) => {
             if (!exists) {

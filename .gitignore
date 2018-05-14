@@ -61,7 +61,6 @@ frontend/dist/
 server/dist/
 database/
 flow-typed/
-mail/
 
 # editor
 .vscode/

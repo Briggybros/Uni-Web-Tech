@@ -42,11 +42,15 @@ class ConfirmForm extends React.Component<Props, State> {
             if (response.ok) {
                 return response.json();
             }
-            throw new Error('Bad confirmation code');
-        }).then((user) => {
-            this.props.updateUser(user);
-            window.location.replace('/');
-        }).catch(alert);
+            throw new Error('Library Error');
+        }).then((body) => {
+            if (body.response.isError) {
+                alert(`${body.response.code}: ${body.response.message}`);
+            } else {
+                this.props.updateUser(body.user);
+                window.location.replace('/');
+            }
+        }).catch(console.error);
     }
 
     render() {

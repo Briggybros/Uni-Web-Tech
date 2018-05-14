@@ -13,16 +13,11 @@ export default class DynamicContent {
             id,
         }).then((rows: ContentData[]) => {
             if (rows.length === 0) {
-                return null;
+                throw new Error(`No page with id: ${id}`);
             } else if (rows.length > 1) {
                 throw new Error(`Multiple pages with id: ${id}`);
             } else {
-                return {
-                    id: rows[0].id,
-                    content: rows[0].content,
-                    type: rows[0].type,
-                    meta: rows[0].meta,
-                };
+                return rows[0];
             }
         });
     }
