@@ -30,6 +30,7 @@ export type UserRolesData = {
 export type ContentData = {
     id: string,
     content: string,
+    published: boolean,
     type: 'NEWS' | 'EVENT' | null,
     meta: string,
 }
@@ -69,6 +70,7 @@ export function init(): Promise<Knex$Knex<*>> {
                 return db.schema.createTable('dynamic_content', (table) => {
                     table.string('id').notNullable().primary();
                     table.json('content').notNullable();
+                    table.boolean('published').notNullable();
                     table.enu('type', ['NEWS', 'EVENT']);
                     table.json('meta');
                 })

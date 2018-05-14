@@ -2,15 +2,15 @@
 import * as React from 'react';
 import styled from 'styled-components';
 
-import MdArrowDropDown from 'react-icons/md/arrow-drop-down';
+import MdArrowDropDown from 'react-icons/lib/md/arrow-drop-down';
 
 type Props = {
-    children : Array<React.Element<any>>
+    children: Array<React.Element<any>>
 }
 
 type State = {
-    open : boolean,
-    selected : number
+    open: boolean,
+    selected: number
 }
 
 const Container = styled.div`
@@ -54,15 +54,15 @@ const OptionBox = styled.div`
 `;
 
 type OptionProps = {
-    id : number,
-    selected : boolean,
-    children : React.Element<any> | Array<React.Element<any>>,
-    onClick : (id : number) => void
+    id: number,
+    selected: boolean,
+    children: React.Element<any> | Array<React.Element<any>>,
+    onClick: (id: number) => void
 }
 
 const Option = ({
     id, selected, children, onClick,
-} : OptionProps) => (
+}: OptionProps) => (
     <OptionBox
         onClick={() => onClick(id)}
         role="button"
@@ -79,7 +79,7 @@ export default class Dropdown extends React.Component<Props, State> {
         selected: 0,
     }
 
-    optionClicked = (id : number) => {
+    optionClicked = (id: number) => {
         this.setState({ selected: id });
     }
 

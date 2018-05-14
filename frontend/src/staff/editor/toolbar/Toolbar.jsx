@@ -2,16 +2,16 @@
 import * as React from 'react';
 import styled from 'styled-components';
 
-import MdFormatBold from 'react-icons/md/format-bold';
-import MdFormatItalic from 'react-icons/md/format-italic';
-import MdFormatUnderlined from 'react-icons/md/format-underlined';
-import MdFormatStrikethrough from 'react-icons/md/format-strikethrough';
-import MdFormatAlignLeft from 'react-icons/md/format-align-left';
-import MdFormatAlignRight from 'react-icons/md/format-align-right';
-import MdFormatAlignCenter from 'react-icons/md/format-align-center';
-import MdInsertPhoto from 'react-icons/md/insert-photo';
-import MdFormatListBulleted from 'react-icons/md/format-list-bulleted';
-import MdFormatListNumbered from 'react-icons/md/format-list-numbered';
+import MdFormatBold from 'react-icons/lib/md/format-bold';
+import MdFormatItalic from 'react-icons/lib/md/format-italic';
+import MdFormatUnderlined from 'react-icons/lib/md/format-underlined';
+import MdFormatStrikethrough from 'react-icons/lib/md/format-strikethrough';
+import MdFormatAlignLeft from 'react-icons/lib/md/format-align-left';
+import MdFormatAlignRight from 'react-icons/lib/md/format-align-right';
+import MdFormatAlignCenter from 'react-icons/lib/md/format-align-center';
+import MdInsertPhoto from 'react-icons/lib/md/insert-photo';
+import MdFormatListBulleted from 'react-icons/lib/md/format-list-bulleted';
+import MdFormatListNumbered from 'react-icons/lib/md/format-list-numbered';
 
 import { MarkButton, NodeButton } from './Buttons';
 import Dropdown from './Dropdown';
@@ -25,10 +25,7 @@ const Container = styled.div`
     flex-direction: column;
     flex-shrink: 0;
     width: 100%;
-    border: 1px solid lightgrey;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    border-bottom: none;
+    border-bottom: 1px solid lightgrey;
 `;
 
 const Row = styled.span`
@@ -38,13 +35,28 @@ const Row = styled.span`
     margin: 0.5rem 0.5rem;
 `;
 
+const Button = styled.button`
+    background: none;
+    border: none;
+    cursor: pointer;
+    &:hover {
+        color: ${props => props.theme.colours.primary};
+    }
+`;
+
 export default ({
     onClick,
     editor,
+    onSave,
+    onPreview,
+    onPublish,
     ...props
 }: {
     onClick: (button: string, data?: any) => any,
-    editor: Object
+    editor: Object,
+    onSave: () => any,
+    onPreview: () => any,
+    onPublish: () => any,
 }) => (
     <Container
         {...props}
@@ -181,6 +193,24 @@ export default ({
                     SubSubSubSection
                 </MarkButton>
             </Dropdown>
+            <Button
+                onClick={() => onSave()}
+                style={{
+                    marginLeft: 'auto',
+                }}
+            >
+                Save
+            </Button>
+            <Button
+                onClick={() => onPreview()}
+            >
+                Preview
+            </Button>
+            <Button
+                onClick={() => onPublish()}
+            >
+                Publish
+            </Button>
         </Row>
     </Container>
 );

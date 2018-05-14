@@ -2,14 +2,14 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 
-import type { Article } from '../../types';
+import type { ArticleType } from '../../types';
 
 import PostSummary from './PostSummary';
 import { updatePosts } from '../../reducers/newsReducer';
 
 type Props = {
     posts: Article[],
-    updatePosts: (Article[], number) => void,
+    updatePosts: (ArticleType[]) => void,
 }
 
 const News = (props: Props) => (
@@ -18,13 +18,13 @@ const News = (props: Props) => (
 
 function mapStateToProps(state: Object): Object {
     return {
-        // posts: state.news.posts,
+        posts: state.news.posts,
     };
 }
 
 function mapDispatchToProps(): Object {
     return {
-        // updatePosts,
+        updatePosts,
     };
 }
 

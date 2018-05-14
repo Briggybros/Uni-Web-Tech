@@ -1,9 +1,11 @@
 // @flow
 import * as React from 'react';
+import { connect } from 'react-redux';
 import { Switch, Route } from 'react-router';
 import styled from 'styled-components';
 
 import type { ArticleType } from '../../../types';
+import { updatePosts } from '../../../reducers/newsReducer';
 
 import Article from './Article';
 import MenuItem from '../MenuItem';
@@ -24,7 +26,7 @@ const News = ({ articles }: Props) => (
     <Page>
         <VerticalList>
             <NewItem
-                to="/staff/news"
+                to="/staff/news/new"
             />
             {articles.map(article => (
                 <MenuItem
@@ -46,4 +48,8 @@ const News = ({ articles }: Props) => (
     </Page>
 );
 
-export default connect()(News);
+export default connect(state => ({
+    articles: Object.values(state.news),
+}), () => ({
+    updatePosts,
+}))(News);

@@ -24,11 +24,13 @@ export default class DynamicContent {
 
     id: string;
     content: Object;
+    published: boolean;
     meta: Object;
 
-    constructor(id: string, content: Object, meta: Object) {
+    constructor(id: string, content: Object, published: boolean, meta: Object) {
         this.id = id;
         this.content = content;
+        this.published = published;
         this.meta = meta;
     }
 
@@ -36,6 +38,7 @@ export default class DynamicContent {
         return {
             id: this.id,
             content: this.content,
+            published: this.published,
             meta: this.meta,
         };
     }

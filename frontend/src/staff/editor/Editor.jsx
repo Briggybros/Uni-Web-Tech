@@ -16,16 +16,17 @@ const Container = styled.div`
 `;
 
 const StyledEditor = styled(SlateEditor)`
-    border: 1px solid lightgrey;
-    border-radius: 0 0 10px 10px;
     padding: 5px 5px 10px 5px;
     flex-grow: 2;
     overflow-y: auto;
 `;
 
 type Props = {
-    defaultValue?: Object,
+    defaultValue?: Value,
     onChange?: (value: Value) => any,
+    onSave?: (value: Value) => any,
+    onPreview?: (value: Value) => any,
+    onPublish?: (value: Value) => any,
 }
 
 type State = {
@@ -58,7 +59,7 @@ const plugins = [
 // ----- COMPONENT ----- //
 export default class Editor extends React.Component<Props, State> {
     static defaultProps = {
-        defaultValue: {
+        defaultValue: Value.fromJSON({
             document: {
                 nodes: [
                     {
@@ -77,20 +78,35 @@ export default class Editor extends React.Component<Props, State> {
                     },
                 ],
             },
-        },
+        }),
         onChange: () => {},
+        onSave: () => {},
+        onPreview: () => {},
+        onPublish: () => {},
     }
 
     constructor(props: Props) {
         super(props);
         this.state = {
-            value: Value.fromJSON(props.defaultValue),
+            value: props.defaultValue,
         };
     }
 
     onChange = ({ value }: { value: Value}) => this.setState({ value }, () => {
         if (this.props.onChange) this.props.onChange(value);
     })
+
+    onSave = () => {
+        if (this.props.onSave) this.props.onSave(this.state.value);
+    }
+
+    onPreview = () => {
+        if (this.props.onPreview) this.props.onPreview(this.state.value);
+    }
+
+    onPublish = () => {
+        if (this.props.onPublish) this.props.onPublish(this.state.value);
+    }
 
     onClick = (type: string, data?: any) => {
         if (isNode(type)) {
@@ -111,6 +127,9 @@ export default class Editor extends React.Component<Props, State> {
             <Container {...this.props}>
                 <EditorButtons
                     onClick={this.onClick}
+                    onSave={this.onSave}
+                    onPreview={this.onPreview}
+                    onPublish={this.onPublish}
                     editor={this.state.value}
                 />
                 <StyledEditor
