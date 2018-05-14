@@ -18,7 +18,7 @@ export default function init() {
                 if (user) {
                     return user.validatePassword(password)
                         .then((result) => {
-                            if (result) {
+                            if (result && user.verified) {
                                 return done(null, user);
                             }
                             return done(null, false);

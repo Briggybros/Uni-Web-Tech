@@ -16,7 +16,7 @@ function genString() {
 }
 
 authRouter.post('/login', passport.authenticate('json'), (req: $Request, res: $Response) => {
-    if (req.user && req.user instanceof User) {
+    if (req.user && req.user instanceof User && req.user.verified) {
         res.send(JSON.stringify({
             user: req.user.toJSON(),
             response: Response.Success.AUTH_SUCCESS,
@@ -89,7 +89,7 @@ authRouter.post('/confirm', (req: $Request, res: $Response) => {
 });
 
 authRouter.get('/validate', (req: {user: User}, res) => {
-    if (req.user) {
+    if (req.user && req.user.verified) {
         return res.send(JSON.stringify({
             user: req.user.toJSON(),
             response: Response.Success.AUTH_SUCCESS,
