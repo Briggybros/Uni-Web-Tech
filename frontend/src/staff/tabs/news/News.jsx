@@ -25,7 +25,7 @@ type Props = {
 
 class News extends React.Component<Props> {
     componentDidMount() {
-        fetch('/api/news')
+        fetch('/api/news/?published=false')
             .then((response) => {
                 if (response.ok) {
                     return response.json();

@@ -4,28 +4,52 @@ import { connect } from 'react-redux';
 
 import type { ArticleType } from '../../types';
 
-import PostSummary from './PostSummary';
-import { updatePosts } from '../../reducers/newsReducer';
+// import PostSummary from './PostSummary';
+import { updateArticles } from '../../reducers/newsReducer';
 
 type Props = {
-    posts: Article[],
-    updatePosts: (ArticleType[]) => void,
+    articles: ArticleType[],
+    updateArticles: (ArticleType[]) => void,
 }
 
-const News = (props: Props) => (
-    <div />
-);
+class Feed extends React.Component<Props> {
+    componentDidMount() {
+        fetch('/api/news/')
+            .then((response) => {
+                if (response.ok) {
+                    return response.json();
+                }
+                throw new Error('Library Error');
+            })
+            .then((body) => {
+                if (body.response.isError) {
+                    alert(`${body.response.code}: ${body.response.message}`);
+                } else {
+                    this.props.updateArticles(body.articles);
+                }
+            })
+            .catch(console.error);
+    }
+
+    render() {
+        return (
+            <div>
+                {this.props.articles.map(article => <span>{article.title}</span>)}
+            </div>
+        );
+    }
+}
 
 function mapStateToProps(state: Object): Object {
     return {
-        posts: state.news.posts,
+        articles: state.news,
     };
 }
 
 function mapDispatchToProps(): Object {
     return {
-        updatePosts,
+        updateArticles,
     };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(News);
+export default connect(mapStateToProps, mapDispatchToProps)(Feed);

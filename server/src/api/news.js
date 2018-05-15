@@ -20,9 +20,14 @@ function isEditor(req: $Request, res: $Response, next: Function) {
 const newsRouter = Router();
 
 newsRouter.get('/', (req: $Request, res: $Response) => {
-    const num: number | null = req.query.num ? parseInt(req.query.num, 10) || parseInt(req.query.num[0], 10) : null;
-    const offset: number | null = req.query.offset ? parseInt(req.query.offset, 10) || parseInt(req.query.offset[0], 10) : null;
-    return Article.getArticles(num, offset)
+    const num: number | null =
+        req.query.num ? parseInt(req.query.num, 10)
+        || parseInt(req.query.num[0], 10) : null;
+    const offset: number | null =
+        req.query.offset ? parseInt(req.query.offset, 10)
+        || parseInt(req.query.offset[0], 10) : null;
+    const published: boolean = !!req.query.published;
+    return Article.getArticles(num, offset, published)
         .then(articles => res.send(JSON.stringify({
             articles: articles.map(article => article.toJSON()),
             response: Response.Success.DATA_FOUND,

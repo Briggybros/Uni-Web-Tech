@@ -11,19 +11,41 @@ export default class Article extends DynamicContent {
             .then(Article.fromRow);
     }
 
-    static getArticles(limit: number | null, offset: number | null): Promise<Article[]> {
-        let query = database.select()
+    static getArticles(
+        limit: number | null,
+        offset: number | null,
+        published: boolean,
+    ): Promise<Article[]> {
+        const query = database.select()
             .from('dynamic_content')
             .where({
                 type: 'NEWS',
+            })
+            .then(rows => rows.filter(row => (published ? row.published : true)))
+            .then(rows => rows.sort((a: ContentData, b: ContentData) => {
+                const aTime = JSON.parse(a.meta).timestamp;
+                const bTime = JSON.parse(b.meta).timestamp;
+                if (aTime === '0') {
+                    return -1;
+                }
+                return Number.parseInt(bTime, 10) - Number.parseInt(aTime, 10);
+            }));
+
+        if (offset !== null) {
+            query.then((rows) => {
+                if (offset !== null) rows.splice(0, offset);
+                return rows;
             });
-        if (limit !== null) {
-            query = query.limit(limit);
-            if (offset !== null) {
-                query = query.offset(offset);
-            }
         }
-        return query.then((rows: ContentData[]) => Promise.all(rows.map(row => Article.fromRow(row))));
+        if (limit !== null) {
+            query.then((rows) => {
+                if (limit !== null) rows.splice(limit, rows.length - limit);
+                return rows;
+            });
+        }
+        return query
+            .then((rows: ContentData[]) =>
+                Promise.all(rows.map(row => Article.fromRow(row))));
     }
 
     static fromRow(data: ContentData): Promise<Article> {
