@@ -5,8 +5,6 @@ import database from '../database';
 import type { UserData, UserRolesData } from '../database';
 
 export default class User {
-    static users: {[email: string]: User} = {};
-
     static createUser(email: string, password: string, firstName: string, lastName: string) {
         return bcrypt.hash(password, 10).then(hash => database('users').insert({
             email,
@@ -18,9 +16,6 @@ export default class User {
     }
 
     static getUser(email: string): Promise<User> {
-        if (User.users[email]) {
-            return Promise.resolve(User.users[email]);
-        }
         return database.select().from('users').where({
             email,
         }).then((rows: UserData[]) => {
@@ -64,7 +59,6 @@ export default class User {
         this.lastName = lastName;
         this.verified = verified;
         this.roles = roles;
-        User.users[email] = this;
     }
 
     set password(password: string) {

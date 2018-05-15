@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { NavLink as UnstyledLink } from 'react-router-dom';
 import styled from 'styled-components';
-import styledProperty from 'styled-property';
+import styledProperty from '@briggybros/styled-property';
 
 const List = styled.ul`
     display: flex;

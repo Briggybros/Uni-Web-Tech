@@ -9,6 +9,7 @@ export type UserType = {
 export type ArticleType = {
     id: string,
     content: string,
+    published: boolean,
     type: 'NEWS',
     timestamp: string,
     title: string,

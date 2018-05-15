@@ -25,6 +25,7 @@ const Container = styled.div`
     flex-direction: column;
     flex-shrink: 0;
     width: 100%;
+    border-top: 1px solid lightgrey;
     border-bottom: 1px solid lightgrey;
 `;
 
@@ -33,15 +34,6 @@ const Row = styled.span`
     flex-direction: row;
     align-items: center;
     margin: 0.5rem 0.5rem;
-`;
-
-const Button = styled.button`
-    background: none;
-    border: none;
-    cursor: pointer;
-    &:hover {
-        color: ${props => props.theme.colours.primary};
-    }
 `;
 
 export default ({
@@ -193,24 +185,6 @@ export default ({
                     SubSubSubSection
                 </MarkButton>
             </Dropdown>
-            <Button
-                onClick={() => onSave()}
-                style={{
-                    marginLeft: 'auto',
-                }}
-            >
-                Save
-            </Button>
-            <Button
-                onClick={() => onPreview()}
-            >
-                Preview
-            </Button>
-            <Button
-                onClick={() => onPublish()}
-            >
-                Publish
-            </Button>
         </Row>
     </Container>
 );

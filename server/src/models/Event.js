@@ -7,13 +7,13 @@ export default class Event extends DynamicContent {
 
     constructor(
         path: string,
-        content: Object,
+        content: string,
         published: boolean,
         datetime: string,
         location: string,
         meta: Object,
     ) {
-        super(path, content, published, { datetime, location, ...meta });
+        super(path, content, published, 'EVENT', { datetime, location, ...meta });
         this.datetime = datetime;
         this.location = location;
     }

@@ -6,6 +6,7 @@ type UpdatePostsAction = {
     type: 'UPDATE_POSTS',
     posts: ArticleType[],
 }
+
 export function updatePosts(posts: ArticleType[]): UpdatePostsAction {
     return {
         type: UPDATE_POSTS,

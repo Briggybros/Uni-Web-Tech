@@ -6,6 +6,11 @@ export const Success = {
         code: 201,
         message: 'User created',
     },
+    DATA_CREATED: {
+        isError: false,
+        code: 201,
+        message: 'Data created',
+    },
     AUTH_SUCCESS: {
         isError: false,
         code: 200,
@@ -43,6 +48,11 @@ export const ClientError = {
         isError: true,
         code: 404,
         message: 'Data not found',
+    },
+    BAD_BODY: {
+        isError: true,
+        code: 400,
+        message: 'Bad body',
     },
 };
 

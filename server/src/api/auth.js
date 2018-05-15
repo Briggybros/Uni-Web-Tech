@@ -1,7 +1,9 @@
 // @flow
 import { Router } from 'express';
-import type { $Request, $Response } from 'express';
+import type { $Response } from 'express';
 import passport from 'passport';
+
+import type { Request as $Request } from './types';
 
 import * as Response from './responses';
 import sendMail, { confirmEmailTemplates } from '../email';
@@ -67,12 +69,9 @@ authRouter.post('/register', (req: $Request, res: $Response) => {
                     response: Response.Success.USER_CREATED,
                 }));
             });
-        }).catch((error) => {
-            console.error(error);
-            res.send(JSON.stringify({
-                response: Response.ServerError.REGISTRATION_FAILED,
-            }));
-        });
+        }).catch(() => res.send(JSON.stringify({
+            response: Response.ServerError.REGISTRATION_FAILED,
+        })));
     }
     return res.send(JSON.stringify({
         response: Response.ClientError.INVALID_REGISTRATION,
@@ -94,7 +93,7 @@ authRouter.post('/confirm', (req: $Request, res: $Response) => {
     }));
 });
 
-authRouter.get('/validate', (req: {user: User}, res) => {
+authRouter.get('/validate', (req: $Request, res: $Response) => {
     if (req.user && req.user.verified) {
         return res.send(JSON.stringify({
             user: req.user.toJSON(),
