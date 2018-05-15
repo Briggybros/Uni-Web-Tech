@@ -33,11 +33,10 @@ export default class Article extends DynamicContent {
             ));
     }
 
-    static createArticle(title: string, content: string, author: User): Article {
+    static createArticle(title: string, content: string, author: User): Promise<Article> {
         const id = encodeURIComponent(title.toLowerCase().replace(' ', '-'));
         const article = new Article(id, title, content, author, false, '0', {});
-        article.save();
-        return article;
+        return article.save().then(() => article);
     }
 
     title: string;
