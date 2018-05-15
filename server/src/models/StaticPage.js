@@ -6,7 +6,7 @@ export default class Page extends DynamicContent {
         return DynamicContent.getContent(id)
             .then(data => new Page(
                 data.id,
-                data.content,
+                JSON.parse(data.content),
                 data.published,
                 'PAGE',
                 JSON.parse(data.meta),

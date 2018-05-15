@@ -20,16 +20,19 @@ function isEditor(req: $Request, res: $Response, next: Function) {
 const newsRouter = Router();
 
 newsRouter.get('/', (req: $Request, res: $Response) => {
-    const num: number = parseInt(req.query.num, 10) || parseInt(req.query.num[0], 10) || 10;
-    const offset: number = parseInt(req.query.offset, 10) || parseInt(req.query.offset[0], 10) || 0;
+    const num: number | null = req.query.num ? parseInt(req.query.num, 10) || parseInt(req.query.num[0], 10) : null;
+    const offset: number | null = req.query.offset ? parseInt(req.query.offset, 10) || parseInt(req.query.offset[0], 10) : null;
     return Article.getArticles(num, offset)
         .then(articles => res.send(JSON.stringify({
-            content: articles.map(article => article.toJSON()),
+            articles: articles.map(article => article.toJSON()),
             response: Response.Success.DATA_FOUND,
         })))
-        .catch(() => res.send(JSON.stringify({
-            response: Response.ClientError.DATA_NOT_FOUND,
-        })));
+        .catch((error) => {
+            console.error(error);
+            return res.send(JSON.stringify({
+                response: Response.ClientError.DATA_NOT_FOUND,
+            }));
+        });
 });
 
 newsRouter.post('/save/:id', isEditor, (req: $Request, res: $Response) => {
@@ -43,7 +46,7 @@ newsRouter.post('/save/:id', isEditor, (req: $Request, res: $Response) => {
     ) {
         const { title, content } = req.body;
         if (req.params.id === 'new') {
-            return Article.createArticle(title, content, req.user)
+            return Article.createArticle(title, JSON.parse(content), req.user)
                 .then(article => res.send(JSON.stringify({
                     response: Response.Success.DATA_CREATED,
                     article: article.toJSON(),
@@ -57,7 +60,7 @@ newsRouter.post('/save/:id', isEditor, (req: $Request, res: $Response) => {
                     newArticle.title = title;
                 }
                 if (content !== article.content) {
-                    newArticle.content = content;
+                    newArticle.content = JSON.parse(content);
                 }
                 return article.save();
             })

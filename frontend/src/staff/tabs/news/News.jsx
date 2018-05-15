@@ -5,7 +5,7 @@ import { Switch, Route } from 'react-router';
 import styled from 'styled-components';
 
 import type { ArticleType } from '../../../types';
-import { updatePosts } from '../../../reducers/newsReducer';
+import { updateArticles } from '../../../reducers/newsReducer';
 
 import Article from './Article';
 import MenuItem from '../MenuItem';
@@ -19,37 +19,57 @@ const Page = styled.div`
 `;
 
 type Props = {
-    articles: ArticleType[]
+    articles: ArticleType[],
+    updateArticles: Function,
 }
 
-const News = ({ articles }: Props) => (
-    <Page>
-        <VerticalList>
-            <NewItem
-                to="/staff/news/new"
-            />
-            {articles.map(article => (
-                <MenuItem
-                    key={article.id}
-                    to={`/staff/news/${article.id}`}
-                    heading={article.title}
-                    subheading={`${article.author.firstName} ${article.author.lastName}`}
-                />
-            ))}
-        </VerticalList>
-        <Switch>
-            <Route path="/staff/news/new">
-                <Article isNew />
-            </Route>
-            <Route path="/staff/news/:id">
-                <Article />
-            </Route>
-        </Switch>
-    </Page>
-);
+class News extends React.Component<Props> {
+    componentDidMount() {
+        fetch('/api/news')
+            .then((response) => {
+                if (response.ok) {
+                    return response.json();
+                }
+                throw new Error('Library Error');
+            })
+            .then((body) => {
+                if (body.response.isError) {
+                    alert(`${body.response.code}: ${body.response.message}`);
+                } else {
+                    this.props.updateArticles(body.articles);
+                }
+            });
+    }
+
+    render() {
+        return (
+            <Page>
+                <VerticalList>
+                    <NewItem
+                        to="/staff/news/new"
+                    />
+                    {this.props.articles.map(article => (
+                        <MenuItem
+                            key={article.id}
+                            to={`/staff/news/${article.id}`}
+                            heading={article.title}
+                            subheading={`${article.author.firstName} ${article.author.lastName}`}
+                        />
+                    ))}
+                </VerticalList>
+                <Switch>
+                    <Route path="/staff/news/new">
+                        <Article key="new" isNew />
+                    </Route>
+                    <Route path="/staff/news/:id" component={Article} />
+                </Switch>
+            </Page>
+        );
+    }
+}
 
 export default connect(state => ({
     articles: Object.values(state.news),
-}), () => ({
-    updatePosts,
-}))(News);
+}), {
+    updateArticles,
+})(News);

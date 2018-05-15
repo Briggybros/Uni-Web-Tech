@@ -68,7 +68,7 @@ export function init(): Promise<Knex$Knex<*>> {
         () => db.schema.hasTable('dynamic_content').then((exists) => {
             if (!exists) {
                 return db.schema.createTable('dynamic_content', (table) => {
-                    table.string('id').notNullable().primary();
+                    table.increments('id');
                     table.json('content').notNullable();
                     table.boolean('published').notNullable();
                     table.enu('type', ['NEWS', 'EVENT']);

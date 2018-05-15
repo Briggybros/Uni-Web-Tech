@@ -7,7 +7,7 @@ export default class Event extends DynamicContent {
 
     constructor(
         path: string,
-        content: string,
+        content: Object,
         published: boolean,
         datetime: string,
         location: string,

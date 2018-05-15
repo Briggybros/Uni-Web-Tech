@@ -17,36 +17,50 @@ export default class DynamicContent {
         });
     }
 
+    static createContent(
+        content: Object,
+        published: boolean,
+        type: string,
+        meta: Object,
+    ): Promise<ContentData> {
+        return database('dynamic_content').insert({
+            content: JSON.stringify(meta),
+            published,
+            type,
+            meta: JSON.stringify(meta),
+        }).then(([id]) => database.select().from('dynamic_content').where({
+            id,
+        })).then(rows => rows[0]);
+    }
+
     id: string;
-    content: string;
+    content: Object;
     published: boolean;
     type: string;
     meta: Object;
 
-    constructor(id: string, content: string, published: boolean, type: string, meta: Object) {
+    constructor(id: string, content: Object, published: boolean, type: string, meta: Object) {
         this.id = id;
         this.content = content;
         this.published = published;
         this.meta = meta;
     }
 
-    save() {
-        return database.select('id').from('dynamic_content').where({
-            id: this.id,
+    save = (() => database.select('id').from('dynamic_content').where({
+        id: this.id,
+    })
+        .then((rows: ContentData[]) => {
+            if (rows.length > 1) {
+                throw new Error(`Multiple content with id: ${this.id}`);
+            } else if (rows.length === 0) {
+                throw new Error(`No content with id: ${this.id}`);
+            } else {
+                return database('dynamic_content').update(this.toContentData()).where({
+                    id: this.id,
+                });
+            }
         })
-            .then((rows: ContentData[]) => {
-                if (rows.length > 1) {
-                    throw new Error(`Multiple content with id: ${this.id}`);
-                } else if (rows.length === 0) {
-                    return database('dynamic_content').insert(this.toJSON());
-                } else {
-                    return database('dynamic_content').update(this.toJSON()).where({
-                        id: this.id,
-                    });
-                }
-            })
-            .then(() => this);
-    }
+        .then(() => this));
 
     publish() {
         return database('dynamic_content').update({
@@ -58,13 +72,17 @@ export default class DynamicContent {
         });
     }
 
-    toJSON(): Object {
+    toContentData(): ContentData {
         return {
             id: this.id,
-            content: this.content,
+            content: JSON.stringify(this.content),
             published: this.published,
-            type: this.type,
-            meta: this.meta,
+            type: null,
+            meta: JSON.stringify(this.meta),
         };
+    }
+
+    toJSON(): Object {
+        return this.toContentData();
     }
 }

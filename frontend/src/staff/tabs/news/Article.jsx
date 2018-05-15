@@ -38,6 +38,18 @@ const Button = styled.button`
     }
 `;
 
+const EditorWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+`;
+
+const TitleInput = styled.input`
+    border: none;
+    border-top: 1px solid lightgrey;
+    font-family: ${props => props.theme.fonts.title}, serif;
+    font-size: 2.5rem;
+`;
+
 type Props = {
     article?: ArticleType,
     updateArticles: Function,
@@ -45,8 +57,8 @@ type Props = {
 
 type State = {
     preview: boolean,
+    title: string,
     value?: Value,
-    article?: ArticleType,
 }
 
 class Article extends React.Component<Props, State> {
@@ -58,18 +70,42 @@ class Article extends React.Component<Props, State> {
         super(props);
         this.state = {
             preview: false,
+            title: props.article && props.article.title ? props.article.title : '',
             value: props.article ? Value.fromJSON(JSON.parse(props.article.content)) : undefined,
-            article: props.article,
         };
     }
 
-    onChange = (value) => {
+    componentDidUpdate(prevProps) {
+        if (
+            prevProps.article &&
+            this.props.article &&
+            prevProps.article.id !== this.props.article.id
+        ) {
+            /*
+             * Note here, that airbnb has rules against setting state in update
+             * If there's a better way to do this, please inform
+             */
+            /* eslint-disable-next-line react/no-did-update-set-state */
+            this.setState({
+                title: this.props.article.title,
+                value: Value.fromJSON(JSON.parse(this.props.article.content)),
+            });
+        }
+    }
+
+    onChange = (value: Value) => {
         this.setState({
             value,
         });
     }
 
-    onSave = () => fetch(`/api/news/save/${this.state.article ? this.state.article.id : 'new'}`, {
+    onTitleChange = (title: string) => {
+        this.setState({
+            title,
+        });
+    }
+
+    onSave = () => fetch(`/api/news/save/${this.props.article ? this.props.article.id : 'new'}`, {
         method: 'POST',
         headers: {
             Accept: 'application/json',
@@ -77,7 +113,7 @@ class Article extends React.Component<Props, State> {
         },
         credentials: 'same-origin',
         body: JSON.stringify({
-            title: 'Title', // TODO
+            title: this.state.title,
             content: serializeToJSONString(this.state.value),
         }),
     }).then((response) => {
@@ -90,9 +126,6 @@ class Article extends React.Component<Props, State> {
             alert(`${body.response.code}: ${body.response.message}`);
             return null;
         }
-        this.setState({
-            article: body.article,
-        });
         this.props.updateArticles([body.article]);
         return body.article;
     }).catch(console.error);
@@ -123,9 +156,6 @@ class Article extends React.Component<Props, State> {
                         alert(`${body.response.code}: ${body.response.message}`);
                         return null;
                     }
-                    this.setState({
-                        article: body.article,
-                    });
                     this.props.updateArticles([body.article]);
                     return body.article;
                 }).catch(console.error);
@@ -148,8 +178,8 @@ class Article extends React.Component<Props, State> {
                         {this.state.preview ? 'Edit' : 'Preview'}
                     </Button>
                     {(
-                        (this.state.article && !this.state.article.published) ||
-                        (!this.state.article)
+                        (this.props.article && !this.props.article.published) ||
+                        (!this.props.article)
                     ) &&
                         <Button
                             onClick={this.onPublish}
@@ -160,17 +190,27 @@ class Article extends React.Component<Props, State> {
                 </ButtonWrapper>
                 {this.state.preview ?
                     this.state.value &&
-                    JSXFromJSONString(serializeToJSONString(this.state.value))
+                    <div>
+                        <h1>{this.state.title}</h1>
+                        {JSXFromJSONString(serializeToJSONString(this.state.value))}
+                    </div>
                     :
-                    <Editor
-                        defaultValue={
-                            this.state.value ?
-                                Value.fromJSON(this.state.value)
-                                :
-                                undefined
-                        }
-                        onChange={this.onChange}
-                    />
+                    <EditorWrapper>
+                        <TitleInput
+                            value={this.state.title}
+                            placeholder="Article title"
+                            onChange={event => this.onTitleChange(event.target.value)}
+                        />
+                        <Editor
+                            defaultValue={
+                                this.state.value ?
+                                    Value.fromJSON(this.state.value)
+                                    :
+                                    undefined
+                            }
+                            onChange={this.onChange}
+                        />
+                    </EditorWrapper>
                 }
             </Window>
         );
@@ -183,10 +223,6 @@ function mapStateToProps(state, ownProps: Object) {
     };
 }
 
-function mapDispatchToProps() {
-    return {
-        updateArticles,
-    };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Article);
+export default connect(mapStateToProps, {
+    updateArticles,
+})(Article);

@@ -1,21 +1,31 @@
 // @flow
 import type { ArticleType } from '../types';
 
-const UPDATE_POSTS = 'UPDATE_POSTS';
-type UpdatePostsAction = {
-    type: 'UPDATE_POSTS',
-    posts: ArticleType[],
+const UPDATE_ARTICLES = 'UPDATE_ARTICLES';
+type UpdateArticlesAction = {
+    type: 'UPDATE_ARTICLES',
+    articles: ArticleType[],
+}
+export function updateArticles(articles: ArticleType[]): UpdateArticlesAction {
+    return {
+        type: UPDATE_ARTICLES,
+        articles,
+    };
 }
 
-export function updatePosts(posts: ArticleType[]): UpdatePostsAction {
+const CLEAR_ARTICLES = 'CLEAR_ARTICLES';
+type ClearArticlesAction = {
+    type: 'CLEAR_ARTICLES',
+}
+export function clearArticles(): ClearArticlesAction {
     return {
-        type: UPDATE_POSTS,
-        posts,
+        type: CLEAR_ARTICLES,
     };
 }
 
 type Action =
-    | UpdatePostsAction
+    | UpdateArticlesAction
+    | ClearArticlesAction
 
 type State = {
     [id: string]: ArticleType,
@@ -23,14 +33,16 @@ type State = {
 
 export function newsReducer(state: State = {}, action: Action) {
     switch (action.type) {
-    case UPDATE_POSTS:
+    case UPDATE_ARTICLES:
         return {
             ...state,
-            ...action.posts.reduce((acc, post) => ({
+            ...action.articles.reduce((acc, article) => ({
                 ...acc,
-                [post.id]: post,
+                [article.id]: article,
             }), {}),
         };
+    case CLEAR_ARTICLES:
+        return {};
     default:
         return state;
     }

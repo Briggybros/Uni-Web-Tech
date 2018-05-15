@@ -11,17 +11,23 @@ export default class Article extends DynamicContent {
             .then(Article.fromRow);
     }
 
-    static getArticles(limit: number, offset: number): Promise<Article[]> {
-        return database.select()
-            .from('pages')
-            .orderBy('timestamp', 'desc')
-            .limit(limit)
-            .offset(offset)
-            .then((rows: ContentData[]) => Promise.all(rows.map(row => Article.fromRow(row))));
+    static getArticles(limit: number | null, offset: number | null): Promise<Article[]> {
+        let query = database.select()
+            .from('dynamic_content')
+            .where({
+                type: 'NEWS',
+            });
+        if (limit !== null) {
+            query = query.limit(limit);
+            if (offset !== null) {
+                query = query.offset(offset);
+            }
+        }
+        return query.then((rows: ContentData[]) => Promise.all(rows.map(row => Article.fromRow(row))));
     }
 
     static fromRow(data: ContentData): Promise<Article> {
-        return User.getUser(JSON.parse(data.meta).author)
+        return User.getUser(JSON.parse(data.meta).author.email)
             .then(author => new Article(
                 data.id,
                 JSON.parse(data.meta).title,
@@ -33,10 +39,12 @@ export default class Article extends DynamicContent {
             ));
     }
 
-    static createArticle(title: string, content: string, author: User): Promise<Article> {
-        const id = encodeURIComponent(title.toLowerCase().replace(' ', '-'));
-        const article = new Article(id, title, content, author, false, '0', {});
-        return article.save().then(() => article);
+    static createArticle(title: string, content: Object, author: User): Promise<Article> {
+        return DynamicContent.createContent(content, false, 'NEWS', {
+            title,
+            author: author.toJSON(),
+            timestamp: '0',
+        }).then((row: ContentData) => Article.fromRow(row));
     }
 
     title: string;
@@ -46,7 +54,7 @@ export default class Article extends DynamicContent {
     constructor(
         id: string,
         title: string,
-        content: string,
+        content: Object,
         author: User,
         published: boolean,
         timestamp: string,
@@ -95,6 +103,13 @@ export default class Article extends DynamicContent {
             this.timestamp = Date.now().toString();
             return this.save();
         });
+    }
+
+    toContentData(): ContentData {
+        return {
+            ...super.toContentData(),
+            type: 'NEWS',
+        };
     }
 
     toJSON() {
