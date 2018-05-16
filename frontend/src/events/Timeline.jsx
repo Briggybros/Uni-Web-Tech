@@ -3,6 +3,8 @@ import * as React from 'react';
 import styled from 'styled-components';
 import { Container as StandardContainer } from '../style-utils';
 import { unique } from '../util/lists';
+import Group from './Group';
+import type { EventType } from '../types';
 
 
 const Container = StandardContainer.extend`
@@ -28,6 +30,10 @@ const TimeLineContainer = styled.div`
     }
 `;
 
+type Props = {
+    events: EventType[]
+}
+
 export default class Timeline extends React.Component<Props> {
     componentDidMount() {
         fetch('/api/events')
@@ -36,13 +42,25 @@ export default class Timeline extends React.Component<Props> {
     }
 
     render() {
-        const groups = unique(events.reduce((acc, event) => {
-            return new Date(parseInt(event.date, 10)).getMonth();
+        const eventsList : EventType[] = this.props.events;
+        const groups : number[] = unique(eventsList.reduce((acc, event) => {
+            const d = new Date(parseInt(event.date, 10));
+            return [
+                ...acc,
+                d.getMonth(),
+            ];
         }, []));
         return (
             <Container>
                 <TimeLineContainer>
-                    { this.props.children }
+                    {groups.map((group) => {
+                        function getMonthsEvents(g: number) {
+                            return eventsList.filter(event => new Date(parseInt(event.date, 10)).getMonth() === g);
+                        }
+                        return (
+                            <Group month={group} events={getMonthsEvents(group)} />
+                        );
+                    })}
                 </TimeLineContainer>
             </Container>
         );

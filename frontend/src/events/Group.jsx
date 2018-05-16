@@ -1,6 +1,8 @@
 // @flow
 import * as React from 'react';
 import styled from 'styled-components';
+import EventEntry from './EventEntry';
+import type { EventType } from '../types';
 
 const TimelineGroup = styled.div`
     position: relative;
@@ -23,12 +25,12 @@ const TimelineMonthEntry = styled.h2`
     left: 0;
     top: 0;
 `;
-export default () => {
-    return (
-        <TimelineGroup>
-            <TimelineMonthEntry>
-                    June 2018
-            </TimelineMonthEntry>
-        </TimelineGroup>
-    );
-};
+
+export default (month: number, events: EventType[]) => (
+    <TimelineGroup>
+        <TimelineMonthEntry>
+            {month}
+        </TimelineMonthEntry>
+        {events.map(event => <EventEntry event={event} />)}
+    </TimelineGroup>
+);
