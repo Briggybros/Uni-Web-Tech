@@ -10,6 +10,7 @@ const Button = styled.button`
     color: white;
     padding: 1rem 0;
     flex-shrink: 0;
+    cursor: pointer;
 `;
 
 const AddIcon = styled(MdAdd)`

@@ -16,7 +16,7 @@ type Props = {
     items: Object[],
     itemRenderer: Function,
     view: Function,
-    link: string,
+    path: string,
     onNew: () => void,
 }
 
@@ -28,12 +28,12 @@ export default (props: Props) => (
             />
             {props.items.map(item => React.createElement(props.itemRenderer, {
                 key: item.id,
-                to: `${props.link}/${item.id}`,
+                to: `${props.path}/${item.id}`,
                 item,
             }))}
         </VerticalList>
         <Switch>
-            <Route path={`${props.link}/:id`} component={props.view} />
+            <Route path={`${props.path}/:id`} component={props.view} />
         </Switch>
     </Page>
 );
