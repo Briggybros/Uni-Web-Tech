@@ -2,6 +2,8 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import { Container as StandardContainer } from '../style-utils';
+import { unique } from '../util/lists';
+
 
 const Container = StandardContainer.extend`
     margin-top: 1rem;
@@ -26,10 +28,23 @@ const TimeLineContainer = styled.div`
     }
 `;
 
-export default () => (
-    <Container>
-        <TimeLineContainer>
-            
-        </TimeLineContainer>
-    </Container>
-);
+export default class Timeline extends React.Component<Props> {
+    componentDidMount() {
+        fetch('/api/events')
+            .then(response => response.json())
+            .then(json => this.props.updateEvents(json.posts, json.start));
+    }
+
+    render() {
+        const groups = unique(events.reduce((acc, event) => {
+            return new Date(parseInt(event.date, 10)).getMonth();
+        }, []));
+        return (
+            <Container>
+                <TimeLineContainer>
+                    { this.props.children }
+                </TimeLineContainer>
+            </Container>
+        );
+    }
+}
