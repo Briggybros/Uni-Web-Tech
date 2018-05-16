@@ -3,16 +3,26 @@ import * as React from 'react';
 import { Link as UnstyledLink } from 'react-router-dom';
 import styled from 'styled-components';
 
-import type { ArticleType } from '../../types';
+import { JSXFromJSONString } from '../../dynamic/serializer';
 
-const Title = styled.h2`
-`;
+import type { ArticleType } from '../../types';
 
 const Link = styled(UnstyledLink)`
     display: flex;
     flex-direction: column;
     text-decoration: none;
     color: black;
+    background: white;
+    margin: 0.5rem 0 0 0;
+    padding: 0 10%;
+    padding-bottom: 1rem;
+`;
+
+const Title = styled.h2`
+`;
+
+const Body = styled.div`
+    margin-bottom: 2rem;
 `;
 
 const Info = styled.span`
@@ -30,6 +40,9 @@ export default ({ article }: Props) => (
         <Title>
             {article.title}
         </Title>
+        <Body>
+            {JSXFromJSONString(article.content)}
+        </Body>
         <Info>
             {article.author.firstName} {article.author.lastName}
         </Info>

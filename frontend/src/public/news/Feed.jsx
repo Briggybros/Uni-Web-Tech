@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 import type { ArticleType } from '../../types';
 
-import ArticleSummary from './ArticleSummary';
+import Article from './Article';
 import { updateArticles } from '../../reducers/newsReducer';
 
 const Page = styled.div`
@@ -41,7 +41,7 @@ class Feed extends React.Component<Props> {
         return (
             <Page>
                 {this.props.articles.filter(article => article.published).map(article => (
-                    <ArticleSummary
+                    <Article
                         key={article.id}
                         article={article}
                     />
