@@ -31,14 +31,15 @@ const TimeLineContainer = styled.div`
 `;
 
 type Props = {
-    events: EventType[]
+    events: EventType[],
+    updateEvents: (EventType[])
 }
 
 export default class Timeline extends React.Component<Props> {
     componentDidMount() {
         fetch('/api/events')
             .then(response => response.json())
-            .then(json => this.props.updateEvents(json.posts, json.start));
+            .then(json => this.props.updateEvents(json.events));
     }
 
     render() {
@@ -54,8 +55,9 @@ export default class Timeline extends React.Component<Props> {
             <Container>
                 <TimeLineContainer>
                     {groups.map((group) => {
-                        function getMonthsEvents(g: number) {
-                            return eventsList.filter(event => new Date(parseInt(event.date, 10)).getMonth() === g);
+                        function getMonthsEvents(g: number): EventType[] {
+                            return eventsList.filter(event =>
+                                new Date(parseInt(event.date, 10)).getMonth() === g);
                         }
                         return (
                             <Group month={group} events={getMonthsEvents(group)} />

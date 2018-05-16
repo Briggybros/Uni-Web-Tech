@@ -26,7 +26,7 @@ const TimelineMonthEntry = styled.h2`
     top: 0;
 `;
 
-export default (month: number, events: EventType[]) => (
+export default ({ month }: { month: number}, { events }: { events: EventType[] }) => (
     <TimelineGroup>
         <TimelineMonthEntry>
             {month}
