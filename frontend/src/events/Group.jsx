@@ -26,11 +26,25 @@ const TimelineMonthEntry = styled.h2`
     top: 0;
 `;
 
-export default ({ month }: { month: number}, { events }: { events: EventType[] }) => (
+type Props = {
+    events: EventType[],
+    month: number
+}
+
+function findMonth(m: number) {
+    const months = ['Jan', 'Feb', 'Mar', 'April', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    return months[m];
+}
+
+export default (props: Props) => (
     <TimelineGroup>
         <TimelineMonthEntry>
-            {month}
+            {findMonth(props.month)}
         </TimelineMonthEntry>
-        {events.map(event => <EventEntry event={event} />)}
+        {props.events.map(event => (<EventEntry
+            key={event.id.toString()}
+            event={event}
+            monthString={findMonth(props.month)}
+        />))}
     </TimelineGroup>
 );

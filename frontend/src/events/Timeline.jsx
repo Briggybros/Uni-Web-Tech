@@ -32,18 +32,25 @@ const TimeLineContainer = styled.div`
 
 type Props = {
     events: EventType[],
-    updateEvents: (EventType[])
+    // updateEvents: (EventType[])
 }
+
+const events: Array<any> = [{
+    id: 1, date: new Date().getTime().toString(), title: 'event', content: 'content',
+}, {
+    id: 2, date: new Date().getTime().toString(), title: 'event', content: 'content',
+}, {
+    id: 3, date: new Date(2018, 11, 24, 10, 33, 30, 0).getTime().toString(), title: 'event', content: 'content',
+}];
 
 export default class Timeline extends React.Component<Props> {
     componentDidMount() {
-        fetch('/api/events')
-            .then(response => response.json())
-            .then(json => this.props.updateEvents(json.events));
+        // fetch('/api/events')
+        //     .then(response => response.json())
+        //     .then(json => this.props.updateEvents(json.events));
     }
-
     render() {
-        const eventsList : EventType[] = this.props.events;
+        const eventsList : EventType[] = events;
         const groups : number[] = unique(eventsList.reduce((acc, event) => {
             const d = new Date(parseInt(event.date, 10));
             return [
@@ -60,7 +67,7 @@ export default class Timeline extends React.Component<Props> {
                                 new Date(parseInt(event.date, 10)).getMonth() === g);
                         }
                         return (
-                            <Group month={group} events={getMonthsEvents(group)} />
+                            <Group key={group.toString()} month={group} events={getMonthsEvents(group)} />
                         );
                     })}
                 </TimeLineContainer>

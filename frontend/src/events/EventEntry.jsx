@@ -34,7 +34,7 @@ const TimelineEventEntry = styled.div`
     }
 `;
 
-const Date = styled.div`
+const DateBox = styled.div`
     min-width: 65px;
     position: absolute;
     left: 0;
@@ -69,7 +69,7 @@ const Post = styled.div`
     border-left: 3px solid ${props => props.theme.colours.primary};
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .12), 0 1px 2px 0 rgba(0, 0, 0, .24);
     padding: 1rem 2rem;
-    background-color: whitdatee;
+    background-color: ${props => props.theme.colours.white};
 `;
 
 const Content = styled.div``;
@@ -78,16 +78,22 @@ const Title = styled.h2`
     margin-top: 0;
 `;
 
-export default ({ event }: {event: EventType}) => {
-    const date = new Date(parseInt(event.date, 10));
-    const month = date.getMonth();
+type Props = {
+    event: EventType,
+    monthString: string,
+};
+
+export default (props: Props) => {
+    const date : Date = new Date(parseInt(props.event.date, 10));
     const day = date.getDate();
+    const month = props.monthString;
+    console.log(month);
     return (
         <TimelineEventEntry>
-            <Date><Day>${day}</Day><Month>${month}</Month></Date>
+            <DateBox><Day>{day}</Day><Month>{month}</Month></DateBox>
             <Post>
-                <Title>${event.title}</Title>
-                <Content>${event.content}</Content>
+                <Title>{props.event.title}</Title>
+                <Content>{props.event.content}</Content>
             </Post>
         </TimelineEventEntry>
     );
