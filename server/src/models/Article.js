@@ -14,14 +14,14 @@ export default class Article extends DynamicContent {
     static getArticles(
         limit: number | null,
         offset: number | null,
-        published: boolean,
+        drafts: boolean,
     ): Promise<Article[]> {
         const query = database.select()
             .from('dynamic_content')
             .where({
                 type: 'NEWS',
             })
-            .then(rows => rows.filter(row => (published ? row.published : true)))
+            .then(rows => rows.filter(row => (drafts ? true : row.published)))
             .then(rows => rows.sort((a: ContentData, b: ContentData) => {
                 const aTime = JSON.parse(a.meta).timestamp;
                 const bTime = JSON.parse(b.meta).timestamp;
@@ -69,10 +69,6 @@ export default class Article extends DynamicContent {
         }).then((row: ContentData) => Article.fromRow(row));
     }
 
-    title: string;
-    author: User;
-    timestamp: string;
-
     constructor(
         id: string,
         title: string,
@@ -88,40 +84,34 @@ export default class Article extends DynamicContent {
             author: author.toJSON(),
             timestamp,
         });
-        this.title = title;
-        this.author = author;
-        this.timestamp = timestamp;
     }
 
     set title(title: string) {
-        this.title = title;
         this.meta = {
             ...this.meta,
             title,
         };
     }
-    get title() { return this.title; }
+    get title() { return this.meta.title; }
 
     set author(author: User) {
-        this.author = author;
         this.meta = {
             ...this.meta,
             author: author.toJSON(),
         };
     }
-    get author() { return this.author; }
+    get author() { return this.meta.author; }
 
     set timestamp(timestamp: string) {
-        this.timestamp = timestamp;
         this.meta = {
             ...this.meta,
             timestamp,
         };
     }
-    get timestamp() { return this.timestamp; }
+    get timestamp() { return this.meta.timestamp; }
 
     publish() {
-        super.publish().then(() => {
+        return super.publish().then(() => {
             this.timestamp = Date.now().toString();
             return this.save();
         });
@@ -139,7 +129,7 @@ export default class Article extends DynamicContent {
             ...super.toJSON(),
             type: 'NEWS',
             title: this.title,
-            author: this.author.toJSON(),
+            author: this.author,
             timestamp: this.timestamp,
         };
     }

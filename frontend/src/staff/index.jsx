@@ -17,7 +17,13 @@ const Page = styled.div`
     height: 100vh;
 `;
 
-export default class Staff extends React.Component<{}> {
+type Props = {
+    history: {
+        push: Function,
+    }
+}
+
+export default class Staff extends React.Component<Props> {
     componentWillMount() {
         fetch('/api/auth/validate', {
             headers: {
@@ -36,12 +42,12 @@ export default class Staff extends React.Component<{}> {
                     body.response.isError ||
                     !(body.user && body.user.roles && body.user.roles.length > 0)
                 ) {
-                    window.location.replace('/');
+                    this.props.history.push('/');
                 }
             })
             .catch((error) => {
                 console.error(error);
-                return window.location.replace('/login');
+                this.props.history.push('/login');
             });
     }
 

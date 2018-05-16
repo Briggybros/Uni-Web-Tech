@@ -51,19 +51,19 @@ const Button = styled(({ dropdown, ...rest }) => <EditorButton {...rest} />)`
 export const MarkButton = ({
     children,
     mark,
-    editor,
+    value,
     onClick,
     dropdown,
     ...props
 }: {
     children: Children,
     mark: string,
-    editor: Object,
+    value: Object,
     onClick: Function,
     dropdown?: boolean,
 }) => (
     <Button
-        active={markType => editor.activeMarks.some(activeMark => activeMark.type === markType)}
+        active={markType => value.activeMarks.some(activeMark => activeMark.type === markType)}
         id={mark}
         onClick={onClick}
         dropdown={dropdown}
@@ -79,19 +79,19 @@ MarkButton.defaultProps = {
 export const NodeButton = ({
     children,
     node,
-    editor,
+    value,
     onClick,
     dropdown,
     ...props
 }: {
     children: Children,
     node: string,
-    editor: Object,
+    value: Object,
     onClick: Function,
     dropdown?: boolean,
 }) => (
     <Button
-        active={nodeType => editor.blocks.some(activeNode => activeNode.type === nodeType)}
+        active={nodeType => value.blocks.some(activeNode => activeNode.type === nodeType)}
         id={node}
         onClick={onClick}
         dropdown={dropdown}

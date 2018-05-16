@@ -5,7 +5,7 @@ import { Value } from 'slate';
 import DropOrPasteImages from 'slate-drop-or-paste-images';
 import styled from 'styled-components';
 
-import EditorButtons from './toolbar/Toolbar';
+import Toolbar from './toolbar/Toolbar';
 import { isMark, toggleMark, renderMark, markHotkey, marks } from '../../dynamic/marks/index';
 import { isNode, toggleNode, renderNode, nodes } from '../../dynamic/nodes/index';
 
@@ -22,15 +22,8 @@ const StyledEditor = styled(SlateEditor)`
 `;
 
 type Props = {
-    defaultValue?: Value,
+    value?: Value,
     onChange?: (value: Value) => any,
-    onSave?: (value: Value) => any,
-    onPreview?: (value: Value) => any,
-    onPublish?: (value: Value) => any,
-}
-
-type State = {
-    value: Value,
 }
 
 // ----- SLATE PLUGINS ----- //
@@ -56,86 +49,27 @@ const plugins = [
     }),
 ];
 
-// ----- COMPONENT ----- //
-export default class Editor extends React.Component<Props, State> {
-    static defaultProps = {
-        defaultValue: Value.fromJSON({
-            document: {
-                nodes: [
-                    {
-                        object: 'block',
-                        type: nodes.LEFT_ALIGN_NODE,
-                        nodes: [
-                            {
-                                object: 'text',
-                                leaves: [
-                                    {
-                                        text: '',
-                                    },
-                                ],
-                            },
-                        ],
-                    },
-                ],
-            },
-        }),
-        onChange: () => {},
-        onSave: () => {},
-        onPreview: () => {},
-        onPublish: () => {},
-    }
-
-    constructor(props: Props) {
-        super(props);
-        this.state = {
-            value: props.defaultValue,
-        };
-    }
-
-    onChange = ({ value }: { value: Value}) => this.setState({ value }, () => {
-        if (this.props.onChange) this.props.onChange(value);
-    })
-
-    onSave = () => {
-        if (this.props.onSave) this.props.onSave(this.state.value);
-    }
-
-    onPreview = () => {
-        if (this.props.onPreview) this.props.onPreview(this.state.value);
-    }
-
-    onPublish = () => {
-        if (this.props.onPublish) this.props.onPublish(this.state.value);
-    }
-
-    onClick = (type: string, data?: any) => {
+const Editor = ({ value, onChange, ...rest }: Props) => {
+    const onClick = (type: string, data?: any) => {
         if (isNode(type)) {
-            const change = toggleNode(type, this.state.value, data).focus();
-            this.setState({
-                value: change.value,
-            });
+            const change = toggleNode(type, value, data).focus();
+            if (onChange) onChange(change.value);
         } else if (isMark(type)) {
-            const change = toggleMark(type, this.state.value).focus();
-            this.setState({
-                value: change.value,
-            });
+            const change = toggleMark(type, value).focus();
+            if (onChange) onChange(change.value);
         }
-    }
+    };
 
-    render() {
+    if (value && onChange) {
         return (
-            <Container {...this.props}>
-                <EditorButtons
-                    onClick={this.onClick}
-                    onSave={this.onSave}
-                    onPreview={this.onPreview}
-                    onPublish={this.onPublish}
-                    editor={this.state.value}
+            <Container {...rest}>
+                <Toolbar
+                    onClick={onClick}
+                    value={value}
                 />
                 <StyledEditor
-                    {...this.props}
-                    value={this.state.value}
-                    onChange={this.onChange}
+                    value={value}
+                    onChange={change => onChange(change.value)}
                     plugins={plugins}
                     renderNode={renderNode}
                     renderMark={renderMark}
@@ -143,4 +77,31 @@ export default class Editor extends React.Component<Props, State> {
             </Container>
         );
     }
-}
+    return null;
+};
+
+Editor.defaultProps = {
+    value: Value.fromJSON({
+        document: {
+            nodes: [
+                {
+                    object: 'block',
+                    type: nodes.LEFT_ALIGN_NODE,
+                    nodes: [
+                        {
+                            object: 'text',
+                            leaves: [
+                                {
+                                    text: '',
+                                },
+                            ],
+                        },
+                    ],
+                },
+            ],
+        },
+    }),
+    onChange: () => {},
+};
+
+export default Editor;

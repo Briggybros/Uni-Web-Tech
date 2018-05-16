@@ -18,16 +18,9 @@ const Page = styled.div`
 export default () => (
     <Page>
         <Switch>
-            <Route path="/login/register">
-                <RegisterForm />
-            </Route>
-            <Route path="/login/confirm">
-                <ConfirmForm />
-            </Route>
-            <Route exact path="/login">
-                {/* Could add FB/Twitter types of login here */}
-                <LoginForm />
-            </Route>
+            <Route path="/login/register" component={RegisterForm} />
+            <Route path="/login/confirm" component={ConfirmForm} />
+            <Route exact path="/login" component={LoginForm} />
         </Switch>
     </Page>
 );

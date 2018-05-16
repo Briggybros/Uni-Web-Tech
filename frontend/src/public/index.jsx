@@ -22,7 +22,7 @@ const Page = styled.div`
 
 const Logout = connect(null, {
     updateUserDispatch: updateUser,
-})(({ updateUserDispatch }) => {
+})(({ updateUserDispatch, push }) => {
     updateUserDispatch(null);
     const cookies = document.cookie.split(';');
 
@@ -31,11 +31,11 @@ const Logout = connect(null, {
         const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
         document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT`;
     });
-    window.location.replace('/');
+    push('/');
     return null;
 });
 
-export default () => (
+export default ({ history }: { history: { push: Function } }) => (
     <Page>
         <Header />
         <Switch>
@@ -50,8 +50,9 @@ export default () => (
             />
             <Route
                 path="/logout"
-                component={Logout}
-            />
+            >
+                <Logout push={history.push} />
+            </Route>
             <Route
                 path="/:id"
                 component={StaticPageLoader}

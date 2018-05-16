@@ -7,6 +7,7 @@ import styledProperty from '@briggybros/styled-property';
 const List = styled.ul`
     display: flex;
     flex-direction: column;
+    flex-shrink: 0;
     margin: 0;
     padding: 0;
     width: 20vw;

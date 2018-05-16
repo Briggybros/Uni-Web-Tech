@@ -24,7 +24,7 @@ export default class DynamicContent {
         meta: Object,
     ): Promise<ContentData> {
         return database('dynamic_content').insert({
-            content: JSON.stringify(meta),
+            content: JSON.stringify(content),
             published,
             type,
             meta: JSON.stringify(meta),

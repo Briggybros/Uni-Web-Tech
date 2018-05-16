@@ -4,6 +4,12 @@ import { Link } from 'react-router-dom';
 
 import { Form, Title, Entry, SubmitButton } from './components';
 
+type Props = {
+    history: {
+        push: Function,
+    }
+}
+
 type State = {
     firstName: string,
     lastName: string,
@@ -13,7 +19,7 @@ type State = {
     passwordConfirm: string,
 }
 
-export default class LoginForm extends React.Component<{}, State> {
+export default class RegisterForm extends React.Component<Props, State> {
     state = {
         firstName: '',
         lastName: '',
@@ -48,7 +54,7 @@ export default class LoginForm extends React.Component<{}, State> {
             if (body.response.isError) {
                 alert(`${body.response.code}: ${body.response.message}`);
             } else {
-                window.location.replace('/login/confirm');
+                this.props.history.push('/login/confirm');
             }
         }).catch(console.error);
     }

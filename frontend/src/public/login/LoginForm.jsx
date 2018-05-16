@@ -9,6 +9,9 @@ import { updateUser } from '../../reducers/userReducer';
 
 type Props = {
     updateUser: Function,
+    history: {
+        push: Function,
+    }
 }
 
 type State = {
@@ -46,7 +49,7 @@ class LoginForm extends React.Component<Props, State> {
                 alert(`${body.response.code}: ${body.response.message}`);
             } else {
                 this.props.updateUser(body.user);
-                window.location.replace('/');
+                this.props.history.push('/');
             }
         }).catch(console.error);
     }

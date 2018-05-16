@@ -26,8 +26,8 @@ newsRouter.get('/', (req: $Request, res: $Response) => {
     const offset: number | null =
         req.query.offset ? parseInt(req.query.offset, 10)
         || parseInt(req.query.offset[0], 10) : null;
-    const published: boolean = !!req.query.published;
-    return Article.getArticles(num, offset, published)
+    const drafts: boolean = !!req.query.drafts;
+    return Article.getArticles(num, offset, drafts)
         .then(articles => res.send(JSON.stringify({
             articles: articles.map(article => article.toJSON()),
             response: Response.Success.DATA_FOUND,
@@ -40,7 +40,36 @@ newsRouter.get('/', (req: $Request, res: $Response) => {
         });
 });
 
+const defaultContent = {
+    document: {
+        nodes: [
+            {
+                object: 'block',
+                type: 'LEFT_ALIGN_NODE',
+                nodes: [
+                    {
+                        object: 'text',
+                        leaves: [
+                            {
+                                text: '',
+                            },
+                        ],
+                    },
+                ],
+            },
+        ],
+    },
+};
+
 newsRouter.post('/save/:id', isEditor, (req: $Request, res: $Response) => {
+    if (req.params.id === 'new') {
+        return Article.createArticle('', defaultContent, req.user)
+            .then(article => res.send(JSON.stringify({
+                response: Response.Success.DATA_CREATED,
+                article: article.toJSON(),
+            })))
+            .catch(console.error);
+    }
     if (
         req.body &&
         typeof req.body === 'object' &&
@@ -50,14 +79,6 @@ newsRouter.post('/save/:id', isEditor, (req: $Request, res: $Response) => {
         typeof req.body.content === 'string'
     ) {
         const { title, content } = req.body;
-        if (req.params.id === 'new') {
-            return Article.createArticle(title, JSON.parse(content), req.user)
-                .then(article => res.send(JSON.stringify({
-                    response: Response.Success.DATA_CREATED,
-                    article: article.toJSON(),
-                })))
-                .catch(console.error);
-        }
         return Article.getArticle(req.params.id)
             .then((article) => {
                 const newArticle = article;
@@ -79,5 +100,13 @@ newsRouter.post('/save/:id', isEditor, (req: $Request, res: $Response) => {
         response: Response.ClientError.BAD_BODY,
     }));
 });
+
+newsRouter.post('/publish/:id', isEditor, (req: $Request, res: $Response) => Article.getArticle(req.params.id)
+    .then(article => article.publish())
+    .then(article => res.send(JSON.stringify({
+        response: Response.Success.DATA_CREATED,
+        article: article.toJSON(),
+    })))
+    .catch(console.error));
 
 export default newsRouter;

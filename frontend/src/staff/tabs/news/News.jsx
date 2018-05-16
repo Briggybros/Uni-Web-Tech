@@ -21,11 +21,14 @@ const Page = styled.div`
 type Props = {
     articles: ArticleType[],
     updateArticles: Function,
+    history: {
+        push: Function,
+    }
 }
 
 class News extends React.Component<Props> {
     componentDidMount() {
-        fetch('/api/news/?published=false')
+        fetch('/api/news/?drafts=true')
             .then((response) => {
                 if (response.ok) {
                     return response.json();
@@ -36,9 +39,34 @@ class News extends React.Component<Props> {
                 if (body.response.isError) {
                     alert(`${body.response.code}: ${body.response.message}`);
                 } else {
+                    console.log(body);
                     this.props.updateArticles(body.articles);
                 }
             });
+    }
+
+    newArticle = () => {
+        fetch('/api/news/save/new', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            credentials: 'same-origin',
+        }).then((response) => {
+            if (response.ok) {
+                return response.json();
+            }
+            throw new Error('Library Error');
+        }).then((body) => {
+            if (body.response.isError) {
+                alert(`${body.response.code}: ${body.response.message}`);
+                return null;
+            }
+            this.props.updateArticles([body.article]);
+            this.props.history.push(`/staff/news/${body.article.id}`);
+            return body.article;
+        }).catch(console.error);
     }
 
     render() {
@@ -46,7 +74,7 @@ class News extends React.Component<Props> {
             <Page>
                 <VerticalList>
                     <NewItem
-                        to="/staff/news/new"
+                        onClick={this.newArticle}
                     />
                     {this.props.articles.map(article => (
                         <MenuItem
@@ -58,9 +86,6 @@ class News extends React.Component<Props> {
                     ))}
                 </VerticalList>
                 <Switch>
-                    <Route path="/staff/news/new">
-                        <Article key="new" isNew />
-                    </Route>
                     <Route path="/staff/news/:id" component={Article} />
                 </Switch>
             </Page>

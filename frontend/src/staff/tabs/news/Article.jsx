@@ -71,8 +71,14 @@ class Article extends React.Component<Props, State> {
         this.state = {
             preview: false,
             title: props.article && props.article.title ? props.article.title : '',
-            value: props.article ? Value.fromJSON(JSON.parse(props.article.content)) : undefined,
         };
+
+        if (props.article) {
+            this.state = {
+                ...this.state,
+                value: Value.fromJSON(JSON.parse(props.article.content)),
+            };
+        }
     }
 
     componentDidUpdate(prevProps) {
@@ -156,6 +162,7 @@ class Article extends React.Component<Props, State> {
                         alert(`${body.response.code}: ${body.response.message}`);
                         return null;
                     }
+                    console.log(body.article);
                     this.props.updateArticles([body.article]);
                     return body.article;
                 }).catch(console.error);
@@ -202,12 +209,7 @@ class Article extends React.Component<Props, State> {
                             onChange={event => this.onTitleChange(event.target.value)}
                         />
                         <Editor
-                            defaultValue={
-                                this.state.value ?
-                                    Value.fromJSON(this.state.value)
-                                    :
-                                    undefined
-                            }
+                            value={this.state.value}
                             onChange={this.onChange}
                         />
                     </EditorWrapper>

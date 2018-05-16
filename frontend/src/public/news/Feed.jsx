@@ -1,11 +1,17 @@
 // @flow
 import * as React from 'react';
 import { connect } from 'react-redux';
+import styled from 'styled-components';
 
 import type { ArticleType } from '../../types';
 
-// import PostSummary from './PostSummary';
+import ArticleSummary from './ArticleSummary';
 import { updateArticles } from '../../reducers/newsReducer';
+
+const Page = styled.div`
+    display: flex;
+    flex-direction: column;
+`;
 
 type Props = {
     articles: ArticleType[],
@@ -14,7 +20,7 @@ type Props = {
 
 class Feed extends React.Component<Props> {
     componentDidMount() {
-        fetch('/api/news/')
+        fetch('/api/news')
             .then((response) => {
                 if (response.ok) {
                     return response.json();
@@ -33,23 +39,24 @@ class Feed extends React.Component<Props> {
 
     render() {
         return (
-            <div>
-                {this.props.articles.map(article => <span>{article.title}</span>)}
-            </div>
+            <Page>
+                {this.props.articles.filter(article => article.published).map(article => (
+                    <ArticleSummary
+                        key={article.id}
+                        article={article}
+                    />
+                ))}
+            </Page>
         );
     }
 }
 
 function mapStateToProps(state: Object): Object {
     return {
-        articles: state.news,
+        articles: Object.values(state.news),
     };
 }
 
-function mapDispatchToProps(): Object {
-    return {
-        updateArticles,
-    };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Feed);
+export default connect(mapStateToProps, {
+    updateArticles,
+})(Feed);

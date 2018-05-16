@@ -3,7 +3,14 @@ import * as React from 'react';
 import styled from 'styled-components';
 import MdAdd from 'react-icons/lib/md/add';
 
-import { Item } from '../components/VerticalList';
+const Button = styled.button`
+    background: #444;
+    border: none;
+    border-bottom: 1px solid #222;
+    color: white;
+    padding: 1rem 0;
+    flex-shrink: 0;
+`;
 
 const AddIcon = styled(MdAdd)`
     align-self: center;
@@ -11,14 +18,10 @@ const AddIcon = styled(MdAdd)`
     width: 2rem;
 `;
 
-type Props = {
-    to: string,
-}
-
-export default ({ to }: Props) => (
-    <Item
-        to={to}
+export default (props: Object) => (
+    <Button
+        {...props}
     >
         <AddIcon />
-    </Item>
+    </Button>
 );

@@ -38,17 +38,11 @@ const Row = styled.span`
 
 export default ({
     onClick,
-    editor,
-    onSave,
-    onPreview,
-    onPublish,
+    value,
     ...props
 }: {
     onClick: (button: string, data?: any) => any,
-    editor: Object,
-    onSave: () => any,
-    onPreview: () => any,
-    onPublish: () => any,
+    value: Object,
 }) => (
     <Container
         {...props}
@@ -56,56 +50,56 @@ export default ({
         <Row>
             <MarkButton
                 mark={marks.BOLD_MARK}
-                editor={editor}
+                value={value}
                 onClick={onClick}
             >
                 <MdFormatBold />
             </MarkButton>
             <MarkButton
                 mark={marks.ITALIC_MARK}
-                editor={editor}
+                value={value}
                 onClick={onClick}
             >
                 <MdFormatItalic />
             </MarkButton>
             <MarkButton
                 mark={marks.UNDERLINE_MARK}
-                editor={editor}
+                value={value}
                 onClick={onClick}
             >
                 <MdFormatUnderlined />
             </MarkButton>
             <MarkButton
                 mark={marks.STRIKETHROUGH_MARK}
-                editor={editor}
+                value={value}
                 onClick={onClick}
             >
                 <MdFormatStrikethrough />
             </MarkButton>
             <NodeButton
                 node={nodes.LEFT_ALIGN_NODE}
-                editor={editor}
+                value={value}
                 onClick={onClick}
             >
                 <MdFormatAlignLeft />
             </NodeButton>
             <NodeButton
                 node={nodes.CENTER_ALIGN_NODE}
-                editor={editor}
+                value={value}
                 onClick={onClick}
             >
                 <MdFormatAlignCenter />
             </NodeButton>
             <NodeButton
                 node={nodes.RIGHT_ALIGN_NODE}
-                editor={editor}
+                value={value}
                 onClick={onClick}
             >
                 <MdFormatAlignRight />
             </NodeButton>
             <NodeButton
                 node={nodes.IMAGE_NODE}
-                editor={editor}
+                value={value}
                 onClick={(id) => {
                     const url = prompt('Image URL:');
                     onClick(id, url);
@@ -115,14 +109,14 @@ export default ({
             </NodeButton>
             <NodeButton
                 node={nodes.BULLET_LIST_NODE}
-                editor={editor}
+                value={value}
                 onClick={onClick}
             >
                 <MdFormatListBulleted />
             </NodeButton>
             <NodeButton
                 node={nodes.NUMBERED_LIST_NODE}
-                editor={editor}
+                value={value}
                 onClick={onClick}
             >
                 <MdFormatListNumbered />
@@ -130,7 +124,7 @@ export default ({
             <Dropdown>
                 <MarkButton
                     mark={marks.NORMAL_MARK}
-                    editor={editor}
+                    value={value}
                     onClick={onClick}
                     dropdown
                 >
@@ -138,7 +132,7 @@ export default ({
                 </MarkButton>
                 <MarkButton
                     mark={marks.H1_MARK}
-                    editor={editor}
+                    value={value}
                     onClick={onClick}
                     dropdown
                 >
@@ -146,7 +140,7 @@ export default ({
                 </MarkButton>
                 <MarkButton
                     mark={marks.H2_MARK}
-                    editor={editor}
+                    value={value}
                     onClick={onClick}
                     dropdown
                 >
@@ -154,7 +148,7 @@ export default ({
                 </MarkButton>
                 <MarkButton
                     mark={marks.H3_MARK}
-                    editor={editor}
+                    value={value}
                     onClick={onClick}
                     dropdown
                 >
@@ -162,7 +156,7 @@ export default ({
                 </MarkButton>
                 <MarkButton
                     mark={marks.H4_MARK}
-                    editor={editor}
+                    value={value}
                     onClick={onClick}
                     dropdown
                 >
@@ -170,7 +164,7 @@ export default ({
                 </MarkButton>
                 <MarkButton
                     mark={marks.H5_MARK}
-                    editor={editor}
+                    value={value}
                     onClick={onClick}
                     dropdown
                 >
@@ -178,7 +172,7 @@ export default ({
                 </MarkButton>
                 <MarkButton
                     mark={marks.H6_MARK}
-                    editor={editor}
+                    value={value}
                     onClick={onClick}
                     dropdown
                 >
