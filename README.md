@@ -47,10 +47,10 @@ Don't need all of these, just an interpretation of Ian's grading system.
 
 ### SVG ###
 
-- [x] Basic drawing (by copying)
+- [x] Basic drawing
 - [x] Shape tools
-- [ ] Freehand
-- [x] Simplification (SVGOMG?)
+- [x] Freehand
+- [x] Simplification
 - [x] Path editing
 - [x] Grouping
 - [ ] Transformations
