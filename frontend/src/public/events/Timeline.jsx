@@ -1,10 +1,10 @@
 // @flow
 import * as React from 'react';
 import styled from 'styled-components';
-import { Container as StandardContainer } from '../style-utils';
-import { unique } from '../util/lists';
+import { Container as StandardContainer } from '../../style-utils';
+import { unique } from '../../util/lists';
 import Group from './Group';
-import type { EventType } from '../types';
+import type { EventType } from '../../types';
 
 
 const Container = StandardContainer.extend`
@@ -68,7 +68,7 @@ export default class Timeline extends React.Component<Props> {
                         }
                         return (
                             <Group
-                                key={group.toString()}
+                                key={group}
                                 month={group}
                                 events={getMonthsEvents(group)}
                             />

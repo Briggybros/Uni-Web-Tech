@@ -1,7 +1,7 @@
 // @flow
 import * as React from 'react';
 import styled from 'styled-components';
-import type { EventType } from '../types';
+import type { EventType } from '../../types';
 
 const TimelineEventEntry = styled.div`
     position: relative;
@@ -85,12 +85,9 @@ type Props = {
 
 export default (props: Props) => {
     const date : Date = new Date(parseInt(props.event.date, 10));
-    const day = date.getDate();
-    const month = props.monthString;
-    console.log(month);
     return (
         <TimelineEventEntry>
-            <DateBox><Day>{day}</Day><Month>{month}</Month></DateBox>
+            <DateBox><Day>{date.getDate()}</Day><Month>{props.monthString}</Month></DateBox>
             <Post>
                 <Title>{props.event.title}</Title>
                 <Content>{props.event.content}</Content>
