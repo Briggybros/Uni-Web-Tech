@@ -33,12 +33,12 @@ eventRouter.get('/', (req: $Request, res: $Response) => {
             events: events.map(event => event.toJSON()),
             response: Response.Success.DATA_FOUND,
         })))
-        .catch((error) => {
-            console.error(error);
-            return res.send(JSON.stringify({
-                response: Response.ClientError.DATA_NOT_FOUND,
-            }));
-        });
+        .catch(error => res.send(JSON.stringify({
+            response: {
+                ...Response.ClientError.DATA_NOT_FOUND,
+                raw: error,
+            },
+        })));
 });
 
 eventRouter.post('/save/:id', isEditor, (req: $Request, res: $Response) => {
@@ -46,9 +46,14 @@ eventRouter.post('/save/:id', isEditor, (req: $Request, res: $Response) => {
         return Event.createEvent('New Event')
             .then(event => res.send(JSON.stringify({
                 response: Response.Success.DATA_CREATED,
-                article: event.toJSON(),
+                event: event.toJSON(),
             })))
-            .catch(console.error);
+            .catch(error => res.send(JSON.stringify({
+                response: {
+                    ...Response.ServerError.DATA_CREATION_FAILED,
+                    raw: error,
+                },
+            })));
     }
     if (
         req.body &&
@@ -56,25 +61,35 @@ eventRouter.post('/save/:id', isEditor, (req: $Request, res: $Response) => {
         req.body.title &&
         typeof req.body.title === 'string' &&
         req.body.content &&
-        typeof req.body.content === 'string'
+        typeof req.body.content === 'string' &&
+        req.body.timestamp &&
+        typeof req.body.timestamp === 'string'
     ) {
-        const { title, content } = req.body;
+        const { title, content, timestamp } = req.body;
         return Event.getEvent(req.params.id)
             .then((event) => {
-                const newArticle = event;
+                const newEvent = event;
                 if (title !== event.title) {
-                    newArticle.title = title;
+                    newEvent.title = title;
                 }
                 if (content !== event.content) {
-                    newArticle.content = JSON.parse(content);
+                    newEvent.content = JSON.parse(content);
+                }
+                if (timestamp !== event.timestamp) {
+                    newEvent.timestamp = timestamp;
                 }
                 return event.save();
             })
             .then(event => res.send(JSON.stringify({
                 response: Response.Success.DATA_CREATED,
-                article: event.toJSON(),
+                event: event.toJSON(),
             })))
-            .catch(console.error);
+            .catch(error => res.send(JSON.stringify({
+                response: {
+                    ...Response.ServerError.DATA_CREATION_FAILED,
+                    raw: error,
+                },
+            })));
     }
     return res.send(JSON.stringify({
         response: Response.ClientError.BAD_BODY,
@@ -85,8 +100,11 @@ eventRouter.post('/publish/:id', isEditor, (req: $Request, res: $Response) => Ev
     .then(event => event.publish())
     .then(event => res.send(JSON.stringify({
         response: Response.Success.DATA_CREATED,
-        article: event.toJSON(),
+        event: event.toJSON(),
     })))
-    .catch(console.error));
+    .catch(error => res.send(JSON.stringify({
+        ...Response.ServerError.DATA_CREATION_FAILED,
+        raw: error,
+    }))));
 
 export default eventRouter;

@@ -1,7 +1,10 @@
 // @flow
 import * as React from 'react';
 
-import { JSXFromJSONString } from '../dynamic/serializer';
+import type { ArticleType, EventType } from '../types';
+
+import Article from './news/Article';
+import Event from './events/Event';
 
 type Props = {
     match: {
@@ -12,13 +15,12 @@ type Props = {
 }
 
 type State = {
-    content: string,
+    item?: ArticleType | EventType,
     error: string,
 }
 
-export default class PageLoader extends React.Component<Props, State> {
+export default class DynamicPageLoader extends React.Component<Props, State> {
     state = {
-        content: '',
         error: '',
     }
 
@@ -36,7 +38,7 @@ export default class PageLoader extends React.Component<Props, State> {
                     });
                 } else {
                     this.setState({
-                        content: body.content,
+                        item: body.item,
                     });
                 }
             }).catch(console.error);
@@ -47,8 +49,14 @@ export default class PageLoader extends React.Component<Props, State> {
             return (
                 <span>{this.state.error}</span>
             );
-        } else if (this.state.content) {
-            return JSXFromJSONString(this.state.content);
+        } else if (this.state.item) {
+            switch (this.state.item.type) {
+            case 'NEWS':
+                return <Article article={this.state.item} />;
+            case 'EVENT':
+                return <Event event={this.state.item} />;
+            default: return null;
+            }
         }
         return (
             <span>Loading...</span>

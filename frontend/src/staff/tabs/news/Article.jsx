@@ -38,7 +38,7 @@ const Button = styled.button`
     }
 `;
 
-const EditorWrapper = styled.div`
+const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
 `;
@@ -162,7 +162,6 @@ class Article extends React.Component<Props, State> {
                         alert(`${body.response.code}: ${body.response.message}`);
                         return null;
                     }
-                    console.log(body.article);
                     this.props.updateArticles([body.article]);
                     return body.article;
                 }).catch(console.error);
@@ -197,12 +196,12 @@ class Article extends React.Component<Props, State> {
                 </ButtonWrapper>
                 {this.state.preview ?
                     this.state.value &&
-                    <div>
+                    <Wrapper>
                         <h1>{this.state.title}</h1>
                         {JSXFromJSONString(serializeToJSONString(this.state.value))}
-                    </div>
+                    </Wrapper>
                     :
-                    <EditorWrapper>
+                    <Wrapper>
                         <TitleInput
                             value={this.state.title}
                             placeholder="Article title"
@@ -212,7 +211,7 @@ class Article extends React.Component<Props, State> {
                             value={this.state.value}
                             onChange={this.onChange}
                         />
-                    </EditorWrapper>
+                    </Wrapper>
                 }
             </Window>
         );

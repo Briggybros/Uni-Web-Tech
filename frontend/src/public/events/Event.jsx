@@ -1,9 +1,16 @@
 // @flow
 import * as React from 'react';
+import { Link as UnstyledLink } from 'react-router-dom';
 import styled from 'styled-components';
+
 import type { EventType } from '../../types';
 
-const TimelineEventEntry = styled.div`
+import { JSXFromJSONString } from '../../dynamic/serializer';
+
+const TimelineEventEntry = styled(UnstyledLink)`
+    display: block;
+    text-decoration: none;
+    color: inherit;
     position: relative;
     margin-top: 3rem;
     &:not(:last-of-type){
@@ -72,7 +79,11 @@ const Post = styled.div`
     background-color: ${props => props.theme.colours.white};
 `;
 
-const Content = styled.div``;
+const Content = styled(({ summary, ...rest }) => <div {...rest} />)`
+    > *:not(:first-child) {
+        display: ${props => (props.summary ? 'none' : 'block')};
+    }
+`;
 
 const Title = styled.h2`
     margin-top: 0;
@@ -80,17 +91,26 @@ const Title = styled.h2`
 
 type Props = {
     event: EventType,
-    monthString: string,
 };
 
-export default (props: Props) => {
-    const date : Date = new Date(parseInt(props.event.timestamp, 10));
+function findMonth(m: number) {
+    const months = ['Jan', 'Feb', 'Mar', 'April', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    return months[m];
+}
+
+export default ({ event }: Props) => {
+    const date : Date = new Date(parseInt(event.timestamp, 10));
     return (
-        <TimelineEventEntry>
-            <DateBox><Day>{date.getDate()}</Day><Month>{props.monthString}</Month></DateBox>
+        <TimelineEventEntry
+            to={`/${event.id}`}
+        >
+            <DateBox>
+                <Day>{date.getDate()}</Day>
+                <Month>{findMonth(date.getMonth())}</Month>
+            </DateBox>
             <Post>
-                <Title>{props.event.title}</Title>
-                <Content>{props.event.content}</Content>
+                <Title>{event.title}</Title>
+                <Content>{JSXFromJSONString(event.content)}</Content>
             </Post>
         </TimelineEventEntry>
     );

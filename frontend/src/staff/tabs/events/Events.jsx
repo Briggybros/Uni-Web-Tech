@@ -20,7 +20,7 @@ type Props = {
 
 class Events extends React.Component<Props> {
     componentDidMount() {
-        fetch('/api/events/?drafts=true')
+        fetch('/api/event/?drafts=true&past=true')
             .then((response) => {
                 if (response.ok) {
                     return response.json();
@@ -37,7 +37,7 @@ class Events extends React.Component<Props> {
     }
 
     newEvent = () => {
-        fetch('/api/events/save/new', {
+        fetch('/api/event/save/new', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
@@ -55,8 +55,8 @@ class Events extends React.Component<Props> {
                 return null;
             }
             this.props.updateEvents([body.event]);
-            this.props.history.push(`/staff/news/${body.article.id}`);
-            return body.article;
+            this.props.history.push(`/staff/events/${body.event.id}`);
+            return body.event;
         }).catch(console.error);
     }
 

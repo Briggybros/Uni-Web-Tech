@@ -1,7 +1,7 @@
 // @flow
 import * as React from 'react';
 import styled from 'styled-components';
-import EventEntry from './EventEntry';
+import Event from './Event';
 import type { EventType } from '../../types';
 
 const TimelineGroup = styled.div`
@@ -46,10 +46,10 @@ export default (props: Props) => (
                 a: EventType,
                 b: EventType,
             ) => parseInt(a.timestamp, 10) - parseInt(b.timestamp, 10))
-            .map(event => (<EventEntry
+            .map(event => (<Event
                 key={event.id}
                 event={event}
-                monthString={findMonth(props.month)}
+                summary
             />))}
     </TimelineGroup>
 );

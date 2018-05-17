@@ -1,10 +1,14 @@
 // @flow
 import * as React from 'react';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
+
+import type { EventType } from '../../types';
+import { updateEvents } from '../../reducers/eventReducer';
+
 import { Container as StandardContainer } from '../../style-utils';
 import { unique } from '../../util/lists';
 import Group from './Group';
-import type { EventType } from '../../types';
 
 
 const Container = StandardContainer.extend`
@@ -31,27 +35,35 @@ const TimeLineContainer = styled.div`
 `;
 
 type Props = {
-    // events: EventType[],
-    // updateEvents: (EventType[])
+    events: EventType[],
+    updateEvents: Function
 }
 
-const events: Array<any> = [{
-    id: 2, date: new Date().getTime().toString(), title: 'event', content: 'content',
-}, {
-    id: 1, date: new Date(2018, 4, 1, 10, 0, 0).getTime().toString(), title: 'event', content: 'content',
-}, {
-    id: 3, date: new Date(2018, 11, 24, 10, 33, 30, 0).getTime().toString(), title: 'event', content: 'content',
-}];
-
-export default class Timeline extends React.Component<Props> {
+class Timeline extends React.Component<Props> {
     componentDidMount() {
-        // fetch('/api/events')
-        //     .then(response => response.json())
-        //     .then(json => this.props.updateEvents(json.events));
+        fetch('/api/event')
+            .then((response) => {
+                if (response.ok) {
+                    return response.json();
+                }
+                throw new Error('Library Error');
+            })
+            .then((body) => {
+                if (body.response.isError) {
+                    alert(`${body.response.code}: ${body.response.message}`);
+                }
+                this.props.updateEvents(body.events);
+            })
+            .catch(console.error);
     }
+
     render() {
-        const eventsList : EventType[] = events;
-        const groups : number[] = unique(eventsList.reduce((acc, event) => {
+        const upcomingEvents =
+            this.props.events
+                .filter(event => event.published)
+                .filter(event => parseInt(event.timestamp, 10) > Date.now());
+
+        const groups : number[] = unique(upcomingEvents.reduce((acc, event) => {
             const d = new Date(parseInt(event.timestamp, 10));
             return [
                 ...acc,
@@ -62,10 +74,8 @@ export default class Timeline extends React.Component<Props> {
             <Container>
                 <TimeLineContainer>
                     {groups.map((group) => {
-                        function getMonthsEvents(g: number): EventType[] {
-                            return eventsList.filter(event =>
-                                new Date(parseInt(event.timestamp, 10)).getMonth() === g);
-                        }
+                        const getMonthsEvents = (g: number) => upcomingEvents.filter(event =>
+                            new Date(parseInt(event.timestamp, 10)).getMonth() === g);
                         return (
                             <Group
                                 key={group}
@@ -79,3 +89,9 @@ export default class Timeline extends React.Component<Props> {
         );
     }
 }
+
+export default connect(state => ({
+    events: Object.values(state.events),
+}), {
+    updateEvents,
+})(Timeline);

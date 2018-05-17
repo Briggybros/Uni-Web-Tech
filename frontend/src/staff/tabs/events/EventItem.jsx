@@ -11,7 +11,7 @@ const Title = styled.h2`
     margin-bottom: 0.5rem;
 `;
 
-const Author = styled.span`
+const DateString = styled.span`
 `;
 
 type Props = {
@@ -23,6 +23,6 @@ export default ({ item }: Props) => (
         to={`/staff/events/${item.id}`}
     >
         <Title>{item.title}</Title>
-        <Author>{item}</Author>
+        <DateString>{new Date(parseInt(item.timestamp, 10)).toLocaleString()}</DateString>
     </Item>
 );

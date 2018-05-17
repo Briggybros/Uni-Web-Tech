@@ -12,7 +12,7 @@ import Timeline from './events/Timeline';
 
 import Login from './login/Login';
 
-import StaticPageLoader from './StaticPageLoader';
+import DynamicPageLoader from './DynamicPageLoader';
 
 import { updateUser } from '../reducers/userReducer';
 
@@ -61,7 +61,7 @@ export default ({ history }: { history: { push: Function } }) => (
             </Route>
             <Route
                 path="/:id"
-                component={StaticPageLoader}
+                component={DynamicPageLoader}
             />
         </Switch>
         <Footer />
