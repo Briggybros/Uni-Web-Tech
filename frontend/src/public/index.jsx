@@ -8,6 +8,8 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 
 import NewsFeed from './news/Feed';
+import Timeline from './events/Timeline';
+
 import Login from './login/Login';
 
 import StaticPageLoader from './StaticPageLoader';
@@ -43,6 +45,10 @@ export default ({ history }: { history: { push: Function } }) => (
                 exact
                 path="/"
                 component={NewsFeed}
+            />
+            <Route
+                path="/events"
+                component={Timeline}
             />
             <Route
                 path="/login"

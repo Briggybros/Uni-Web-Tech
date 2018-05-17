@@ -36,9 +36,9 @@ type Props = {
 }
 
 const events: Array<any> = [{
-    id: 1, date: new Date().getTime().toString(), title: 'event', content: 'content',
-}, {
     id: 2, date: new Date().getTime().toString(), title: 'event', content: 'content',
+}, {
+    id: 1, date: new Date(2018, 4, 1, 10, 0, 0).getTime().toString(), title: 'event', content: 'content',
 }, {
     id: 3, date: new Date(2018, 11, 24, 10, 33, 30, 0).getTime().toString(), title: 'event', content: 'content',
 }];
