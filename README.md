@@ -13,14 +13,14 @@ Don't need all of these, just an interpretation of Ian's grading system.
 
 - [x] Get page delivery to work
 - [x] Use XHTML delivery
-- [ ] Use HTML validator in tests
-- [ ] Investigate issues and get high level confidence (slightly ambiguous)
+- [x] Use XHTML validator in tests
+- [x] Investigate issues and get high level confidence
 
 ### CSS ###
 
 - [x] Get styles to work
 - [x] No style tags or atributes in html (No <div style="..." width="420px" /> type stuff I assume)
-- [ ] Investigate issues and get high level confidence (slightly ambiguous)
+- [x] Investigate issues and get high level confidence (slightly ambiguous)
 
 ### JS ###
 
@@ -64,27 +64,27 @@ Don't need all of these, just an interpretation of Ian's grading system.
 - [x] Port numbers
 - [ ] URL validation
 - [x] Content negotiation
-- [ ] Redirections
-- [ ] UTF8 (Why is this here?)
+- [x] Redirections
+- [x] UTF8 (Why is this here?)
 - [ ] HTTPS
 - [ ] Certificates
 - [ ] Web sockets (Please)
 - [ ] Cloud hosting (Can easily host express server as EBS system on AWS including load balancing)
 - [ ] Security issues beyond URL validation
 - [ ] Automated testing (Would personally include HTML validator)
-- [ ] Cookies (Hope we don't need disclaimer)
+- [x] Cookies
 - [x] Running under reduced privilege (Assuming not needing sudo to run server)
 
 ### Database ###
 
-- [ ] Have data in database
-- [ ] Use data on server
-- [ ] Update database
-- [ ] Separate model for database
-- [ ] Good database design
+- [x] Have data in database
+- [x] Use data on server
+- [x] Update database
+- [x] Separate model for database
+- [x] Good database design
 
 ### Dynamic pages ###
 
-- [ ] Simple dynamic pages
-- [ ] Sophisticated dynamic pages (REST, Sockets, WebRTC)
-- [ ] Fluency in chosen framework
+- [x] Simple dynamic pages
+- [x] Sophisticated dynamic pages
+- [x] Fluency in chosen framework
