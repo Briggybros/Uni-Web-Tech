@@ -31,7 +31,7 @@ const TimeLineContainer = styled.div`
 `;
 
 type Props = {
-    events: EventType[],
+    // events: EventType[],
     // updateEvents: (EventType[])
 }
 
@@ -67,7 +67,11 @@ export default class Timeline extends React.Component<Props> {
                                 new Date(parseInt(event.date, 10)).getMonth() === g);
                         }
                         return (
-                            <Group key={group.toString()} month={group} events={getMonthsEvents(group)} />
+                            <Group
+                                key={group.toString()}
+                                month={group}
+                                events={getMonthsEvents(group)}
+                            />
                         );
                     })}
                 </TimeLineContainer>
