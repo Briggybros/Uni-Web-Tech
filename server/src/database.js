@@ -14,75 +14,72 @@ const db = knex({
     },
 });
 
-export type UserRow = {
-    username: string,
+export type UserData = {
     email: string,
     password: string,
+    firstName: string,
+    lastName: string,
+    verified: boolean,
 };
 
-export type RolesRow = {
-    id: number,
-    name: string,
+export type UserRolesData = {
+    email: string,
+    role: string,
 };
 
-export type UserRolesRow = {
-    username: string,
-    role_id: number,
-};
-
-export type PagesRow = {
-    path: string,
+export type ContentData = {
+    id: string,
     content: string,
+    published: boolean,
     type: 'NEWS' | 'EVENT' | null,
     meta: string,
 }
 
 export default db;
 
-export function init(): Promise<knex> {
-    return new Promise((resolve, reject) => {
-        resolve(PromiseReduce([
-            db.schema.hasTable('users').then((exists) => {
-                if (!exists) {
-                    return db.schema.createTable('users', (table) => {
-                        table.string('username').notNullable().primary();
-                        table.string('email');
-                        table.string('password', 60);
-                    });
-                }
-                return null;
-            }),
-            db.schema.hasTable('roles').then((exists) => {
-                if (!exists) {
-                    return db.schema.createTable('roles', (table) => {
-                        table.increments('id').notNullable().unsigned().primary();
-                        table.string('name');
-                    });
-                }
-                return null;
-            }),
-            db.schema.hasTable('user_roles').then((exists) => {
-                if (!exists) {
-                    return db.schema.createTable('user_roles', (table) => {
-                        table.string('username').notNullable();
-                        table.integer('role_id').unsigned().notNullable();
-                        table.foreign('username').references('username').inTable('users');
-                        table.foreign('role_id').references('id').inTable('roles');
-                    });
-                }
-                return null;
-            }),
-            db.schema.hasTable('pages').then((exists) => {
-                if (!exists) {
-                    return db.schema.createTable('pages', (table) => {
-                        table.string('path').notNullable().primary();
-                        table.json('content').notNullable();
-                        table.enu('type', ['NEWS', 'EVENT']);
-                        table.json('meta');
-                    });
-                }
-                return null;
-            }),
-        ]).catch(reject));
-    }).then(() => db);
+export function init(): Promise<Knex$Knex<*>> {
+    return new Promise((resolve, reject) => PromiseReduce([
+        () => db.schema.hasTable('users').then((exists) => {
+            if (!exists) {
+                return db.schema.createTable('users', (table) => {
+                    table.string('email').notNullable().primary();
+                    table.string('password', 60).notNullable();
+                    table.string('firstName').notNullable();
+                    table.string('lastName').notNullable();
+                    table.boolean('verified').notNullable();
+                })
+                    .then(() => console.log('users table created'))
+                    .catch(console.error);
+            }
+            return null;
+        }),
+        () => db.schema.hasTable('user_roles').then((exists) => {
+            if (!exists) {
+                return db.schema.createTable('user_roles', (table) => {
+                    table.string('email').notNullable();
+                    table.string('role').notNullable();
+                    table.foreign('email').references('email').inTable('users');
+                })
+                    .then(() => console.log('user_roles table created'))
+                    .catch(console.error);
+            }
+            return null;
+        }),
+        () => db.schema.hasTable('dynamic_content').then((exists) => {
+            if (!exists) {
+                return db.schema.createTable('dynamic_content', (table) => {
+                    table.increments('id');
+                    table.json('content').notNullable();
+                    table.boolean('published').notNullable();
+                    table.enu('type', ['NEWS', 'EVENT']);
+                    table.json('meta');
+                })
+                    .then(() => console.log('dynamic_content table created'))
+                    .catch(console.error);
+            }
+            return null;
+        }),
+    ])
+        .then(resolve)
+        .catch(reject)).then(() => db);
 }

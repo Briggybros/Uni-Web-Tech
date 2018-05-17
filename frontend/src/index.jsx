@@ -1,58 +1,50 @@
 // @flow
 import React from 'react';
 import { render } from 'react-dom';
-import { Route, Switch } from 'react-router';
-import { BrowserRouter as Router } from 'react-router-dom';
 import { createStore } from 'redux';
 import { Provider as ReduxProvider } from 'react-redux';
-import styled from 'styled-components';
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+import { PersistGate } from 'redux-persist/integration/react';
 
 import ThemeProvider from './providers/ThemeProvider';
 import { theme, injectGlobalStyles } from './style-utils';
 
-import Header from './components/Header';
-import Footer from './components/Footer';
+import Routes from './routes';
+
 import reducer from './reducer';
 
-import PageLoader from './pageloader/PageLoader';
+const persistedReducer = persistReducer({
+    key: 'root',
+    storage,
+}, reducer);
 
-const store = createStore(reducer, {});
+const store = createStore(
+    persistedReducer,
+    {},
+    // eslint-disable-next-line no-underscore-dangle
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+);
 
 injectGlobalStyles();
 
 const mount : HTMLElement | null = document.getElementById('app');
-
-const Page = styled.div`
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-`;
 
 if (mount) {
     render(
         <ReduxProvider
             store={store}
         >
-            <ThemeProvider
-                theme={theme}
-            >
-                <Router>
-                    <Page>
-                        <Header />
-                        <Switch>
-                            {/* Add specific routes above this */}
-                            <Route>
-                                <PageLoader />
-                            </Route>
-                        </Switch>
-                        <Footer />
-                    </Page>
-                </Router>
-            </ThemeProvider>
+            <PersistGate persistor={persistStore(store)}>
+                <ThemeProvider
+                    theme={theme}
+                >
+                    <Routes />
+                </ThemeProvider>
+            </PersistGate>
         </ReduxProvider>,
         mount,
     );
 } else {
     throw new Error('Could not find React mount point');
 }
-

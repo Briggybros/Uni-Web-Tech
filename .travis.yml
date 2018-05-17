@@ -6,3 +6,14 @@ cache:
     - node_modules
 notifications:
   email: false
+env: 
+  - CXX=g++-4.9
+addons:
+  apt:
+    sources:
+    - ubuntu-toolchain-r-test
+    packages:
+    - gcc
+    - g++-4.9
+    - make
+    - python2.7

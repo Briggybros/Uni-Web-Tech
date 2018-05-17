@@ -62,5 +62,9 @@ server/dist/
 database/
 flow-typed/
 
-#editor
+# editor
 .vscode/
+
+# Using custom flow-type for redux-persist and knex (The supplied types are broke)
+!flow-typed/npm/redux-persist_vx.x.x.js
+!flow-typed/npm/knex_v0.14.x.js

@@ -2,13 +2,12 @@
 import path from 'path';
 import express from 'express';
 import type { $Response, $Request, NextFunction } from 'express';
-import passport from 'passport';
 import session from 'express-session';
 import bodyParser from 'body-parser';
-import cookieParser from 'cookie-parser';
 
 import api from './api/index';
 import { init as initDatabase } from './database';
+import initPassport from './passport';
 
 initDatabase();
 
@@ -26,16 +25,22 @@ function xhtmlify(req: $Request, res: $Response, done: NextFunction) {
     return done();
 }
 
+const passport = initPassport();
+
+app.use(express.static(DIST));
+app.use(bodyParser.json());
 app.use(session({
     secret: 'UMRQlXrka6MIYrBMVMZOz5JvsPq1i9EymesiDdAa0AQtEt9yRj5wHHQ8IHtqCKmP',
-    resave: false,
-    saveUninitialized: true,
+    resave: true,
+    saveUninitialized: false,
+    cookie: {
+        secure: false,
+        maxAge: 31536000000,
+    },
 }));
-app.use(cookieParser());
-app.use(bodyParser.json());
-app.use(express.static(DIST));
-app.use(passport.initialize());
-app.use(passport.session());
+app.use(passport.initialize);
+app.use(passport.session);
+
 
 app.use('/api', api);
 
