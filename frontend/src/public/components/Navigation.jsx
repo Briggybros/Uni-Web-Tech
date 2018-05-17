@@ -1,9 +1,10 @@
 // @flow
 import * as React from 'react';
 import { connect } from 'react-redux';
+import { Link as UnstyledLink } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { Link as UnstyledLink } from 'react-router-dom';
+import type { UserType, PageType } from '../../types';
 
 const Navigation = styled.nav`
     display: flex;
@@ -50,20 +51,32 @@ const Link = styled(UnstyledLink)`
 type Props = {
     isOpen: boolean,
     headerHeight: string,
-    user: {
-        roles: string[],
-    },
+    user: UserType,
+    pages: PageType[],
 }
 
-const Nav = ({ isOpen, headerHeight, user }: Props) => (
+const Nav = ({
+    isOpen,
+    headerHeight,
+    user,
+    pages,
+    ...rest
+}: Props) => (
     <Navigation
         isOpen={isOpen}
         headerHeight={headerHeight}
+        {...rest}
     >
         <Menu>
             <Link to="/">Home</Link>
             <Link to="/events">Events</Link>
-            <Link to="/about">About</Link>
+            {pages.map(page => (
+                <Link
+                    to={`/${page.url}`}
+                >
+                    {page.title}
+                </Link>
+            ))}
             {user && user.roles && user.roles.length > 0 && <Link to="/staff">Staff</Link>}
             {user ? <Link to="/logout">Logout</Link> : <Link to="/login">Login</Link>}
         </Menu>
@@ -72,4 +85,5 @@ const Nav = ({ isOpen, headerHeight, user }: Props) => (
 
 export default connect(state => ({
     user: state.user,
+    pages: Object.values(state.pages).filter(page => (page && page.inNav ? page.inNav : false)),
 }))(Nav);
