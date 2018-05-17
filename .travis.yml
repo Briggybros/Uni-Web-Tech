@@ -16,3 +16,4 @@ addons:
     - gcc
     - g++-4.9
     - make
+    - python2.7
