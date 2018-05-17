@@ -7,11 +7,20 @@ export type UserType = {
 }
 
 export type ArticleType = {
-    id: string,
+    id: number,
     content: string,
     published: boolean,
     type: 'NEWS',
     timestamp: string,
     title: string,
     author: UserType,
+}
+
+export type EventType = {
+    id: number,
+    content: string,
+    published: boolean,
+    type: 'EVENT',
+    date: string,
+    title: string,
 }

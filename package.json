@@ -13,7 +13,7 @@
     "build:frontend": "ENV=dev webpack --config ./frontend/webpack.config.js",
     "build:frontend:hot": "ENV=dev webpack --watch --config ./frontend/webpack.config.js",
     "test": "eslint ./ && flow && npm run build:server && npm run build:frontend",
-    "postinstall": "npx flow-typed install"
+    "postinstall": "flow-typed install"
   },
   "dependencies": {
     "@briggybros/styled-property": "^1.0.3",

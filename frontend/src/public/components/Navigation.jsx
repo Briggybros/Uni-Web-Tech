@@ -7,6 +7,7 @@ import { Link as UnstyledLink } from 'react-router-dom';
 
 const Navigation = styled.nav`
     display: flex;
+    z-index:1;
     ${props => (props.theme.media.mobile ? 'position: fixed;' : '')}
     ${props => (props.theme.media.mobile ? 'width: 80%;' : '')}
     ${props => (props.theme.media.mobile ? `top: ${props.headerHeight};` : '')}
@@ -61,6 +62,7 @@ const Nav = ({ isOpen, headerHeight, user }: Props) => (
     >
         <Menu>
             <Link to="/">Home</Link>
+            <Link to="/events">Events</Link>
             <Link to="/about">About</Link>
             {user && user.roles && user.roles.length > 0 && <Link to="/staff">Staff</Link>}
             {user ? <Link to="/logout">Logout</Link> : <Link to="/login">Login</Link>}
