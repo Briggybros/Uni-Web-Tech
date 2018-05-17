@@ -52,7 +52,7 @@ export default class Timeline extends React.Component<Props> {
     render() {
         const eventsList : EventType[] = events;
         const groups : number[] = unique(eventsList.reduce((acc, event) => {
-            const d = new Date(parseInt(event.date, 10));
+            const d = new Date(parseInt(event.timestamp, 10));
             return [
                 ...acc,
                 d.getMonth(),
@@ -64,7 +64,7 @@ export default class Timeline extends React.Component<Props> {
                     {groups.map((group) => {
                         function getMonthsEvents(g: number): EventType[] {
                             return eventsList.filter(event =>
-                                new Date(parseInt(event.date, 10)).getMonth() === g);
+                                new Date(parseInt(event.timestamp, 10)).getMonth() === g);
                         }
                         return (
                             <Group

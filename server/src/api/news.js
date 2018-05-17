@@ -40,30 +40,9 @@ newsRouter.get('/', (req: $Request, res: $Response) => {
         });
 });
 
-const defaultContent = {
-    document: {
-        nodes: [
-            {
-                object: 'block',
-                type: 'LEFT_ALIGN_NODE',
-                nodes: [
-                    {
-                        object: 'text',
-                        leaves: [
-                            {
-                                text: '',
-                            },
-                        ],
-                    },
-                ],
-            },
-        ],
-    },
-};
-
 newsRouter.post('/save/:id', isEditor, (req: $Request, res: $Response) => {
     if (req.params.id === 'new') {
-        return Article.createArticle('', defaultContent, req.user)
+        return Article.createArticle('New Article', req.user)
             .then(article => res.send(JSON.stringify({
                 response: Response.Success.DATA_CREATED,
                 article: article.toJSON(),

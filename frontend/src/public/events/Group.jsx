@@ -42,7 +42,10 @@ export default (props: Props) => (
             {findMonth(props.month)}
         </TimelineMonthEntry>
         {props.events
-            .sort((a: EventType, b: EventType) => parseInt(a.date, 10) - parseInt(b.date, 10))
+            .sort((
+                a: EventType,
+                b: EventType,
+            ) => parseInt(a.timestamp, 10) - parseInt(b.timestamp, 10))
             .map(event => (<EventEntry
                 key={event.id}
                 event={event}

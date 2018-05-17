@@ -3,6 +3,27 @@ import database from '../database';
 import type { ContentData } from '../database';
 
 export default class DynamicContent {
+    static defaultContent = {
+        document: {
+            nodes: [
+                {
+                    object: 'block',
+                    type: 'LEFT_ALIGN_NODE',
+                    nodes: [
+                        {
+                            object: 'text',
+                            leaves: [
+                                {
+                                    text: '',
+                                },
+                            ],
+                        },
+                    ],
+                },
+            ],
+        },
+    };
+
     static getContent(id: string): Promise<ContentData> {
         return database.select().from('dynamic_content').where({
             id,
@@ -18,13 +39,13 @@ export default class DynamicContent {
     }
 
     static createContent(
-        content: Object,
+        content?: Object,
         published: boolean,
         type: string,
         meta: Object,
     ): Promise<ContentData> {
         return database('dynamic_content').insert({
-            content: JSON.stringify(content),
+            content: JSON.stringify(content || DynamicContent.defaultContent),
             published,
             type,
             meta: JSON.stringify(meta),

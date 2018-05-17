@@ -84,7 +84,7 @@ type Props = {
 };
 
 export default (props: Props) => {
-    const date : Date = new Date(parseInt(props.event.date, 10));
+    const date : Date = new Date(parseInt(props.event.timestamp, 10));
     return (
         <TimelineEventEntry>
             <DateBox><Day>{date.getDate()}</Day><Month>{props.monthString}</Month></DateBox>

@@ -52,16 +52,16 @@ export default class Article extends DynamicContent {
         return User.getUser(JSON.parse(data.meta).author.email)
             .then(author => new Article(
                 data.id,
-                JSON.parse(data.meta).title,
                 JSON.parse(data.content),
-                author,
                 data.published,
                 JSON.parse(data.meta).timestamp,
+                JSON.parse(data.meta).title,
+                author,
                 JSON.parse(data.meta),
             ));
     }
 
-    static createArticle(title: string, content: Object, author: User): Promise<Article> {
+    static createArticle(title: string, author: User, content?: Object): Promise<Article> {
         return DynamicContent.createContent(content, false, 'NEWS', {
             title,
             author: author.toJSON(),
@@ -71,11 +71,11 @@ export default class Article extends DynamicContent {
 
     constructor(
         id: string,
-        title: string,
         content: Object,
-        author: User,
         published: boolean,
         timestamp: string,
+        title: string,
+        author: User,
         meta: Object,
     ) {
         super(id, content, published, 'NEWS', {
@@ -128,9 +128,9 @@ export default class Article extends DynamicContent {
         return {
             ...super.toJSON(),
             type: 'NEWS',
+            timestamp: this.timestamp,
             title: this.title,
             author: this.author,
-            timestamp: this.timestamp,
         };
     }
 }
