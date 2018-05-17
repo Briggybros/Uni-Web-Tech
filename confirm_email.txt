@@ -1,0 +1,5 @@
+Thank you for signing up with Bristol RAG!
+To validate your email address, please copy and paste this link into your browser: 
+VERIFY_LINK
+Kind regards,
+Bristol RAG

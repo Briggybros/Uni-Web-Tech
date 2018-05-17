@@ -14,8 +14,11 @@ RUN npm install
 # Copy code into directory
 COPY . /usr/src/ragsite
 
+# Transplile files
+RUN npm run build
+
 # Expose the port 8080
 EXPOSE 8080
 
 # Set the startup command
-CMD ["yarn", "start:hot"]
+CMD ["npm", "start"]
