@@ -3,19 +3,10 @@ import { Router } from 'express';
 import type { $Response } from 'express';
 
 import type { Request as $Request } from './types';
-
 import * as Response from './responses';
+import { isEditor } from './middleware';
 
 import Article from '../models/Article';
-
-function isEditor(req: $Request, res: $Response, next: Function) {
-    if (req.user.roles.includes('editor') || req.user.roles.includes('admin')) {
-        return next();
-    }
-    return res.send(JSON.stringify({
-        response: Response.ClientError.AUTH_FAILED,
-    }));
-}
 
 const newsRouter = Router();
 
@@ -72,7 +63,7 @@ newsRouter.post('/save/:id', isEditor, (req: $Request, res: $Response) => {
                 if (content !== article.content) {
                     newArticle.content = JSON.parse(content);
                 }
-                return article.save();
+                return newArticle.save();
             })
             .then(article => res.send(JSON.stringify({
                 response: Response.Success.DATA_CREATED,

@@ -117,17 +117,9 @@ export default class Article extends DynamicContent {
         });
     }
 
-    toContentData(): ContentData {
-        return {
-            ...super.toContentData(),
-            type: 'NEWS',
-        };
-    }
-
     toJSON() {
         return {
             ...super.toJSON(),
-            type: 'NEWS',
             timestamp: this.timestamp,
             title: this.title,
             author: this.author,

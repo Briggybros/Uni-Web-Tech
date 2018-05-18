@@ -27,11 +27,13 @@ export type UserRolesData = {
     role: string,
 };
 
+export type TypeType = 'NEWS' | 'EVENT' | 'PAGE';
+
 export type ContentData = {
     id: string,
     content: string,
     published: boolean,
-    type: 'NEWS' | 'EVENT' | null,
+    type: TypeType,
     meta: string,
 }
 
@@ -71,7 +73,7 @@ export function init(): Promise<Knex$Knex<*>> {
                     table.increments('id');
                     table.json('content').notNullable();
                     table.boolean('published').notNullable();
-                    table.enu('type', ['NEWS', 'EVENT']);
+                    table.enu('type', ['NEWS', 'EVENT', 'PAGE']);
                     table.json('meta');
                 })
                     .then(() => console.log('dynamic_content table created'))

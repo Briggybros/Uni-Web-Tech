@@ -81,7 +81,7 @@ export default class Event extends DynamicContent {
         title: string,
         meta: Object,
     ) {
-        super(id, content, published, 'NEWS', {
+        super(id, content, published, 'EVENT', {
             ...meta,
             title,
             timestamp,
@@ -104,24 +104,9 @@ export default class Event extends DynamicContent {
     }
     get timestamp() { return this.meta.timestamp; }
 
-    publish() {
-        return super.publish().then(() => {
-            this.timestamp = Date.now().toString();
-            return this.save();
-        });
-    }
-
-    toContentData(): ContentData {
-        return {
-            ...super.toContentData(),
-            type: 'EVENT',
-        };
-    }
-
     toJSON() {
         return {
             ...super.toJSON(),
-            type: 'EVENT',
             timestamp: this.timestamp,
             title: this.title,
         };
