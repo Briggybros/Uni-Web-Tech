@@ -1,6 +1,6 @@
 // @flow
 import database from '../database';
-import type { ContentData } from '../database';
+import type { ContentData, TypeType } from '../database';
 
 export default class DynamicContent {
     static defaultContent = {
@@ -57,13 +57,14 @@ export default class DynamicContent {
     id: string;
     content: Object;
     published: boolean;
-    type: string;
+    type: TypeType;
     meta: Object;
 
-    constructor(id: string, content: Object, published: boolean, type: string, meta: Object) {
+    constructor(id: string, content: Object, published: boolean, type: TypeType, meta: Object) {
         this.id = id;
         this.content = content;
         this.published = published;
+        this.type = type;
         this.meta = meta;
     }
 
@@ -88,9 +89,11 @@ export default class DynamicContent {
             published: true,
         }).where({
             id: this.id,
-        }).then(() => {
-            this.published = true;
-        });
+        })
+            .then(() => {
+                this.published = true;
+            })
+            .then(() => this);
     }
 
     toContentData(): ContentData {
@@ -98,7 +101,7 @@ export default class DynamicContent {
             id: this.id,
             content: JSON.stringify(this.content),
             published: this.published,
-            type: null,
+            type: this.type,
             meta: JSON.stringify(this.meta),
         };
     }

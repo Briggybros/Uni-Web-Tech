@@ -35,7 +35,7 @@ class DynamicPageLoader extends React.Component<Props, State> {
                 item: this.props.pages[this.props.match.params.id],
             });
         } else {
-            fetch(`/api/page/${this.props.match.params.id}`)
+            fetch(`/api/dynamic/${this.props.match.params.id}`)
                 .then((response) => {
                     if (response.ok) {
                         return response.json();
@@ -77,6 +77,13 @@ class DynamicPageLoader extends React.Component<Props, State> {
     }
 }
 
-export default connect(state => ({
-    pages: state.pages,
-}))(DynamicPageLoader);
+export default connect((state: {pages: $Exact<{[id: string]: PageType}>}) => {
+    // $FlowFixMe Object.values() returns mixed[] when it should return PageType[] https://github.com/facebook/flow/issues/2221
+    const pages: PageType[] = Object.values(state.pages);
+    return {
+        pages: pages.reduce((acc, page) => ({
+            ...acc,
+            [page.url]: page,
+        }), {}),
+    };
+})(DynamicPageLoader);

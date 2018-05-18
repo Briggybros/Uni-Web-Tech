@@ -38,7 +38,7 @@ export function pageReducer(state: State = {}, action: Action) {
             ...state,
             ...action.pages.reduce((acc, page) => ({
                 ...acc,
-                [page.url]: page,
+                [page.id]: page,
             }), {}),
         };
     case CLEAR_PAGES:

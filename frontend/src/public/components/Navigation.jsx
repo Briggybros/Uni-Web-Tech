@@ -47,7 +47,6 @@ const Link = styled(UnstyledLink)`
     }
 `;
 
-
 type Props = {
     isOpen: boolean,
     headerHeight: string,
@@ -72,6 +71,7 @@ const Nav = ({
             <Link to="/events">Events</Link>
             {pages.map(page => (
                 <Link
+                    key={page.id}
                     to={`/${page.url}`}
                 >
                     {page.title}
@@ -83,7 +83,11 @@ const Nav = ({
     </Navigation>
 );
 
-export default connect(state => ({
-    user: state.user,
-    pages: Object.values(state.pages).filter(page => (page && page.inNav ? page.inNav : false)),
-}))(Nav);
+export default connect((state) => {
+    // $FlowFixMe Object.values() returns mixed[] when it should return PageType[] https://github.com/facebook/flow/issues/2221
+    const pages: PageType[] = Object.values(state.pages);
+    return {
+        pages: pages.filter(page => page.inNav && page.published),
+        user: state.user,
+    };
+})(Nav);

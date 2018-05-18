@@ -7,29 +7,26 @@ export type UserType = {
     roles: string[],
 }
 
-export type ArticleType = {
+type DynamicType = {
     id: number,
     content: string,
     published: boolean,
+}
+
+export type ArticleType = DynamicType & {
     type: 'NEWS',
     timestamp: string,
     title: string,
     author: UserType,
 }
 
-export type EventType = {
-    id: number,
-    content: string,
-    published: boolean,
+export type EventType = DynamicType & {
     type: 'EVENT',
     timestamp: string,
     title: string,
 }
 
-export type PageType = {
-    id: number,
-    content: string,
-    published: boolean,
+export type PageType = DynamicType & {
     type: 'PAGE',
     url: string,
     inNav: boolean,
