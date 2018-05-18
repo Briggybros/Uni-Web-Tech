@@ -62,4 +62,9 @@ export const ServerError = {
         code: 500,
         message: 'Registration failed',
     },
+    DATA_CREATION_FAILED: {
+        isError: true,
+        code: 500,
+        message: 'Data creation failed',
+    },
 };

@@ -69,8 +69,11 @@ authRouter.post('/register', (req: $Request, res: $Response) => {
                     response: Response.Success.USER_CREATED,
                 }));
             });
-        }).catch(() => res.send(JSON.stringify({
-            response: Response.ServerError.REGISTRATION_FAILED,
+        }).catch(error => res.send(JSON.stringify({
+            response: {
+                ...Response.ServerError.REGISTRATION_FAILED,
+                raw: error,
+            },
         })));
     }
     return res.send(JSON.stringify({

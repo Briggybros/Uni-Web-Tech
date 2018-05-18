@@ -42,6 +42,7 @@ class Feed extends React.Component<Props> {
             <Page>
                 {this.props.articles.filter(article => article.published).map(article => (
                     <Article
+                        summary
                         key={article.id}
                         article={article}
                     />

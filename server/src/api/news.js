@@ -32,43 +32,27 @@ newsRouter.get('/', (req: $Request, res: $Response) => {
             articles: articles.map(article => article.toJSON()),
             response: Response.Success.DATA_FOUND,
         })))
-        .catch((error) => {
-            console.error(error);
-            return res.send(JSON.stringify({
-                response: Response.ClientError.DATA_NOT_FOUND,
-            }));
-        });
-});
-
-const defaultContent = {
-    document: {
-        nodes: [
-            {
-                object: 'block',
-                type: 'LEFT_ALIGN_NODE',
-                nodes: [
-                    {
-                        object: 'text',
-                        leaves: [
-                            {
-                                text: '',
-                            },
-                        ],
-                    },
-                ],
+        .catch(error => res.send(JSON.stringify({
+            response: {
+                ...Response.ClientError.DATA_NOT_FOUND,
+                raw: error,
             },
-        ],
-    },
-};
+        })));
+});
 
 newsRouter.post('/save/:id', isEditor, (req: $Request, res: $Response) => {
     if (req.params.id === 'new') {
-        return Article.createArticle('', defaultContent, req.user)
+        return Article.createArticle('New Article', req.user)
             .then(article => res.send(JSON.stringify({
                 response: Response.Success.DATA_CREATED,
                 article: article.toJSON(),
             })))
-            .catch(console.error);
+            .catch(error => res.send(JSON.stringify({
+                response: {
+                    ...Response.ServerError.DATA_CREATION_FAILED,
+                    raw: error,
+                },
+            })));
     }
     if (
         req.body &&
@@ -94,7 +78,12 @@ newsRouter.post('/save/:id', isEditor, (req: $Request, res: $Response) => {
                 response: Response.Success.DATA_CREATED,
                 article: article.toJSON(),
             })))
-            .catch(console.error);
+            .catch(error => res.send(JSON.stringify({
+                response: {
+                    ...Response.ServerError.DATA_CREATION_FAILED,
+                    raw: error,
+                },
+            })));
     }
     return res.send(JSON.stringify({
         response: Response.ClientError.BAD_BODY,
@@ -107,6 +96,11 @@ newsRouter.post('/publish/:id', isEditor, (req: $Request, res: $Response) => Art
         response: Response.Success.DATA_CREATED,
         article: article.toJSON(),
     })))
-    .catch(console.error));
+    .catch(error => res.send(JSON.stringify({
+        response: {
+            ...Response.ServerError.DATA_CREATION_FAILED,
+            raw: error,
+        },
+    }))));
 
 export default newsRouter;

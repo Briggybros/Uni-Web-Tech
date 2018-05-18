@@ -28,7 +28,6 @@ export default (props: Props) => (
             />
             {props.items.map(item => React.createElement(props.itemRenderer, {
                 key: item.id,
-                to: `${props.path}/${item.id}`,
                 item,
             }))}
         </VerticalList>

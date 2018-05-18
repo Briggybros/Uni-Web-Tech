@@ -2,11 +2,12 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Value } from 'slate';
+import UnstyledDateTimePicker from 'react-datetime-picker';
 import styled from 'styled-components';
 
-import type { ArticleType } from '../../../types';
+import type { EventType } from '../../../types';
 
-import { updateArticles } from '../../../reducers/newsReducer';
+import { updateEvents } from '../../../reducers/eventReducer';
 
 import Editor from '../../editor/Editor';
 import { JSXFromJSONString, serializeToJSONString } from '../../../dynamic/serializer';
@@ -50,51 +51,69 @@ const TitleInput = styled.input`
     font-size: 2.5rem;
 `;
 
+const DateTimePicker = styled(UnstyledDateTimePicker)`
+    background: white;
+
+    > div:first-child {
+        border: none;
+    }
+
+    > div:nth-child(2) {
+        z-index: 2;
+    }
+`;
+
 type Props = {
-    article?: ArticleType,
-    updateArticles: Function,
+    event?: EventType,
+    updateEvents: Function,
 }
 
 type State = {
     preview: boolean,
     title: string,
+    timestamp: Date,
     value?: Value,
 }
 
-class Article extends React.Component<Props, State> {
+class Event extends React.Component<Props, State> {
     static defaultProps = {
-        article: undefined,
+        event: undefined,
     }
 
     constructor(props) {
         super(props);
         this.state = {
             preview: false,
-            title: props.article && props.article.title ? props.article.title : '',
+            title: props.event && props.event.title ? props.event.title : '',
+            timestamp: props.event && props.event.timestamp ?
+                new Date(parseInt(props.event.timestamp, 10)) :
+                new Date(Date.now()),
         };
 
-        if (props.article) {
+        if (props.event) {
             this.state = {
                 ...this.state,
-                value: Value.fromJSON(JSON.parse(props.article.content)),
+                value: Value.fromJSON(JSON.parse(props.event.content)),
             };
         }
     }
 
     componentDidUpdate(prevProps) {
         if (
-            prevProps.article &&
-            this.props.article &&
-            prevProps.article.id !== this.props.article.id
+            prevProps.event &&
+            this.props.event &&
+            prevProps.event.id !== this.props.event.id
         ) {
+            const { event } = this.props;
             /*
              * Note here, that airbnb has rules against setting state in update
              * If there's a better way to do this, please inform
              */
             /* eslint-disable-next-line react/no-did-update-set-state */
             this.setState({
-                title: this.props.article.title,
-                value: Value.fromJSON(JSON.parse(this.props.article.content)),
+                title: event.title,
+                timestamp: new Date(parseInt(event.timestamp, 10)),
+                value: Value.fromJSON(JSON.parse(event.content)),
             });
         }
     }
@@ -111,7 +130,13 @@ class Article extends React.Component<Props, State> {
         });
     }
 
-    onSave = () => fetch(`/api/news/save/${this.props.article ? this.props.article.id : 'new'}`, {
+    onDatetimeChange = (timestamp: Date) => {
+        this.setState({
+            timestamp,
+        });
+    }
+
+    onSave = () => fetch(`/api/event/save/${this.props.event ? this.props.event.id : 'new'}`, {
         method: 'POST',
         headers: {
             Accept: 'application/json',
@@ -121,6 +146,7 @@ class Article extends React.Component<Props, State> {
         body: JSON.stringify({
             title: this.state.title,
             content: serializeToJSONString(this.state.value),
+            timestamp: this.state.timestamp.getTime().toString(),
         }),
     }).then((response) => {
         if (response.ok) {
@@ -132,8 +158,8 @@ class Article extends React.Component<Props, State> {
             alert(`${body.response.code}: ${body.response.message}`);
             return null;
         }
-        this.props.updateArticles([body.article]);
-        return body.article;
+        this.props.updateEvents([body.event]);
+        return body.event;
     }).catch(console.error);
 
     onPreview = () => {
@@ -143,9 +169,9 @@ class Article extends React.Component<Props, State> {
     };
 
     onPublish = () => {
-        this.onSave().then((article) => {
-            if (article) {
-                fetch(`/api/news/publish/${article.id}`, {
+        this.onSave().then((event) => {
+            if (event) {
+                fetch(`/api/event/publish/${event.id}`, {
                     method: 'POST',
                     headers: {
                         Accept: 'application/json',
@@ -162,8 +188,8 @@ class Article extends React.Component<Props, State> {
                         alert(`${body.response.code}: ${body.response.message}`);
                         return null;
                     }
-                    this.props.updateArticles([body.article]);
-                    return body.article;
+                    this.props.updateEvents([body.event]);
+                    return body.event;
                 }).catch(console.error);
             }
         });
@@ -184,8 +210,8 @@ class Article extends React.Component<Props, State> {
                         {this.state.preview ? 'Edit' : 'Preview'}
                     </Button>
                     {(
-                        (this.props.article && !this.props.article.published) ||
-                        (!this.props.article)
+                        (this.props.event && !this.props.event.published) ||
+                        (!this.props.event)
                     ) &&
                         <Button
                             onClick={this.onPublish}
@@ -204,8 +230,12 @@ class Article extends React.Component<Props, State> {
                     <Wrapper>
                         <TitleInput
                             value={this.state.title}
-                            placeholder="Article title"
+                            placeholder="Event title"
                             onChange={event => this.onTitleChange(event.target.value)}
+                        />
+                        <DateTimePicker
+                            value={this.state.timestamp}
+                            onChange={this.onDatetimeChange}
                         />
                         <Editor
                             value={this.state.value}
@@ -220,10 +250,10 @@ class Article extends React.Component<Props, State> {
 
 function mapStateToProps(state, ownProps: Object) {
     return {
-        article: ownProps.isNew ? null : state.news[ownProps.match.params.id],
+        event: ownProps.isNew ? null : state.events[ownProps.match.params.id],
     };
 }
 
 export default connect(mapStateToProps, {
-    updateArticles,
-})(Article);
+    updateEvents,
+})(Event);

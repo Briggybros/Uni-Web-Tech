@@ -21,6 +21,6 @@ export type EventType = {
     content: string,
     published: boolean,
     type: 'EVENT',
-    date: string,
+    timestamp: string,
     title: string,
 }

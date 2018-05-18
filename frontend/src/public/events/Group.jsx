@@ -1,7 +1,7 @@
 // @flow
 import * as React from 'react';
 import styled from 'styled-components';
-import EventEntry from './EventEntry';
+import Event from './Event';
 import type { EventType } from '../../types';
 
 const TimelineGroup = styled.div`
@@ -42,11 +42,14 @@ export default (props: Props) => (
             {findMonth(props.month)}
         </TimelineMonthEntry>
         {props.events
-            .sort((a: EventType, b: EventType) => parseInt(a.date, 10) - parseInt(b.date, 10))
-            .map(event => (<EventEntry
+            .sort((
+                a: EventType,
+                b: EventType,
+            ) => parseInt(a.timestamp, 10) - parseInt(b.timestamp, 10))
+            .map(event => (<Event
                 key={event.id}
                 event={event}
-                monthString={findMonth(props.month)}
+                summary
             />))}
     </TimelineGroup>
 );

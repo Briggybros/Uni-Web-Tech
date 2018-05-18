@@ -2,5 +2,4 @@ fronted/dist/
 server/dist/
 node_modules/
 database/
-flow-typed/
 mail/

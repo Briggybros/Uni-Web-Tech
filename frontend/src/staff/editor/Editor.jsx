@@ -19,6 +19,7 @@ const StyledEditor = styled(SlateEditor)`
     padding: 5px 5px 10px 5px;
     flex-grow: 2;
     overflow-y: auto;
+    background: white;
 `;
 
 type Props = {

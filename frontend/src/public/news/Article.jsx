@@ -21,8 +21,11 @@ const Link = styled(UnstyledLink)`
 const Title = styled.h2`
 `;
 
-const Body = styled.div`
+const Body = styled(({ summary, ...rest }) => <div {...rest} />)`
     margin-bottom: 2rem;
+    > *:not(:first-child) {
+        display: ${props => (props.summary ? 'none' : 'block')};
+    }
 `;
 
 const Info = styled.span`
@@ -30,17 +33,20 @@ const Info = styled.span`
 `;
 
 type Props = {
-    article: ArticleType
+    article: ArticleType,
+    summary?: boolean,
 }
 
-export default ({ article }: Props) => (
+const Article = ({ article, summary }: Props) => (
     <Link
         to={`/${article.id}`}
     >
         <Title>
             {article.title}
         </Title>
-        <Body>
+        <Body
+            summary={summary}
+        >
             {JSXFromJSONString(article.content)}
         </Body>
         <Info>
@@ -51,3 +57,9 @@ export default ({ article }: Props) => (
         </Info>
     </Link>
 );
+
+Article.defaultProps = {
+    summary: false,
+};
+
+export default Article;

@@ -2,7 +2,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 
-import type { ArticleType } from '../../../types';
+import type { EventType } from '../../../types';
 
 import { Item } from '../../components/VerticalList';
 
@@ -11,18 +11,18 @@ const Title = styled.h2`
     margin-bottom: 0.5rem;
 `;
 
-const Author = styled.span`
+const DateString = styled.span`
 `;
 
 type Props = {
-    item: ArticleType,
+    item: EventType,
 }
 
 export default ({ item }: Props) => (
     <Item
-        to={`/staff/news/${item.id}`}
+        to={`/staff/events/${item.id}`}
     >
         <Title>{item.title}</Title>
-        <Author>{item.author.firstName} {item.author.lastName}</Author>
+        <DateString>{new Date(parseInt(item.timestamp, 10)).toLocaleString()}</DateString>
     </Item>
 );
