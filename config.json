@@ -1,0 +1,22 @@
+{
+    "server": {
+        "url": "localhost:8080",
+        "ports": {
+            "HTTP": 8080,
+            "HTTPS": 8081
+        }
+    },
+    "database": {
+        "url": "database",
+        "database": "rag",
+        "user": "rag",
+        "password": "rag"
+    },
+    "email": {
+        "url": "mail3.gridhost.co.uk",
+        "user": "noreply@bristolrag.co.uk",
+        "password": "bristolrag",
+        "port": "465",
+        "secure": true
+    }
+}

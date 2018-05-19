@@ -3,19 +3,22 @@ import fileSystem from 'fs';
 import path from 'path';
 import ejs from 'ejs';
 import nodemailer from 'nodemailer';
+import containerized from 'containerized';
+
+import config from '../../config.json';
 
 const transporter = nodemailer.createTransport({
-    host: 'mail3.gridhost.co.uk',
-    port: 465,
-    secure: true,
+    host: containerized() ? 'mail' : config.email.url || 'localhost',
+    port: config.email.port || 587,
+    secure: config.email.secure || false,
     auth: {
-        user: 'webmanager@bristolrag.co.uk',
-        pass: 'mtMaDcRvmZyr26eG^JJL',
+        user: config.email.user,
+        pass: config.email.password,
     },
 });
 
 export function confirmEmailTemplates(confirmCode: string): Promise<{html: string, plain: string}> {
-    const verifyLink = `http://localhost:8080/login/confirm?code=${confirmCode}`;
+    const verifyLink = `http://${config.server.url}/login/confirm?code=${confirmCode}`;
     return new Promise((resolve, reject) => {
         fileSystem.readFile(
             path.join(__dirname, '..', '..', 'confirm_email.txt'),

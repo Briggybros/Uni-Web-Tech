@@ -4,13 +4,15 @@ import containerized from 'containerized';
 
 import { PromiseReduce } from './util';
 
+import config from '../../config.json';
+
 const db = knex({
     client: 'mysql',
     connection: {
-        host: containerized() ? 'database' : process.env.DB_URL || 'localhost',
-        user: process.env.DB_USER || 'rag',
-        password: process.env.DB_PASSWORD || 'rag',
-        database: process.env.DB_DATABASE || 'rag',
+        host: containerized() ? 'database' : config.database.url || 'localhost',
+        user: config.database.user || 'rag',
+        password: config.database.password || 'rag',
+        database: config.database.database || 'rag',
     },
 });
 
