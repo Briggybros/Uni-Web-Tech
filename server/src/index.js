@@ -9,9 +9,11 @@ import api from './api/index';
 import { init as initDatabase } from './database';
 import initPassport from './passport';
 
+import config from '../../config.json';
+
 initDatabase();
 
-const PORT : number | string = process.env.PORT || 8080;
+const PORT : number | string = config.server.port || 8080;
 const DIST : string = path.join(__dirname, '..', '..', 'frontend', 'dist');
 
 const app = express();
