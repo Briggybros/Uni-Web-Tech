@@ -3,7 +3,13 @@
         "url": "localhost:8080",
         "ports": {
             "HTTP": 8080,
-            "HTTPS": 8081
+            "HTTPS": 8443
+        },
+        "root": {
+            "email": "root@brisolrag.co.uk",
+            "password": "password",
+            "firstName": "root",
+            "lastName": "user"
         }
     },
     "database": {

@@ -19,6 +19,7 @@ RUN npm run build
 
 # Expose the port 8080
 EXPOSE 8080
+EXPOSE 8443
 
 # Set the startup command
 CMD ["npm", "start"]
