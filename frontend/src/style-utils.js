@@ -40,7 +40,7 @@ export function injectGlobalStyles() {
             font-style: normal;
         }
 
-        @import url('http://fonts.googleapis.com/css?family=Raleway');
+        @import url('https://fonts.googleapis.com/css?family=Raleway');
         @import url('https://necolas.github.io/normalize.css/8.0.0/normalize.css');
 
         body {
