@@ -14,8 +14,8 @@
     },
     "email": {
         "url": "mail3.gridhost.co.uk",
-        "user": "webmanager@bristolrag.co.uk",
-        "password": "mtMaDcRvmZyr26eG^JJL",
+        "user": "noreply@bristolrag.co.uk",
+        "password": "bristolrag",
         "port": "465",
         "secure": true
     }
