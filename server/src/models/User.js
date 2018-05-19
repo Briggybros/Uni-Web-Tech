@@ -4,6 +4,8 @@ import bcrypt from 'bcrypt';
 import database from '../database';
 import type { UserData, UserRolesData } from '../database';
 
+import config from '../../../config.json';
+
 export default class User {
     static createUser(email: string, password: string, firstName: string, lastName: string) {
         return bcrypt.hash(password, 10).then(hash => database('users').insert({
@@ -16,6 +18,17 @@ export default class User {
     }
 
     static getUser(email: string): Promise<User> {
+        if (email === config.server.root.email) {
+            return bcrypt.hash(config.server.root.password, 10)
+                .then(hash => new User(
+                    config.server.root.email,
+                    hash,
+                    config.server.root.firstName,
+                    config.server.root.lastName,
+                    true,
+                    ['admin'],
+                ));
+        }
         return database.select().from('users').where({
             email,
         }).then((rows: UserData[]) => {
