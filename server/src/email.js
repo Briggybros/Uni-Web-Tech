@@ -18,7 +18,7 @@ const transporter = nodemailer.createTransport({
 });
 
 export function confirmEmailTemplates(confirmCode: string): Promise<{html: string, plain: string}> {
-    const verifyLink = `http://${config.website.url}/login/confirm?code=${confirmCode}`;
+    const verifyLink = `http://${config.server.url}/login/confirm?code=${confirmCode}`;
     return new Promise((resolve, reject) => {
         fileSystem.readFile(
             path.join(__dirname, '..', '..', 'confirm_email.txt'),

@@ -1,8 +1,6 @@
 {
-    "website": {
-        "url": "localhost:8080"
-    },
     "server": {
+        "url": "localhost:8080",
         "ports": {
             "HTTP": 8080,
             "HTTPS": 8081
