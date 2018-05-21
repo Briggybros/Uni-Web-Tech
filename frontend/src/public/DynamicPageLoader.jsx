@@ -1,12 +1,25 @@
 // @flow
 import * as React from 'react';
 import { connect } from 'react-redux';
+import styled from 'styled-components';
 
 import type { ArticleType, EventType, PageType } from '../types';
 
 import Article from './news/Article';
 import Event from './events/Event';
 import StaticPage from './StaticPage';
+
+const Container = styled.div`
+    flex-grow: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`;
+
+const LoadingImage = styled.img`
+    width: 10%;
+    height: 10%;
+`;
 
 type Props = {
     pages: {
@@ -56,9 +69,11 @@ class DynamicPageLoader extends React.Component<Props, State> {
     }
 
     render() {
-        if (this.state.error) {
+        if (this.state.error !== '') {
             return (
-                <span>{this.state.error}</span>
+                <Container>
+                    <h1>{this.state.error}</h1>
+                </Container>
             );
         } else if (this.state.item) {
             switch (this.state.item.type) {
@@ -72,7 +87,9 @@ class DynamicPageLoader extends React.Component<Props, State> {
             }
         }
         return (
-            <span>Loading...</span>
+            <Container>
+                <LoadingImage src="/logo_load.svg" alt="Loading..." />
+            </Container>
         );
     }
 }
